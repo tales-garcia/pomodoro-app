@@ -15,7 +15,8 @@
     "build:react": "webpack --config webpack/react.webpack.js",
     "package": "npm-run-all build package:dist",
     "package:dist": "electron-builder --dir",
-    "test": "jest"
+    "test": "jest",
+    "commit": "cz"
   },
   "keywords": [],
   "author": "Tales Garcia <tales.garcia@gmail.com>",
@@ -30,6 +31,7 @@
     "@types/styled-components": "^5.1.0",
     "babel-loader": "^8.1.0",
     "cross-env": "^7.0.2",
+    "cz-conventional-changelog": "^3.3.0",
     "electron": "^8.2.2",
     "electron-builder": "^22.7.0",
     "html-webpack-plugin": "^4.2.0",
@@ -57,5 +59,10 @@
       "package.json",
       "dist/**"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
