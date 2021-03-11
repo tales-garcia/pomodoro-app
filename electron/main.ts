@@ -8,7 +8,7 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: 400,
     height: 500,
-    backgroundColor: '#191622',
+    backgroundColor: '#1A1A29',
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true
