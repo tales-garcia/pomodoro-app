@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, Menu, ipcMain } from 'electron'
 import * as path from 'path'
 import * as url from 'url'
 
@@ -41,6 +41,12 @@ function createWindow () {
     mainWindow = null
   })
 }
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+})
 
 app.on('ready', createWindow)
 app.allowRendererProcessReuse = true
