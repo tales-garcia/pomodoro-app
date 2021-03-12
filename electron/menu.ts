@@ -10,7 +10,6 @@ export default function createMenu(window: BrowserWindow | null) {
 
             ]
         }] : []),
-        { role: 'viewMenu' },
         {
             label: 'New Timer',
             submenu: [
@@ -25,10 +24,13 @@ export default function createMenu(window: BrowserWindow | null) {
                             label: '15min', click: () => timer.create(15 * 60)
                         },
                         {
+                            label: '10min', click: () => timer.create(10 * 60)
+                        },
+                        {
                             label: '5min', click: () => timer.create(5 * 60)
                         },
                         {
-                            label: '10min', click: () => timer.create(10 * 60)
+                            label: '1min', click: () => timer.create(60)
                         }
                     ]
                 }
