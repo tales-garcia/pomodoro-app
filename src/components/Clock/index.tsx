@@ -5,8 +5,6 @@ import { ThemeContext } from 'styled-components';
 
 import { Container } from './styles';
 
-ipcRenderer.addListener('create-timer', console.log);
-
 const Clock: React.FC = () => {
     const [time, setTime] = useState<number | null>(null);
     const [isActive, setIsActive] = useState(false);
@@ -18,6 +16,17 @@ const Clock: React.FC = () => {
 
     const splittedMinutes = useMemo(() => String(minutes).padStart(2, '0').split(''), [minutes]);
     const splittedSeconds = useMemo(() => String(seconds).padStart(2, '0').split(''), [seconds]);
+
+    useEffect(() => {
+        ipcRenderer.on('create-timer', (_, time) => {
+            setInputTime([String(Math.floor(time / 60)), String(time % 60)])
+            if (!time) {
+                setInputTime(['--', '--']);
+            }
+            setTime(time);
+        });
+        ipcRenderer.send('clock-ready');
+    }, []);
 
     useEffect(() => {
         if (isActive && time && time > 0) {

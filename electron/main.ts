@@ -1,10 +1,11 @@
-import { app, BrowserWindow, Menu, ipcMain } from 'electron'
+import { app, BrowserWindow } from 'electron'
+import createMenu from './menu';
 import * as path from 'path'
 import * as url from 'url'
 
-let mainWindow: Electron.BrowserWindow | null;
+export let mainWindow: Electron.BrowserWindow | null;
 
-function createWindow () {
+export function createWindow () {
   mainWindow = new BrowserWindow({
     width: 400,
     height: 500,
@@ -39,14 +40,17 @@ function createWindow () {
 
   mainWindow.on('closed', () => {
     mainWindow = null
-  })
+  });
+
+  createMenu(mainWindow);
 }
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
 })
 
-app.on('ready', createWindow)
+app.on('ready', () => createWindow());
+
 app.allowRendererProcessReuse = true
