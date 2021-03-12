@@ -1,8 +1,11 @@
+import { ipcRenderer } from 'electron';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { buildStyles, CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import { ThemeContext } from 'styled-components';
 
 import { Container } from './styles';
+
+ipcRenderer.addListener('create-timer', console.log);
 
 const Clock: React.FC = () => {
     const [time, setTime] = useState<number | null>(null);
@@ -22,6 +25,7 @@ const Clock: React.FC = () => {
             return () => clearTimeout(timeout);
         } else if (isActive && time === 0) {
             resetCounter()
+            new Notification('Timer finished');
         }
     }, [isActive, time]);
 
