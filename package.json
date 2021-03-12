@@ -51,9 +51,17 @@
     "styled-components": "^5.1.1"
   },
   "build": {
-    "appId": "your.id",
+    "appId": "br.com.tales-garcia.pomodoro",
+    "productName": "Pomodoro",
     "mac": {
-      "category": "public.app-category.video"
+      "target": "dmg",
+      "category": "public.app-category.utilities"
+    },
+    "win": {
+      "target": "tar.gz"
+    },
+    "linux": {
+      "target": "tar.gz"
     },
     "directories": {
       "output": "packages"
