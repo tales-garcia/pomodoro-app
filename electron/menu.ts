@@ -35,6 +35,33 @@ export default function createMenu(window: BrowserWindow | null) {
                     ]
                 }
             ],
+        },
+        {
+            label: 'Edit',
+            submenu: [
+                { label: 'Close', click: timer.close },
+                { label: 'Reset', click: timer.reset },
+                {
+                    label: 'Set time',
+                    submenu: [
+                        {
+                            label: '25min', click: () => timer.set(25 * 60)
+                        },
+                        {
+                            label: '15min', click: () => timer.set(15 * 60)
+                        },
+                        {
+                            label: '10min', click: () => timer.set(10 * 60)
+                        },
+                        {
+                            label: '5min', click: () => timer.set(5 * 60)
+                        },
+                        {
+                            label: '1min', click: () => timer.set(60)
+                        }
+                    ]
+                }
+            ],
         }
     ])
 

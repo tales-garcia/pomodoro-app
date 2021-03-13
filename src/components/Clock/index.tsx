@@ -24,6 +24,7 @@ const Clock: React.FC = () => {
                 setInputTime(['--', '--']);
             }
             setTime(time);
+            setIsActive(false);
         });
         ipcRenderer.send('clock-ready');
     }, []);

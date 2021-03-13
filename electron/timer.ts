@@ -11,5 +11,20 @@ export default {
         }
 
         ipcMain.addListener('clock-ready', handleAppReady);
+    },
+    set(time: number) {
+        if (!mainWindow) {
+            this.create(time);
+            return;
+        }
+
+        mainWindow!.webContents.send('create-timer', time);
+    },
+    reset() {
+        if (mainWindow)
+        mainWindow.webContents.send('create-timer', 0);
+    },
+    close: () => {
+        mainWindow?.close();
     }
 }
