@@ -5,6 +5,8 @@ export let mainWindow: Electron.BrowserWindow | null;
 
 export function createWindow () {
   mainWindow = windows.createTimer();
+
+  mainWindow.on('close', () => mainWindow = null);
 }
 
 app.on('window-all-closed', () => {
@@ -14,5 +16,6 @@ app.on('window-all-closed', () => {
 })
 
 app.on('ready', () => createWindow());
+app.on('browser-window-focus', (_, window) => mainWindow = window);
 
 app.allowRendererProcessReuse = true
