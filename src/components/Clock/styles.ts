@@ -12,16 +12,27 @@ export const Container = styled.div`
 
   font: 700 6rem 'Open Sans', sans-serif;
 
-  p {
-    margin-top: 2rem;
-    font: 700 1.5rem 'Montserrat', sans-serif;
-    letter-spacing: 0.3rem;
-    cursor: pointer;
-  }
 
   > div {
     border: 7px solid ${({ theme }) => theme.darkBlue};
     background: ${({ theme }) => theme.darkBlue};
     border-radius: 50%;
+
+    p {
+      margin-top: 2rem;
+      font: 700 1.5rem 'Montserrat', sans-serif;
+      letter-spacing: 0.3rem;
+      cursor: pointer;
+    }
+  }
+
+  > p {
+    color: ${({ theme }) => theme.red};
+    margin-top: 3rem;
+    font: 700 1.5rem 'Montserrat', sans-serif;
+    letter-spacing: 0.3rem;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
   }
 `;

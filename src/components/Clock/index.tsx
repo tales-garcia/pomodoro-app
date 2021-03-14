@@ -59,6 +59,7 @@ const Clock: React.FC = () => {
         () => {
             setIsActive(false);
             setTime(maxTime);
+            setInputTime(['--', '--']);
         },
         [maxTime]
     )
@@ -111,6 +112,8 @@ const Clock: React.FC = () => {
 
                 <p style={{ opacity: time ? 1 : 0.5, cursor: time ? 'pointer' : 'not-allowed' }} onClick={!!time ? toggleCounter : undefined}>{isActive ? 'PAUSE' : 'START'}</p>
             </CircularProgressbarWithChildren>
+
+            <p style={{ opacity: (time || inputTime.some(input => /(0|1|2|3|4|5|6|7|8|9)/i.test(input))) ? 1 : 0.5, cursor: (time || inputTime.some(input => /(0|1|2|3|4|5|6|7|8|9)/i.test(input))) ? 'pointer' : 'not-allowed' }} onClick={resetCounter}>RESET</p>
         </Container>
     );
 }
