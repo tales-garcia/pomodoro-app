@@ -1,10 +1,10 @@
-import { BrowserWindow } from "electron";
+import { BrowserWindow, ipcMain } from "electron";
 import createMenu from "./menu";
 import path from 'path';
 import * as url from 'url';
 
 export default {
-    createTimer: () => {
+    createTimer: (windowProps?: Electron.BrowserWindowConstructorOptions) => {
         const window = new BrowserWindow({
             width: 400,
             height: 500,
@@ -22,7 +22,8 @@ export default {
             fullscreenable: false,
             frame: process.platform === 'darwin',
             transparent: process.platform === 'darwin',
-            acceptFirstMouse: true
+            acceptFirstMouse: true,
+            ...windowProps
         })
 
         if (process.env.NODE_ENV === 'development') {
