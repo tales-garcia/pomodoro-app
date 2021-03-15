@@ -38,7 +38,7 @@ export default {
             )
         }
 
-        createMenu(window);
+        createMenu();
 
         return window;
     }

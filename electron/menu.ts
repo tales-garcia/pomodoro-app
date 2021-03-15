@@ -2,7 +2,7 @@ import { app, BrowserWindow, Menu } from "electron";
 import { createWindow } from "./main";
 import timer from "./timer";
 
-export default function createMenu(window: BrowserWindow | null) {
+export default function createMenu() {
     const dockMenu = Menu.buildFromTemplate([
         ...(process.platform === 'darwin' ? [{
             label: app.getName(),
