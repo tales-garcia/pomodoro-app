@@ -1,4 +1,4 @@
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, remote } from 'electron';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { buildStyles, CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import { ThemeContext } from 'styled-components';
@@ -9,27 +9,40 @@ const Clock: React.FC = () => {
     const [time, setTime] = useState<number | null>(null);
     const [isActive, setIsActive] = useState(false);
     const [inputTime, setInputTime] = useState(['--', '--']);
+    const [maxTime, setMaxTime] = useState<number | null>(null);
 
     const minutes = useMemo(() => time ? Math.floor(time / 60) : null, [time]);
     const seconds = useMemo(() => time ? time % 60 : null, [time]);
-    const maxTime = useMemo(() => (Number(inputTime[0]) * 60) + Number(inputTime[1]), [inputTime]);
 
     const splittedMinutes = useMemo(() => String(minutes).padStart(2, '0').split(''), [minutes]);
     const splittedSeconds = useMemo(() => String(seconds).padStart(2, '0').split(''), [seconds]);
 
     useEffect(() => {
-        ipcRenderer.on('create-timer', (_, time) => {
-            setInputTime([String(Math.floor(time / 60)), String(time % 60)])
+        ipcRenderer.on('create-timer', (_, time, maxTime) => {
+            setInputTime([String(Math.floor(maxTime / 60)), String(maxTime % 60)])
             if (!time) {
                 setInputTime(['--', '--']);
             }
+            setMaxTime(maxTime || time);
             setTime(time);
             setIsActive(false);
         });
         ipcRenderer.send('clock-ready');
     }, []);
 
+    const handleGetTimeReply = useCallback(() => {
+        ipcRenderer.send('get-time-reply', time, maxTime)
+    }, [time, maxTime])
+
     useEffect(() => {
+        ipcRenderer.removeAllListeners('get-time');
+
+        if (time) {
+            ipcRenderer.addListener('get-time', handleGetTimeReply);
+        } else {
+            ipcRenderer.addListener('get-time', () => ipcRenderer.send('get-time-reply', null));
+        }
+
         if (isActive && time && time > 0) {
             const timeout = setTimeout(() => setTime(time - 1), 1000);
             return () => clearTimeout(timeout);
@@ -45,6 +58,7 @@ const Clock: React.FC = () => {
 
             const time = (Number(minutes) * 60) + Number(seconds);
             setTime(time);
+            setMaxTime(time);
         }
     }, [inputTime]);
 
