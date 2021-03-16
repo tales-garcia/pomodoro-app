@@ -3,19 +3,39 @@ import timer from './timer';
 import windows from './windows';
 import Store from './store';
 
+interface Window {
+  bounds: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+  time?: number;
+  maxTime?: number;
+}
+
 export let mainWindow: Electron.BrowserWindow | null;
-const windowsStore = new Store<{ windows: Array<{ x: number, y: number, width: number, height: number }> }>({
+const windowsStore = new Store<{ windows: Array<Window> }>({
   default: {
     windows: [
-      { x: 500, y: 195, width: 400, height: 500 }
+      {
+        bounds: { x: 500, y: 195, width: 400, height: 500 }
+      }
     ]
   },
   filename: 'windows'
 });
 
 export function createWindow() {
-  windowsStore.get('windows').forEach(bounds => {
-    mainWindow = windows.createTimer(bounds);
+  mainWindow = windows.createTimer();
+}
+
+function createInitialWindows() {
+  windowsStore.get('windows').forEach(({ time, bounds, maxTime }) => {
+    mainWindow = windows.createTimer(bounds, {
+      time,
+      maxTime
+    });
 
     mainWindow.on('close', () => mainWindow = null);
   });
@@ -27,7 +47,7 @@ app.on('window-all-closed', () => {
   }
 })
 
-app.on('ready', () => createWindow());
+app.on('ready', createInitialWindows);
 app.on('browser-window-focus', (_, window) => mainWindow = window);
 
 app.allowRendererProcessReuse = true
@@ -50,12 +70,27 @@ app.on('open-url', function (event, url) {
 
 })
 
-app.on('before-quit', () => {
-  const windowsBounds = BrowserWindow.getAllWindows().map(browserWindow => {
-    return {
-      ...browserWindow.getBounds()
-    };
-  });
+app.on('before-quit', event => {
+  if (!BrowserWindow.getAllWindows().length) return;
+  event.preventDefault();
+  const windowsBounds: any[] = [];
 
-  windowsStore.set('windows', windowsBounds);
+  BrowserWindow.getAllWindows().forEach(browserWindow => {
+    ipcMain.removeAllListeners('get-time-reply');
+    const handleGetTimeReply = (_: any, time: number, maxTime: number) => {
+      windowsBounds.push({
+        bounds: BrowserWindow.fromWebContents(_.sender)!.getBounds(),
+        time,
+        maxTime
+      })
+
+      if (windowsBounds.length >= BrowserWindow.getAllWindows().length) {
+        windowsStore.set('windows', windowsBounds)
+        app.exit()
+      }
+    }
+
+    ipcMain.on('get-time-reply', handleGetTimeReply);
+    browserWindow.webContents.send('get-time');
+  });
 });
