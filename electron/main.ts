@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron'
 import timer from './timer';
 import windows from './windows';
 import Store from './store';
+import { v4 } from 'uuid';
 
 interface Window {
   bounds: {
@@ -81,6 +82,7 @@ app.on('before-quit', event => {
       windowsBounds.push({
         bounds: BrowserWindow.fromWebContents(_.sender)!.getBounds(),
         time,
+        id: v4(),
         maxTime
       })
 
