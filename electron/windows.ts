@@ -5,6 +5,7 @@ import * as url from 'url';
 
 export default {
     createTimer: (windowProps?: Electron.BrowserWindowConstructorOptions, timerParams?: { maxTime?: number; time?: number; }) => {
+        
         const window = new BrowserWindow({
             width: 400,
             height: 500,
@@ -25,15 +26,6 @@ export default {
             acceptFirstMouse: true,
             ...windowProps
         })
-
-        if (timerParams?.time) {
-            const handleAppReady = () => {
-                window.webContents.send('create-timer', timerParams?.time, timerParams?.maxTime);
-                ipcMain.removeListener('clock-ready', handleAppReady);
-            }
-
-            ipcMain.addListener('clock-ready', handleAppReady);
-        }
 
         if (process.env.NODE_ENV === 'development') {
             window.loadURL('http://localhost:4000')

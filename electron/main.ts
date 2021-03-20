@@ -2,7 +2,6 @@ import { app, BrowserWindow, ipcMain } from 'electron'
 import timer from './timer';
 import windows from './windows';
 import Store from './store';
-import { v4 } from 'uuid';
 
 interface Window {
   bounds: {
@@ -17,12 +16,12 @@ interface Window {
 }
 
 export let mainWindow: Electron.BrowserWindow | null;
-const windowsStore = new Store<{ windows: Array<Window> }>({
+export const windowsStore = new Store<{ windows: Array<Window> }>({
   default: {
     windows: [
       {
         bounds: { x: 500, y: 195, width: 400, height: 500 },
-        id: 1
+        id: 0
       }
     ]
   },
@@ -32,6 +31,12 @@ const windowsStore = new Store<{ windows: Array<Window> }>({
 export function createWindow() {
   mainWindow = windows.createTimer();
 }
+
+ipcMain.on('get-time', (ev, id) => {
+  const window = windowsStore.get('windows').find((win) => win.id === id);
+
+  ev.returnValue = [window?.time, window?.maxTime];
+});
 
 function createInitialWindows() {
   windowsStore.get('windows').forEach(({ time, bounds, maxTime }) => {
@@ -73,10 +78,6 @@ app.on('open-url', function (event, url) {
 
 })
 
-ipcMain.on('get-time', (ev, id) => {
-  ev.returnValue = windowsStore.get('windows').find(window => window.id === id)?.time;
-})
-
 app.on('before-quit', event => {
   if (!BrowserWindow.getAllWindows().length) return;
   event.preventDefault();
@@ -88,8 +89,8 @@ app.on('before-quit', event => {
       windowsBounds.push({
         bounds: BrowserWindow.fromWebContents(_.sender)!.getBounds(),
         time,
-        id: BrowserWindow.fromWebContents(_.sender)!.id,
-        maxTime
+        maxTime,
+        id: BrowserWindow.fromWebContents(_.sender)!.id
       })
 
       if (windowsBounds.length >= BrowserWindow.getAllWindows().length) {

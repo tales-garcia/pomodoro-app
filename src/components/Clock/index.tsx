@@ -5,11 +5,13 @@ import { ThemeContext } from 'styled-components';
 
 import { Container } from './styles';
 
+const [storedTime, storedMaxTime] = ipcRenderer.sendSync('get-time', remote.getCurrentWindow().id);
+
 const Clock: React.FC = () => {
-    const [time, setTime] = useState<number | null>(null);
+    const [time, setTime] = useState<number | null>(storedTime || null);
     const [isActive, setIsActive] = useState(false);
     const [inputTime, setInputTime] = useState(['--', '--']);
-    const [maxTime, setMaxTime] = useState<number | null>(null);
+    const [maxTime, setMaxTime] = useState<number | null>(storedMaxTime || time || null);
 
     const minutes = useMemo(() => time ? Math.floor(time / 60) : null, [time]);
     const seconds = useMemo(() => time ? time % 60 : null, [time]);
@@ -18,16 +20,15 @@ const Clock: React.FC = () => {
     const splittedSeconds = useMemo(() => String(seconds).padStart(2, '0').split(''), [seconds]);
 
     useEffect(() => {
-        ipcRenderer.on('create-timer', (_, time, maxTime) => {
-            setInputTime([String(Math.floor(maxTime / 60)), String(maxTime % 60)])
+        ipcRenderer.on('set-time', (_, time) => {
+            setInputTime([String(Math.floor(time / 60)), String(time % 60)])
             if (!time) {
                 setInputTime(['--', '--']);
             }
-            setMaxTime(maxTime || time);
-            setTime(time);
+            setMaxTime(time || null);
+            setTime(time || null);
             setIsActive(false);
         });
-        ipcRenderer.send('clock-ready');
     }, []);
 
     const handleGetTimeReply = useCallback(() => {
@@ -53,7 +54,7 @@ const Clock: React.FC = () => {
     }, [isActive, time]);
 
     useEffect(() => {
-        if (!inputTime.some(text => !text)) {
+        if (!time && !inputTime.some(text => !text)) {
             const [minutes, seconds] = inputTime;
 
             const time = (Number(minutes) * 60) + Number(seconds);

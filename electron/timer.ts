@@ -3,14 +3,11 @@ import { createWindow, mainWindow } from "./main"
 
 export default {
     create: (time: number) => {
+        ipcMain.prependOnceListener('get-time', (ev) => {
+            ev.returnValue = [time, time];
+        });
+
         createWindow();
-
-        function handleAppReady() {
-            mainWindow!.webContents.send('create-timer', time);
-            ipcMain.removeListener('clock-ready', handleAppReady);
-        }
-
-        ipcMain.addListener('clock-ready', handleAppReady);
     },
     set(time: number) {
         if (!mainWindow) {
@@ -18,11 +15,11 @@ export default {
             return;
         }
 
-        mainWindow!.webContents.send('create-timer', time);
+        mainWindow!.webContents.send('set-time', time);
     },
     reset() {
         if (mainWindow)
-        mainWindow.webContents.send('create-timer', 0);
+        mainWindow.webContents.send('set-time', 0);
     },
     close: () => {
         mainWindow?.close();
