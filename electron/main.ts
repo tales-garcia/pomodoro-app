@@ -11,6 +11,7 @@ interface Window {
     width: number;
     height: number;
   };
+  id: number;
   time?: number;
   maxTime?: number;
 }
@@ -20,7 +21,8 @@ const windowsStore = new Store<{ windows: Array<Window> }>({
   default: {
     windows: [
       {
-        bounds: { x: 500, y: 195, width: 400, height: 500 }
+        bounds: { x: 500, y: 195, width: 400, height: 500 },
+        id: 1
       }
     ]
   },
@@ -71,6 +73,10 @@ app.on('open-url', function (event, url) {
 
 })
 
+ipcMain.on('get-time', (ev, id) => {
+  ev.returnValue = windowsStore.get('windows').find(window => window.id === id)?.time;
+})
+
 app.on('before-quit', event => {
   if (!BrowserWindow.getAllWindows().length) return;
   event.preventDefault();
@@ -82,7 +88,7 @@ app.on('before-quit', event => {
       windowsBounds.push({
         bounds: BrowserWindow.fromWebContents(_.sender)!.getBounds(),
         time,
-        id: v4(),
+        id: BrowserWindow.fromWebContents(_.sender)!.id,
         maxTime
       })
 
