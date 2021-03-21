@@ -70,7 +70,9 @@ app.on('open-url', function (event, url) {
   event.preventDefault()
 
   app.whenReady().then(() => {
-    app.focus();
+    app.focus({
+      steal: true
+    });
     const [command, ...args] = url.replace('pomodoro://', '').split('/');
 
     timer[command](args);
