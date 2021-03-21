@@ -39,11 +39,8 @@ ipcMain.on('get-time', (ev, id) => {
 });
 
 function createInitialWindows() {
-  windowsStore.get('windows').forEach(({ time, bounds, maxTime }) => {
-    mainWindow = windows.createTimer(bounds, {
-      time,
-      maxTime
-    });
+  windowsStore.get('windows').forEach(({ bounds }) => {
+    mainWindow = windows.createTimer(bounds);
 
     mainWindow.on('close', () => mainWindow = null);
   });

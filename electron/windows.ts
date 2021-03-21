@@ -4,7 +4,7 @@ import path from 'path';
 import * as url from 'url';
 
 export default {
-    createTimer: (windowProps?: Electron.BrowserWindowConstructorOptions, timerParams?: { maxTime?: number; time?: number; }) => {
+    createTimer: (windowProps?: Electron.BrowserWindowConstructorOptions) => {
         
         const window = new BrowserWindow({
             width: 400,
