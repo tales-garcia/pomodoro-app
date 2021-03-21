@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcMain } from "electron";
+import { BrowserWindow } from "electron";
 import createMenu from "./menu";
 import path from 'path';
 import * as url from 'url';
