@@ -55,12 +55,15 @@
     "productName": "Pomodoro",
     "mac": {
       "target": "dmg",
+      "icon": "icons/icon.icns",
       "category": "public.app-category.utilities"
     },
     "win": {
-      "target": "tar.gz"
+      "target": "tar.gz",
+      "icon": "icons/icon.ico"
     },
     "linux": {
+      "icon": "icons/icon.png",
       "target": "tar.gz"
     },
     "directories": {
