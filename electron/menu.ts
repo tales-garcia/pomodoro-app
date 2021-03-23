@@ -1,6 +1,6 @@
 import { app, Menu } from "electron";
-import { createWindow } from "./main";
 import timer from "./timer";
+import windows from "./windows";
 
 export default function createMenu() {
     const dockMenu = Menu.buildFromTemplate([
@@ -13,7 +13,7 @@ export default function createMenu() {
         {
             label: 'New Timer',
             submenu: [
-                { label: 'Custom', click: createWindow },
+                { label: 'Custom', click: windows.createTimer },
                 {
                     label: 'Presets',
                     submenu: [

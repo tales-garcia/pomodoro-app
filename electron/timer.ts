@@ -1,5 +1,6 @@
 import { ipcMain } from "electron";
-import { createWindow, mainWindow } from "./main"
+import { mainWindow } from "./main"
+import windows from "./windows";
 
 export default {
     create: (time: number) => {
@@ -7,7 +8,7 @@ export default {
             ev.returnValue = [time, time];
         });
 
-        createWindow();
+        windows.createTimer();
     },
     set(time: number) {
         if (!mainWindow) {

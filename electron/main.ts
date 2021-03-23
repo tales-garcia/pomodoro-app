@@ -28,10 +28,6 @@ export const windowsStore = new Store<{ windows: Array<Window> }>({
   filename: 'windows'
 });
 
-export function createWindow() {
-  mainWindow = windows.createTimer();
-}
-
 ipcMain.on('get-time', (ev, id) => {
   const window = windowsStore.get('windows').find((win) => win.id === id);
 
