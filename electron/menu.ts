@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu } from "electron";
+import { app, Menu } from "electron";
 import { createWindow } from "./main";
 import timer from "./timer";
 
