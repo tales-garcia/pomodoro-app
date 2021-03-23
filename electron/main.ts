@@ -14,7 +14,7 @@ interface Window {
   time?: number;
   maxTime?: number;
 }
-
+const idsTranslator: { [key: number]: number } = {};
 export let mainWindow: Electron.BrowserWindow | null;
 export const windowsStore = new Store<{ windows: Array<Window> }>({
   default: {
@@ -29,14 +29,16 @@ export const windowsStore = new Store<{ windows: Array<Window> }>({
 });
 
 ipcMain.on('get-time', (ev, id) => {
-  const window = windowsStore.get('windows').find((win) => win.id === id);
+  const window = windowsStore.get('windows').find((win) => win.id === idsTranslator[id]);
 
   ev.returnValue = [window?.time, window?.maxTime];
 });
 
 function createInitialWindows() {
-  windowsStore.get('windows').forEach(({ bounds }) => {
+  windowsStore.get('windows').forEach(({ bounds, id }) => {
     mainWindow = windows.createTimer(bounds);
+
+    idsTranslator[mainWindow.id] = id;
 
     mainWindow.on('close', () => mainWindow = null);
   });
