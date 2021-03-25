@@ -28,11 +28,16 @@ export const windowsStore = new Store<{ windows: Array<Window> }>({
   },
   filename: 'windows'
 });
-
+let getTimeCalledTimes = 0;
 ipcMain.on('get-time', (ev, id) => {
   const window = windowsStore.get('windows').find((win) => win.id === idsTranslator[id]);
 
   ev.returnValue = [window?.time, window?.maxTime];
+
+  getTimeCalledTimes++;
+  if (getTimeCalledTimes === BrowserWindow.getAllWindows().length) {
+    ipcMain.emit('initial-windows-created');
+  }
 });
 
 function createInitialWindows() {
@@ -65,7 +70,7 @@ app.whenReady().then(() => {
 app.on('open-url', function (event, url) {
   event.preventDefault()
 
-  app.whenReady().then(() => {
+  ipcMain.once('initial-windows-created', () => {
     app.focus({
       steal: true
     });
