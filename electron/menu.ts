@@ -5,11 +5,8 @@ import windows from "./windows";
 export default function createMenu() {
     const dockMenu = Menu.buildFromTemplate([
         ...(process.platform === 'darwin' ? [{
-            label: app.getName(),
-            submenu: [
-
-            ]
-        }] : []),
+            role: 'appMenu'
+        }] : [] as any),
         {
             label: 'New Timer',
             submenu: [
