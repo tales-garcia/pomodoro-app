@@ -1,8 +1,9 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, ipcMain, Tray } from 'electron'
 import timer from './timer';
 import windows from './windows';
 import Store from './store';
 import { v4 } from 'uuid';
+import path from 'path';
 
 interface Window {
   bounds: {
@@ -62,6 +63,8 @@ app.on('browser-window-focus', (_, window) => mainWindow = window);
 app.allowRendererProcessReuse = true
 
 app.whenReady().then(() => {
+  new Tray(path.resolve(__dirname, '..', 'icons', 'iconTemplate.png'));
+
   if (!app.isDefaultProtocolClient('pomodoro')) {
     app.setAsDefaultProtocolClient('pomodoro');
   }
