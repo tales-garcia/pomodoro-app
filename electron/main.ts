@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, Tray } from 'electron'
+import { app, BrowserWindow, ipcMain, Menu, Tray } from 'electron'
 import timer from './timer';
 import windows from './windows';
 import Store from './store';
@@ -18,6 +18,8 @@ interface Window {
 }
 const idsTranslator: { [key: number]: string } = {};
 export let mainWindow: Electron.BrowserWindow | null;
+let tray: Tray;
+
 export const windowsStore = new Store<{ windows: Array<Window> }>({
   default: {
     windows: [
@@ -63,7 +65,13 @@ app.on('browser-window-focus', (_, window) => mainWindow = window);
 app.allowRendererProcessReuse = true
 
 app.whenReady().then(() => {
-  new Tray(path.resolve(__dirname, '..', 'icons', 'iconTemplate.png'));
+  tray = new Tray(path.resolve(__dirname, '..', 'icons', 'iconTemplate.png'));
+
+  tray.setContextMenu(Menu.buildFromTemplate([
+    {
+      label: 'Dashboard'
+    }
+  ]));
 
   if (!app.isDefaultProtocolClient('pomodoro')) {
     app.setAsDefaultProtocolClient('pomodoro');
@@ -85,6 +93,7 @@ app.on('open-url', function (event, url) {
 })
 
 app.on('before-quit', event => {
+  tray.destroy();
   if (!BrowserWindow.getAllWindows().length) return;
   event.preventDefault();
   const windowsBounds: any[] = [];
