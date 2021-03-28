@@ -64,7 +64,7 @@ app.on('browser-window-focus', (_, window) => mainWindow = window);
 
 app.allowRendererProcessReuse = true
 
-app.whenReady().then(() => {
+app.once('ready', () => {
   tray = new Tray(path.resolve(__dirname, '..', 'icons', 'iconTemplate.png'));
 
   tray.setContextMenu(Menu.buildFromTemplate([
