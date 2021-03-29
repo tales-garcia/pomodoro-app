@@ -1,9 +1,9 @@
-import { app, BrowserWindow, ipcMain, Menu, Tray } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import timer from './timer';
 import windows from './windows';
 import Store from './store';
 import { v4 } from 'uuid';
-import path from 'path';
+import tray from './tray';
 
 interface Window {
   bounds: {
@@ -18,7 +18,6 @@ interface Window {
 }
 const idsTranslator: { [key: number]: string } = {};
 export let mainWindow: Electron.BrowserWindow | null;
-let tray: Tray;
 
 export const windowsStore = new Store<{ windows: Array<Window> }>({
   default: {
@@ -65,13 +64,7 @@ app.on('browser-window-focus', (_, window) => mainWindow = window);
 app.allowRendererProcessReuse = true
 
 app.once('ready', () => {
-  tray = new Tray(path.resolve(__dirname, '..', 'icons', 'iconTemplate.png'));
-
-  tray.setContextMenu(Menu.buildFromTemplate([
-    {
-      label: 'Dashboard'
-    }
-  ]));
+  tray.create();
 
   if (!app.isDefaultProtocolClient('pomodoro')) {
     app.setAsDefaultProtocolClient('pomodoro');
