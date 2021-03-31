@@ -13,6 +13,7 @@ interface Window {
     height: number;
   };
   id: string;
+  type: 'timer' | 'dashboard';
   time?: number;
   maxTime?: number;
 }
@@ -24,7 +25,8 @@ export const windowsStore = new Store<{ windows: Array<Window> }>({
     windows: [
       {
         bounds: { x: 500, y: 195, width: 400, height: 500 },
-        id: v4()
+        id: v4(),
+        type: 'timer'
       }
     ]
   },
@@ -32,19 +34,26 @@ export const windowsStore = new Store<{ windows: Array<Window> }>({
 });
 let getTimeCalledTimes = 0;
 ipcMain.on('get-time', (ev, id) => {
-  const window = windowsStore.get('windows').find((win) => win.id === idsTranslator[id]);
+  const window = windowsStore.get('windows').filter(window => window.type === 'timer').find((win) => win.id === idsTranslator[id]);
 
   ev.returnValue = [window?.time, window?.maxTime];
 
   getTimeCalledTimes++;
-  if (getTimeCalledTimes === BrowserWindow.getAllWindows().length) {
+  if (getTimeCalledTimes === windowsStore.get('windows').filter(window => window.type === 'timer').length) {
     ipcMain.emit('initial-windows-created');
   }
 });
 
 function createInitialWindows() {
-  windowsStore.get('windows').forEach(({ bounds, id }) => {
-    mainWindow = windows.createTimer(bounds);
+  windowsStore.get('windows').forEach(({ bounds, id, type }) => {
+    const typeToMethod: {
+      [key in typeof type]: keyof typeof windows;
+    } = {
+      dashboard: 'createDashboard',
+      timer: 'createTimer'
+    };
+
+    mainWindow = windows[typeToMethod[type]](bounds);
 
     idsTranslator[mainWindow.id] = id;
 
@@ -92,11 +101,29 @@ app.on('before-quit', event => {
   const windowsBounds: any[] = [];
 
   BrowserWindow.getAllWindows().forEach(browserWindow => {
+    if (browserWindow.webContents.getURL().includes('dashboard')) {
+      windowsBounds.push({
+        bounds: {
+          ...browserWindow.getBounds(),
+          fullscreen: browserWindow.isFullScreen()
+        },
+        type: 'dashboard',
+        id: v4()
+      });
+
+      if (windowsBounds.length >= BrowserWindow.getAllWindows().length) {
+        windowsStore.set('windows', windowsBounds)
+        app.exit()
+      }
+
+      return;
+    }
     ipcMain.removeAllListeners('get-time-reply');
     const handleGetTimeReply = (_: any, time: number, maxTime: number) => {
       windowsBounds.push({
         bounds: BrowserWindow.fromWebContents(_.sender)!.getBounds(),
         time,
+        type: 'timer',
         maxTime,
         id: v4()
       })
