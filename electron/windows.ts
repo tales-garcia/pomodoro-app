@@ -42,5 +42,37 @@ export default {
         createMenu();
 
         return window;
+    },
+    createDashboard: (windowProps?: Electron.BrowserWindowConstructorOptions) => {
+        
+        const window = new BrowserWindow({
+            backgroundColor: '#1A1A29',
+            webPreferences: {
+                nodeIntegration: true,
+                enableRemoteModule: true
+            },
+            movable: true,
+            resizable: true,
+            maximizable: true,
+            minimizable: true,
+            fullscreen: windowProps?.fullscreen || true,
+            fullscreenable: true,
+            ...windowProps
+        })
+
+        if (process.env.NODE_ENV === 'development') {
+            window.loadURL('http://localhost:4000/#/dashboard')
+        } else {
+            window.loadURL(
+                url.format({
+                    pathname: path.join(__dirname, 'renderer/index.html'),
+                    protocol: 'file:',
+                    hash: '/dashboard',
+                    slashes: true
+                })
+            )
+        }
+
+        return window;
     }
 }
