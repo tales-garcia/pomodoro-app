@@ -46,7 +46,7 @@ export default {
         return window;
     },
     createDashboard: (windowProps?: Electron.BrowserWindowConstructorOptions) => {
-        if (!dashboardWindow || dashboardWindow.isDestroyed()) return;
+        if (dashboardWindow && !dashboardWindow.isDestroyed()) return;
         
         dashboardWindow = new BrowserWindow({
             backgroundColor: '#1A1A29',
