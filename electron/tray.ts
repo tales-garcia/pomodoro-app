@@ -17,7 +17,8 @@ export default {
 
         this.setContextMenu(Menu.buildFromTemplate([
             {
-                label: 'Dashboard'
+                label: 'Dashboard',
+                click: windows.createDashboard
             },
             {
                 label: 'New Timer',
