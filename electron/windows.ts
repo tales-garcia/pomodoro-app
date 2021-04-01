@@ -3,6 +3,8 @@ import createMenu from "./menu";
 import path from 'path';
 import * as url from 'url';
 
+let dashboardWindow: BrowserWindow | null;
+
 export default {
     createTimer: (windowProps?: Electron.BrowserWindowConstructorOptions) => {
         
@@ -44,8 +46,9 @@ export default {
         return window;
     },
     createDashboard: (windowProps?: Electron.BrowserWindowConstructorOptions) => {
+        if (!dashboardWindow || dashboardWindow.isDestroyed()) return;
         
-        const window = new BrowserWindow({
+        dashboardWindow = new BrowserWindow({
             backgroundColor: '#1A1A29',
             webPreferences: {
                 nodeIntegration: true,
@@ -61,9 +64,9 @@ export default {
         })
 
         if (process.env.NODE_ENV === 'development') {
-            window.loadURL('http://localhost:4000/#/dashboard')
+            dashboardWindow.loadURL('http://localhost:4000/#/dashboard')
         } else {
-            window.loadURL(
+            dashboardWindow.loadURL(
                 url.format({
                     pathname: path.join(__dirname, 'renderer/index.html'),
                     protocol: 'file:',
@@ -72,7 +75,5 @@ export default {
                 })
             )
         }
-
-        return window;
     }
 }
