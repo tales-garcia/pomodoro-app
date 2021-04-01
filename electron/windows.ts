@@ -75,5 +75,7 @@ export default {
                 })
             )
         }
+
+        return dashboardWindow;
     }
 }
