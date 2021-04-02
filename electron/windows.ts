@@ -26,6 +26,7 @@ export default {
             frame: process.platform === 'darwin',
             transparent: process.platform === 'darwin',
             acceptFirstMouse: true,
+            title: 'Timer',
             ...windowProps
         })
 
@@ -60,6 +61,7 @@ export default {
             minimizable: true,
             fullscreen: windowProps?.fullscreen || true,
             fullscreenable: true,
+            title: 'Dashboard',
             ...windowProps
         })
 
