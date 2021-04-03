@@ -1,5 +1,6 @@
 import React from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
+import Dashboard from './pages/Dashboard';
 import Timer from './pages/Timer';
 
 const Routes: React.FC = () => {
@@ -7,7 +8,7 @@ const Routes: React.FC = () => {
     <HashRouter>
         <Switch>
             <Route path="/" exact component={Timer} />
-            <Route exact path="/dashboard" render={() => <div>Dashboard</div>} />
+            <Route exact path="/dashboard" component={Dashboard} />
         </Switch>
     </HashRouter>
   );
