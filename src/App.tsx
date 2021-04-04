@@ -14,7 +14,7 @@ document.body.appendChild(windowTopBar)
 document.body.appendChild(mainElement)
 
 const theme = {
-  blue: '#1A1A29',
+  blue: '#24243B',
   darkBlue: '#151423',
   red: '#D93C3C',
   text: '#E4E4E4'
