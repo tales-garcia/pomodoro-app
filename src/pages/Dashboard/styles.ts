@@ -38,6 +38,14 @@ export const Container = styled.main`
 
         > ul {
             flex: 1;
+
+            > li > svg {
+                cursor: pointer;
+
+                :hover {
+                    opacity: 0.8;
+                }
+            }
         }
 
         > footer {
