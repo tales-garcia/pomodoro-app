@@ -39,6 +39,24 @@ export const Container = styled.main`
         > ul {
             flex: 1;
         }
+
+        > footer {
+            display: grid;
+            width: 100%;
+            grid-template-rows: 1fr;
+            grid-auto-columns: 20px;
+            grid-auto-rows: 20px;
+            grid-auto-flow: column;
+            gap: 8px;
+
+            > svg {
+                cursor: pointer;
+
+                :hover {
+                    opacity: 0.8;
+                }
+            }
+        }
     }
 `;
 
