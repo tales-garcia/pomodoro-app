@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiTrash2, FiEdit2, FiFolderPlus, FiSliders } from 'react-icons/fi';
+import { FiTrash2, FiEdit2, FiFolderPlus, FiSliders, FiEdit, FiPlay, FiTrash } from 'react-icons/fi';
 import { useTheme } from 'styled-components';
 import { Container, WorkspaceItem } from './styles';
 
@@ -31,10 +31,42 @@ const Dashboard: React.FC = () => {
           <FiEdit2 size={28} color={text} />
         </h1>
         <ul>
-          <li>Python</li>
-          <li>React</li>
-          <li>C#</li>
-          <li>Java</li>
+          <li>
+            <h2>15<span>:</span>00</h2>
+            <h3>React</h3>
+            <footer>
+              <FiPlay size={20} color={text} />
+              <FiEdit size={20} color={text} />
+              <FiTrash size={20} color={red} />
+            </footer>
+          </li>
+          <li>
+            <h2>20<span>:</span>00</h2>
+            <h3>Java</h3>
+            <footer>
+              <FiPlay size={20} color={text} />
+              <FiEdit size={20} color={text} />
+              <FiTrash size={20} color={red} />
+            </footer>
+          </li>
+          <li>
+            <h2>20<span>:</span>00</h2>
+            <h3>C#</h3>
+            <footer>
+              <FiPlay size={20} color={text} />
+              <FiEdit size={20} color={text} />
+              <FiTrash size={20} color={red} />
+            </footer>
+          </li>
+          <li>
+            <h2>10<span>:</span>00</h2>
+            <h3>Python</h3>
+            <footer>
+              <FiPlay size={20} color={text} />
+              <FiEdit size={20} color={text} />
+              <FiTrash size={20} color={red} />
+            </footer>
+          </li>
         </ul>
       </main>
     </Container>
