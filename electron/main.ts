@@ -53,11 +53,11 @@ function createInitialWindows() {
       timer: 'createTimer'
     };
 
-    mainWindow = windows[typeToMethod[type]](bounds);
+    mainWindow = windows[typeToMethod[type]](bounds) || null;
 
-    idsTranslator[mainWindow.id] = id;
+    idsTranslator[mainWindow!.id] = id;
 
-    mainWindow.on('close', () => mainWindow = null);
+    mainWindow!.on('close', () => mainWindow = null);
   });
 }
 
