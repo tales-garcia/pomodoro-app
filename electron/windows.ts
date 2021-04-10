@@ -10,7 +10,7 @@ export default {
         
         const window = new BrowserWindow({
             width: 400,
-            height: 500,
+            height: 550,
             backgroundColor: '#1A1A29',
             webPreferences: {
                 nodeIntegration: true,
