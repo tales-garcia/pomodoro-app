@@ -1,6 +1,7 @@
 import React from 'react';
 import { FiTrash2, FiEdit2, FiFolderPlus, FiSliders, FiEdit, FiPlay, FiTrash } from 'react-icons/fi';
 import { useTheme } from 'styled-components';
+import TimerItem from '../../components/TimerItem';
 import { Container, WorkspaceItem } from './styles';
 
 const Dashboard: React.FC = () => {
@@ -31,42 +32,10 @@ const Dashboard: React.FC = () => {
           <FiEdit2 size={28} color={text} />
         </h1>
         <ul>
-          <li>
-            <h2>15<span>:</span>00</h2>
-            <h3>React</h3>
-            <footer>
-              <FiPlay size={20} color={text} />
-              <FiEdit size={20} color={text} />
-              <FiTrash size={20} color={red} />
-            </footer>
-          </li>
-          <li>
-            <h2>20<span>:</span>00</h2>
-            <h3>Java</h3>
-            <footer>
-              <FiPlay size={20} color={text} />
-              <FiEdit size={20} color={text} />
-              <FiTrash size={20} color={red} />
-            </footer>
-          </li>
-          <li>
-            <h2>20<span>:</span>00</h2>
-            <h3>C#</h3>
-            <footer>
-              <FiPlay size={20} color={text} />
-              <FiEdit size={20} color={text} />
-              <FiTrash size={20} color={red} />
-            </footer>
-          </li>
-          <li>
-            <h2>10<span>:</span>00</h2>
-            <h3>Python</h3>
-            <footer>
-              <FiPlay size={20} color={text} />
-              <FiEdit size={20} color={text} />
-              <FiTrash size={20} color={red} />
-            </footer>
-          </li>
+          <TimerItem name="React" time={900} />
+          <TimerItem name="Java" time={1200} />
+          <TimerItem name="C#" time={1200} />
+          <TimerItem name="Python" time={600} />
         </ul>
       </main>
     </Container>
