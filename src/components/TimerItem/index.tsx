@@ -1,4 +1,5 @@
-import React, { useMemo } from 'react';
+import { ipcRenderer } from 'electron';
+import React, { useCallback, useMemo } from 'react';
 import { FiPlay, FiEdit, FiTrash } from 'react-icons/fi';
 import { useTheme } from 'styled-components';
 
@@ -18,12 +19,16 @@ const TimerItem: React.FC<TimerItemProps> = ({ name, time }) => {
     const splittedMinutes = useMemo(() => String(minutes).padStart(2, '0'), [minutes]);
     const splittedSeconds = useMemo(() => String(seconds).padStart(2, '0'), [seconds]);
 
+    const openTimer = useCallback(() => {
+        ipcRenderer.send('create-timer', time);
+    }, [time]);
+
     return (
         <Container>
             <h2>{splittedMinutes}<span>:</span>{splittedSeconds}</h2>
             <h3>{name}</h3>
             <footer>
-                <FiPlay size={20} color={text} />
+                <FiPlay onClick={openTimer} size={20} color={text} />
                 <FiEdit size={20} color={text} />
                 <FiTrash size={20} color={red} />
             </footer>
