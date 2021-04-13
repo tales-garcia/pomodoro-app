@@ -1,5 +1,6 @@
 import { ipcMain } from "electron";
 import { windowsStore, idsTranslator } from "./main";
+import timer from "./timer";
 
 type Events = {
     [channel: string]: (event: Electron.IpcMainEvent, ...args: any[]) => void;
@@ -17,5 +18,8 @@ export default {
         if (getTimeCalledTimes === windowsStore.get('windows').filter(window => window.type === 'timer').length) {
             ipcMain.emit('initial-windows-created');
         }
+    },
+    'create-timer': (_, time) => {
+        timer.create(time);
     }
 } as Events;
