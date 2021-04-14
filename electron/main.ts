@@ -17,6 +17,7 @@ interface Window {
   type: 'timer' | 'dashboard';
   time?: number;
   maxTime?: number;
+  title?: string;
 }
 export const idsTranslator: { [key: number]: string } = {};
 export let mainWindow: Electron.BrowserWindow | null;
