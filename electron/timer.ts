@@ -2,10 +2,19 @@ import { ipcMain } from "electron";
 import { mainWindow } from "./main"
 import windows from "./windows";
 
+interface ITimerProps {
+    time: number;
+    title?: string;
+}
+
 export default {
-    create: (time: number) => {
-        ipcMain.prependOnceListener('get-time', (ev) => {
-            ev.returnValue = [time, time];
+    create: ({ time, title }: ITimerProps) => {
+        ipcMain.prependOnceListener('get-timer-props', (ev) => {
+            ev.returnValue = {
+                storedTime: time,
+                title,
+                storedMaxTime: time
+            };
         });
 
         windows.createTimer();
