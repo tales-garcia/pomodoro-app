@@ -5,13 +5,16 @@ import { ThemeContext } from 'styled-components';
 
 import { Container } from './styles';
 
-const [storedTime, storedMaxTime] = ipcRenderer.sendSync('get-time', remote.getCurrentWindow().id);
+interface ClockProps {
+    time: number;
+    maxTime: number;
+}
 
-const Clock: React.FC = () => {
-    const [time, setTime] = useState<number | null>(storedTime || null);
+const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime }) => {
+    const [time, setTime] = useState<number | null>(propsTime || null);
     const [isActive, setIsActive] = useState(false);
     const [inputTime, setInputTime] = useState(['--', '--']);
-    const [maxTime, setMaxTime] = useState<number | null>(storedMaxTime || time || null);
+    const [maxTime, setMaxTime] = useState<number | null>(propsMaxTime || time || null);
 
     const minutes = useMemo(() => time ? Math.floor(time / 60) : null, [time]);
     const seconds = useMemo(() => time ? time % 60 : null, [time]);
