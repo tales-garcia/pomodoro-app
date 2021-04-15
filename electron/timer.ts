@@ -21,7 +21,7 @@ export default {
     },
     set(time: number) {
         if (!mainWindow) {
-            this.create(time);
+            this.create({ time });
             return;
         }
 
