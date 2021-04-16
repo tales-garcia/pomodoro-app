@@ -1,4 +1,5 @@
 import { ipcMain } from "electron";
+import { v4 } from "uuid";
 import { windowsStore, idsTranslator } from "./main";
 import timer from "./timer";
 
@@ -33,5 +34,14 @@ export default {
             time,
             title
         });
+    },
+    'create-workspace': (ev, workspaceDto: WorkspaceDTO) => {
+        const workspace = {
+            ...workspaceDto,
+            timers: [],
+            id: v4()
+        } as Workspace;
+
+        ev.returnValue = workspace;
     }
 } as Events;
