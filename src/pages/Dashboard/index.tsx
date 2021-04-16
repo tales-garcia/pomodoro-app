@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiTrash2, FiEdit2, FiFolderPlus, FiSliders, FiEdit, FiPlay, FiTrash } from 'react-icons/fi';
+import { FiTrash2, FiEdit2, FiFolderPlus, FiSliders } from 'react-icons/fi';
 import { useTheme } from 'styled-components';
 import TimerItem from '../../components/TimerItem';
 import { Container, WorkspaceItem } from './styles';
