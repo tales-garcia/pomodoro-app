@@ -109,6 +109,7 @@ export const WorkspaceItem = styled.li<WorkspaceItemProps>`
     width: 100%;
     opacity: 0.6;
     padding: 12px 18px;
+    cursor: pointer;
     border-radius: 10px;
     display: flex;
     justify-content: space-between;
