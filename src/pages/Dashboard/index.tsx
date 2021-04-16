@@ -34,7 +34,7 @@ const Dashboard: React.FC = () => {
         <h1>Workspaces</h1>
         <ul>
           {workspaces.map((workspace) => (
-            <WorkspaceItem onClick={() => setSelectedWorkspace(workspace)} isActive={Number((selectedWorkspace || { id: 's' }).id === workspace.id)}>
+            <WorkspaceItem onClick={() => setSelectedWorkspace(workspace)} isActive={Number((selectedWorkspace || { id: null }).id === workspace.id)}>
               Studies
               <FiTrash2 size={16} color={red} />
             </WorkspaceItem>
