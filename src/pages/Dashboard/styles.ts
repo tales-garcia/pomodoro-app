@@ -32,6 +32,7 @@ export const Container = styled.main`
         justify-content: space-between;
         background: ${({ theme }) => theme.darkBlue};
         padding: 36px;
+        height: 100vh;
 
         > * + * {
             margin-top: 64px;
@@ -39,6 +40,12 @@ export const Container = styled.main`
 
         > ul {
             flex: 1;
+            height: 100%;
+            overflow-y: scroll;
+
+            ::-webkit-scrollbar {
+                display: none;
+            }
 
             > li > svg {
                 cursor: pointer;
