@@ -12,7 +12,7 @@ export let mainWindow: Electron.BrowserWindow | null;
 Object.keys(events).forEach(event => ipcMain.on(event, events[event]));
 
 function createInitialWindows() {
-  windowsStore.get('windows').forEach(({ bounds, id, type }) => {
+  windowsStore.windows.forEach(({ bounds, id, type }) => {
     const typeToMethod: {
       [key in typeof type]: keyof typeof windows;
     } = {
@@ -79,7 +79,7 @@ app.on('before-quit', event => {
       });
 
       if (windowsBounds.length >= BrowserWindow.getAllWindows().length) {
-        windowsStore.set('windows', windowsBounds)
+        windowsStore.windows = windowsBounds;
         app.exit()
       }
 
@@ -96,7 +96,7 @@ app.on('before-quit', event => {
       })
 
       if (windowsBounds.length >= BrowserWindow.getAllWindows().length) {
-        windowsStore.set('windows', windowsBounds)
+        windowsStore.windows = windowsBounds;
         app.exit()
       }
     }

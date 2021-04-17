@@ -17,7 +17,7 @@ let getTimeCalledTimes = 0;
 
 export default {
     'get-timer-props': (ev, id) => {
-        const window = windowsStore.get('windows').filter(window => window.type === 'timer').find((win) => win.id === idsTranslator[id]);
+        const window = windowsStore.windows.filter(window => window.type === 'timer').find((win) => win.id === idsTranslator[id]);
 
         ev.returnValue = {
             storedTime: window?.time,
@@ -26,7 +26,7 @@ export default {
         }
 
         getTimeCalledTimes++;
-        if (getTimeCalledTimes === windowsStore.get('windows').filter(window => window.type === 'timer').length) {
+        if (getTimeCalledTimes === windowsStore.windows.filter(window => window.type === 'timer').length) {
             ipcMain.emit('initial-windows-created');
         }
     },

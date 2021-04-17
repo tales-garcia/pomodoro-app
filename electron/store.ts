@@ -8,23 +8,25 @@ interface Options<T> {
 }
 
 class Store<T = any> {
-    private path: string;
-    data: T;
-
     constructor(opts: Options<T>) {
         const userDataPath = (app || remote.app).getPath('userData');
-        this.path = path.join(userDataPath, opts.filename + '.json');
+        const filepath = path.join(userDataPath, opts.filename + '.json');
 
-        this.data = parseDataFile(this.path, opts.default);
-    }
+        return new Proxy<Store<T>>(parseDataFile(filepath, opts.default), {
+            set(target, key, value) {
+                try {
+                    const finalStore = {
+                        ...target,
+                        [key]: value
+                    }
 
-    get(key: keyof T): T[keyof T] {
-        return (this.data as {[key in keyof T]: any})[key];
-    }
-
-    set(key: keyof T, val: T[keyof T]): void {
-        (this.data as {[key in keyof T]: any})[key] = val;
-        fs.writeFileSync(this.path, JSON.stringify(this.data));
+                    fs.writeFileSync(filepath, JSON.stringify(finalStore));
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            }
+        });
     }
 }
 
@@ -36,4 +38,4 @@ function parseDataFile(filePath: string, defaults: any) {
     }
 }
 
-export default Store;
+export default Store as { new <T>(opts: Options<T>): T };
