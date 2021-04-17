@@ -1,39 +1,13 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
 import timer from './timer';
 import windows from './windows';
-import Store from './store';
 import { v4 } from 'uuid';
 import tray from './tray';
 import events from './events';
+import { windowsStore } from './stores';
 
-interface Window {
-  bounds: {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-  };
-  id: string;
-  type: 'timer' | 'dashboard';
-  time?: number;
-  maxTime?: number;
-  title?: string;
-}
 export const idsTranslator: { [key: number]: string } = {};
 export let mainWindow: Electron.BrowserWindow | null;
-
-export const windowsStore = new Store<{ windows: Array<Window> }>({
-  default: {
-    windows: [
-      {
-        bounds: { x: 500, y: 195, width: 400, height: 550 },
-        id: v4(),
-        type: 'timer'
-      }
-    ]
-  },
-  filename: 'windows'
-});
 
 Object.keys(events).forEach(event => ipcMain.on(event, events[event]));
 
