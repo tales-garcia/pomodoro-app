@@ -1,6 +1,7 @@
 import { ipcMain } from "electron";
 import { v4 } from "uuid";
-import { windowsStore, idsTranslator } from "./main";
+import { idsTranslator } from "./main";
+import { windowsStore } from './stores';
 import timer from "./timer";
 
 interface ITimerProps {
