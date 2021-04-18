@@ -13,14 +13,11 @@ class Store<T = any> {
         const filepath = path.join(userDataPath, opts.filename + '.json');
 
         return new Proxy<Store<T>>(parseDataFile(filepath, opts.default), {
-            set(target, key, value) {
+            set(target: any, key, value) {
                 try {
-                    const finalStore = {
-                        ...target,
-                        [key]: value
-                    }
+                    target[key] = value;
 
-                    fs.writeFileSync(filepath, JSON.stringify(finalStore));
+                    fs.writeFileSync(filepath, JSON.stringify(target));
                     return true;
                 } catch (e) {
                     return false;
