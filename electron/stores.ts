@@ -28,3 +28,9 @@ export const windowsStore = new Store<{ windows: Array<Window> }>({
     },
     filename: 'windows'
 });
+
+
+export const workspacesStore = new Store<Workspace[]>({
+    filename: 'workspaces',
+    default: []
+});
