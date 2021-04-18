@@ -1,7 +1,7 @@
 import { ipcMain } from "electron";
 import { v4 } from "uuid";
 import { idsTranslator } from "./main";
-import { windowsStore } from './stores';
+import { windowsStore, workspacesStore } from './stores';
 import timer from "./timer";
 
 interface ITimerProps {
@@ -43,6 +43,11 @@ export default {
             id: v4()
         } as Workspace;
 
+        workspacesStore.push(workspace);
+
         ev.returnValue = workspace;
+    },
+    'get-workspaces': (ev) => {
+        ev.returnValue = JSON.parse(JSON.stringify(workspacesStore));
     }
 } as Events;

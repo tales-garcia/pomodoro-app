@@ -7,7 +7,7 @@ import { Container, WorkspaceItem } from './styles';
 
 const Dashboard: React.FC = () => {
   const { red, text } = useTheme();
-  const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
+  const [workspaces, setWorkspaces] = useState<Workspace[]>(ipcRenderer.sendSync('get-workspaces'));
   const [selectedWorkspace, setSelectedWorkspace] = useState<Workspace | null>(null);
 
   const createWorkspace = useCallback(() => {
