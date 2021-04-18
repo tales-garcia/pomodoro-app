@@ -34,4 +34,4 @@ export default {
     close: () => {
         mainWindow?.close();
     }
-} as { [key: string]: (...args: any[]) => void }
+}

@@ -56,7 +56,7 @@ app.on('open-url', function (event, url) {
     });
     const [command, ...args] = url.replace('pomodoro://', '').split('/');
 
-    timer[command](args);
+    (timer as any)[command](args);
   });
 
 })
