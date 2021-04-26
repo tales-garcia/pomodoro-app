@@ -49,5 +49,10 @@ export default {
     },
     'get-workspaces': (ev) => {
         ev.returnValue = JSON.parse(JSON.stringify(workspacesStore));
+    },
+    'delete-workspace': (ev, id: string) => {
+        const workspaceIndex = workspacesStore.findIndex(workspace => workspace.id === id);
+        workspacesStore.splice(workspaceIndex, 1);
+        ev.returnValue = JSON.parse(JSON.stringify(workspacesStore));
     }
 } as Events;

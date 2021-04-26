@@ -36,7 +36,7 @@ const Dashboard: React.FC = () => {
           {workspaces.map((workspace) => (
             <WorkspaceItem onClick={() => setSelectedWorkspace(workspace)} isActive={Number((selectedWorkspace || { id: null }).id === workspace.id)}>
               Studies
-              <FiTrash2 size={16} color={red} />
+              <FiTrash2 size={16} color={red} onClick={() => setWorkspaces(ipcRenderer.sendSync('delete-workspace', workspace.id))}/>
             </WorkspaceItem>
           ))}
         </ul>
