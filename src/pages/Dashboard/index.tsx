@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { FiTrash2, FiEdit2, FiFolderPlus, FiSliders } from 'react-icons/fi';
 import { useTheme } from 'styled-components';
 import TimerItem from '../../components/TimerItem';
