@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FiTrash2, FiEdit2, FiFolderPlus, FiSliders } from 'react-icons/fi';
 import { useTheme } from 'styled-components';
 import TimerItem from '../../components/TimerItem';
@@ -47,16 +47,19 @@ const Dashboard: React.FC = () => {
         </footer>
       </aside>
       <main>
-        <h1>
-          Studies
-          <FiEdit2 size={28} color={text} />
-        </h1>
-        <ul>
-          <TimerItem name="React" time={900} />
-          <TimerItem name="Java" time={1200} />
-          <TimerItem name="C#" time={1200} />
-          <TimerItem name="Python" time={600} />
-        </ul>
+        {selectedWorkspace && (
+          <>
+            <h1>
+              {selectedWorkspace.name}
+              <FiEdit2 size={28} color={text} />
+            </h1>
+            <ul>
+              {selectedWorkspace.timers.map(timer => (
+                <TimerItem name={timer.name} time={timer.time} />
+              ))}
+            </ul>
+          </>
+        )}
       </main>
     </Container>
   );
