@@ -28,6 +28,25 @@ const Dashboard: React.FC = () => {
     }
   }, []);
 
+  const handleWorkspaceDelete = (id: string) => {
+    if (!selectedWorkspace || id !== selectedWorkspace.id) {
+      setWorkspaces(ipcRenderer.sendSync('delete-workspace', id));
+      return;
+    }
+
+    let selectedWorkspaceIndex = workspaces.findIndex((workspace) => workspace.id === selectedWorkspace.id);
+
+    if (workspaces[selectedWorkspaceIndex + 1]) selectedWorkspaceIndex++;
+    else if (workspaces[selectedWorkspaceIndex - 1]) selectedWorkspaceIndex--;
+    else {
+      setSelectedWorkspace(null);
+      setWorkspaces(ipcRenderer.sendSync('delete-workspace', id));
+      return;
+    }
+    setSelectedWorkspace(workspaces[selectedWorkspaceIndex]);
+    setWorkspaces(ipcRenderer.sendSync('delete-workspace', id));
+  }
+
   return (
     <Container>
       <aside>
@@ -36,7 +55,7 @@ const Dashboard: React.FC = () => {
           {workspaces.map((workspace) => (
             <WorkspaceItem onClick={() => setSelectedWorkspace(workspace)} isActive={Number((selectedWorkspace || { id: null }).id === workspace.id)}>
               Studies
-              <FiTrash2 size={16} color={red} onClick={() => setWorkspaces(ipcRenderer.sendSync('delete-workspace', workspace.id))}/>
+              <FiTrash2 size={16} color={red} onClick={() => handleWorkspaceDelete(workspace.id)}/>
             </WorkspaceItem>
           ))}
         </ul>
