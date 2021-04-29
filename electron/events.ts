@@ -38,8 +38,8 @@ export default {
     },
     'create-workspace': (ev, workspaceDto: WorkspaceDTO) => {
         const workspace = {
-            ...workspaceDto,
             timers: [],
+            ...workspaceDto,
             id: v4()
         } as Workspace;
 
