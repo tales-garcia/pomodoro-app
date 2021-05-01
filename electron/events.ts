@@ -54,5 +54,17 @@ export default {
         const workspaceIndex = workspacesStore.findIndex(workspace => workspace.id === id);
         workspacesStore.splice(workspaceIndex, 1);
         ev.returnValue = JSON.parse(JSON.stringify(workspacesStore));
+    },
+    'edit-workspace': (ev, id: string, data: Partial<WorkspaceDTO>) => {
+        const workspaceIndex = workspacesStore.findIndex(workspace => workspace.id === id);
+
+        const finalWorkspace = {
+            ...workspacesStore[workspaceIndex],
+            ...data
+        };
+
+        workspacesStore[workspaceIndex] = finalWorkspace;
+
+        ev.returnValue = JSON.parse(JSON.stringify(workspacesStore));
     }
 } as Events;
