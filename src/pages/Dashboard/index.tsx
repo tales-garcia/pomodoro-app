@@ -83,6 +83,16 @@ const Dashboard: React.FC = () => {
           </>
         )}
       </main>
+      <div>
+        <main>
+          <h2>New workspace</h2>
+          <input type="text" />
+          <div>
+            <button>Cancel</button>
+            <button>Confirm</button>
+          </div>
+        </main>
+      </div>
     </Container>
   );
 }
