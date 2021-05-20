@@ -3,7 +3,7 @@ import React, { useCallback, useState } from 'react';
 import { FiTrash2, FiEdit2, FiFolderPlus, FiSliders } from 'react-icons/fi';
 import { useTheme } from 'styled-components';
 import TimerItem from '../../components/TimerItem';
-import { Container, WorkspaceItem } from './styles';
+import { Container, Modal, Overlay, WorkspaceItem } from './styles';
 
 const Dashboard: React.FC = () => {
   const { red, text } = useTheme();
@@ -83,16 +83,16 @@ const Dashboard: React.FC = () => {
           </>
         )}
       </main>
-      <div>
-        <main>
+      <Overlay>
+        <Modal>
           <h2>New workspace</h2>
           <input type="text" />
           <div>
             <button>Cancel</button>
             <button>Confirm</button>
           </div>
-        </main>
-      </div>
+        </Modal>
+      </Overlay>
     </Container>
   );
 }

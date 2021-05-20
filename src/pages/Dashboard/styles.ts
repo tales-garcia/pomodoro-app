@@ -120,3 +120,7 @@ export const WorkspaceItem = styled.li<WorkspaceItemProps>`
         background: ${theme.blue};
     `}
 `;
+
+export const Overlay = styled.div``;
+
+export const Modal = styled.main``;
