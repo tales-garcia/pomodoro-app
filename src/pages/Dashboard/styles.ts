@@ -121,6 +121,13 @@ export const WorkspaceItem = styled.li<WorkspaceItemProps>`
     `}
 `;
 
-export const Overlay = styled.div``;
+export const Overlay = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+`;
 
 export const Modal = styled.main``;
