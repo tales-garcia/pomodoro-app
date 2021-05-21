@@ -86,7 +86,7 @@ const Dashboard: React.FC = () => {
       <Overlay>
         <Modal>
           <h2>New workspace</h2>
-          <input type="text" />
+          <input type="text" placeholder="Name" />
           <div>
             <button>Cancel</button>
             <button>Confirm</button>
