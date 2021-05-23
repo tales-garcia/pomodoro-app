@@ -47,6 +47,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "formik": "^2.2.8",
     "react": "^16.13.1",
     "react-circular-progressbar": "^2.0.3",
     "react-dom": "^16.13.1",
