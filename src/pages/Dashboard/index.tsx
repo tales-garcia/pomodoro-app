@@ -9,16 +9,12 @@ const Dashboard: React.FC = () => {
   const { red, text } = useTheme();
   const [workspaces, setWorkspaces] = useState<Workspace[]>(ipcRenderer.sendSync('get-workspaces'));
   const [selectedWorkspace, setSelectedWorkspace] = useState<Workspace | null>(null);
+  const [workspaceName, setWorkspaceName] = useState('');
 
   const createWorkspace = useCallback(() => {
     const workspace = {
-      name: 'Studies',
-      timers: [
-        {
-          name: 'React',
-          time: 600
-        }
-      ]
+      name: workspaceName,
+      timers: []
     }
 
     const generatedWorkspace = ipcRenderer.sendSync('create-workspace', workspace) as Workspace;
@@ -86,10 +82,10 @@ const Dashboard: React.FC = () => {
       <Overlay>
         <Modal>
           <h2>New workspace</h2>
-          <input type="text" placeholder="Name" />
+          <input value={workspaceName} onChange={ev => setWorkspaceName(ev.target.value)} type="text" placeholder="Name" />
           <div>
             <button>Cancel</button>
-            <button>Confirm</button>
+            <button onClick={createWorkspace}>Confirm</button>
           </div>
         </Modal>
       </Overlay>
