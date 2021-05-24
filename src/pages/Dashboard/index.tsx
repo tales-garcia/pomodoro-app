@@ -12,7 +12,7 @@ const Dashboard: React.FC = () => {
   const [workspaces, setWorkspaces] = useState<Workspace[]>(ipcRenderer.sendSync('get-workspaces'));
   const [selectedWorkspace, setSelectedWorkspace] = useState<Workspace | null>(null);
 
-  const createWorkspace = useCallback((name: string) => {
+  const createWorkspace = useCallback(({ name }) => {
     const workspace = {
       name: name,
       timers: []
@@ -84,7 +84,7 @@ const Dashboard: React.FC = () => {
         <Modal>
           <Formik
             initialValues={{ name: '' }}
-            onSubmit={({ name }) => createWorkspace(name)}
+            onSubmit={createWorkspace}
           >
             <Form>
               <h2>New workspace</h2>
