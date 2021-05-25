@@ -2,7 +2,6 @@ import React from 'react'
 import 'react-circular-progressbar/dist/styles.css';
 import { render } from 'react-dom'
 import { ThemeProvider } from 'styled-components'
-import Clock from './components/Clock'
 import Routes from './Routes';
 import { GlobalStyle } from './styles/GlobalStyle'
 
