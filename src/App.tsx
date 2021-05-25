@@ -2,6 +2,7 @@ import React from 'react'
 import 'react-circular-progressbar/dist/styles.css';
 import { render } from 'react-dom'
 import { ThemeProvider } from 'styled-components'
+import { ModalProvider } from './hooks/modal';
 import Routes from './Routes';
 import { GlobalStyle } from './styles/GlobalStyle'
 
@@ -23,7 +24,9 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Routes/>
+      <ModalProvider>
+        <Routes/>
+      </ModalProvider>
     </ThemeProvider>
   )
 }
