@@ -5,14 +5,18 @@ import { FiTrash2, FiEdit2, FiFolderPlus, FiSliders } from 'react-icons/fi';
 import { useTheme } from 'styled-components';
 import Input from '../../components/Input';
 import TimerItem from '../../components/TimerItem';
-import { Container, Modal, Overlay, WorkspaceItem } from './styles';
+import { useModal } from '../../hooks/modal';
+import { Container, WorkspaceItem } from './styles';
 
 const Dashboard: React.FC = () => {
   const { red, text } = useTheme();
   const [workspaces, setWorkspaces] = useState<Workspace[]>(ipcRenderer.sendSync('get-workspaces'));
   const [selectedWorkspace, setSelectedWorkspace] = useState<Workspace | null>(null);
+  const { setContent, show, hide } = useModal();
 
   const createWorkspace = useCallback(({ name }) => {
+    hide();
+
     const workspace = {
       name: name,
       timers: []
@@ -44,6 +48,28 @@ const Dashboard: React.FC = () => {
     setWorkspaces(ipcRenderer.sendSync('delete-workspace', id));
   }
 
+  const createWorkspaceModal = useCallback(() => {
+    setContent(
+      (
+        <Formik
+            initialValues={{ name: '' }}
+            onSubmit={createWorkspace}
+        >
+            <Form>
+              <h2>New workspace</h2>
+              <Input name="name" type="text" placeholder="Name" />
+              <div>
+                  <button type="button" onClick={hide}>Cancel</button>
+                  <button type="submit">Confirm</button>
+              </div>
+            </Form>
+        </Formik>
+      )
+    );
+
+    show();
+  }, []);
+
   return (
     <Container>
       <aside>
@@ -62,7 +88,7 @@ const Dashboard: React.FC = () => {
 
         <footer>
           <FiSliders size={20} color={text} />
-          <FiFolderPlus onClick={undefined} size={20} color={text} />
+          <FiFolderPlus onClick={createWorkspaceModal} size={20} color={text} />
         </footer>
       </aside>
       <main>
@@ -80,23 +106,6 @@ const Dashboard: React.FC = () => {
           </>
         )}
       </main>
-      <Overlay>
-        <Modal>
-          <Formik
-            initialValues={{ name: '' }}
-            onSubmit={createWorkspace}
-          >
-            <Form>
-              <h2>New workspace</h2>
-              <Input name="name" type="text" placeholder="Name" />
-              <div>
-                <button type="button">Cancel</button>
-                <button type="submit">Confirm</button>
-              </div>
-            </Form>
-          </Formik>
-        </Modal>
-      </Overlay>
     </Container>
   );
 }
