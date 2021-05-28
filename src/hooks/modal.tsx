@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import React, { createContext, ReactNode, useCallback, useContext, useState } from 'react';
 import Modal from '../components/Modal';
 
@@ -20,6 +21,8 @@ export const useModal = () => {
     return context;
 }
 
+const AnimatedModal = motion(Modal) as typeof motion.div;
+
 export const ModalProvider: React.FC = ({ children }) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [content, setContent] = useState<ReactNode>(false);
@@ -41,11 +44,18 @@ export const ModalProvider: React.FC = ({ children }) => {
                 show
             }}
         >
-            {isOpen && (
-                <Modal>
-                    {content}
-                </Modal>
-            )}
+            <AnimatePresence>
+                {isOpen && (
+                    <AnimatedModal
+                        initial={{ opacity: 0, scale: 1.3 }}
+                        transition={{ power: 0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 1.3 }}
+                    >
+                        {content}
+                    </AnimatedModal>
+                )}
+            </AnimatePresence>
             {children}
         </modalContext.Provider>
     )
