@@ -52,17 +52,17 @@ const Dashboard: React.FC = () => {
     setContent(
       (
         <Formik
-            initialValues={{ name: '' }}
-            onSubmit={createWorkspace}
+          initialValues={{ name: '' }}
+          onSubmit={createWorkspace}
         >
-            <Form>
-              <h2>New workspace</h2>
-              <Input name="name" type="text" placeholder="Name" />
-              <div>
-                  <button type="button" onClick={hide}>Cancel</button>
-                  <button type="submit">Confirm</button>
-              </div>
-            </Form>
+          <Form>
+            <h2>New workspace</h2>
+            <Input name="name" type="text" placeholder="Name" />
+            <div>
+              <button type="button" onClick={hide}>Cancel</button>
+              <button type="submit">Confirm</button>
+            </div>
+          </Form>
         </Formik>
       )
     );
