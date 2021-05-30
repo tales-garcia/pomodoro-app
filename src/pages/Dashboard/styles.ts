@@ -108,10 +108,6 @@ export const Container = styled.main`
             grid-auto-rows: 300px;
             grid-auto-columns: 250px;
             grid-template-columns: repeat(auto-fill, 250px);
-
-            > li {
-                
-            }
         }
     }
 `;
