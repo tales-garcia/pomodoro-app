@@ -1,7 +1,7 @@
 import { ipcRenderer } from 'electron';
 import { Form, Formik } from 'formik';
 import React, { useCallback, useState } from 'react';
-import { FiTrash2, FiEdit2, FiFolderPlus, FiSliders } from 'react-icons/fi';
+import { FiTrash2, FiPlus, FiFolderPlus, FiSliders } from 'react-icons/fi';
 import { useTheme } from 'styled-components';
 import Input from '../../components/Input';
 import TimerItem from '../../components/TimerItem';
@@ -96,7 +96,10 @@ const Dashboard: React.FC = () => {
           <>
             <h1>
               {selectedWorkspace.name}
-              <FiEdit2 size={28} color={text} />
+              <button>
+                <FiPlus size={20} color={text} />
+                New
+              </button>
             </h1>
             <ul>
               {selectedWorkspace.timers.map(timer => (

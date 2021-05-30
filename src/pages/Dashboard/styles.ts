@@ -84,10 +84,21 @@ export const Container = styled.main`
             margin-top: 54px;
         }
 
-        > h1 > svg {
+        > h1 > button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: ${({ theme }) => theme.darkBlue};
+            border: 1px solid ${({ theme }) => theme.red};
+            border-radius: 8px;
+            padding: 12px 18px;
             cursor: pointer;
-            :hover {
-                opacity: 0.8;
+
+            color: ${({ theme }) => theme.text};
+            font: 400 1rem Montserrat, sans-serif;
+
+            svg {
+                margin-right: 6px;
             }
         }
 
