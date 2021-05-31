@@ -70,6 +70,29 @@ const Dashboard: React.FC = () => {
     show();
   }, []);
 
+  const createNewTimerModal = useCallback(() => {
+    setContent(
+      (
+        <Formik
+          initialValues={{ title: '', time: '' }}
+          onSubmit={console.log}
+        >
+          <Form>
+            <h2>New timer</h2>
+            <Input name="title" type="text" placeholder="Name" />
+            <Input name="time" type="text" placeholder="Time" />
+            <div>
+              <button type="button" onClick={hide}>Cancel</button>
+              <button type="submit">Confirm</button>
+            </div>
+          </Form>
+        </Formik>
+      )
+    );
+
+    show();
+  }, []);
+
   return (
     <Container>
       <aside>
