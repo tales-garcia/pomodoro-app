@@ -30,7 +30,7 @@ export default {
             ipcMain.emit('initial-windows-created');
         }
     },
-    'create-timer': (_, { time, title }: ITimerProps) => {
+    'create-timer-window': (_, { time, title }: ITimerProps) => {
         timer.create({
             time,
             title

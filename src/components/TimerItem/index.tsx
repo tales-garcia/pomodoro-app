@@ -20,7 +20,7 @@ const TimerItem: React.FC<TimerItemProps> = ({ name, time }) => {
     const splittedSeconds = useMemo(() => String(seconds).padStart(2, '0'), [seconds]);
 
     const openTimer = useCallback(() => {
-        ipcRenderer.send('create-timer', {
+        ipcRenderer.send('create-timer-window', {
             time,
             title: name
         });
