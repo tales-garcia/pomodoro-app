@@ -13,3 +13,7 @@ interface Workspace {
 interface WorkspaceDTO {
     name: string;
 }
+
+interface ITimerDTO extends Omit<Timer, "id"> {
+    workspaceId: string;
+}
