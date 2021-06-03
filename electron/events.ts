@@ -36,6 +36,20 @@ export default {
             title
         });
     },
+    'create-timer': (_, { time, name, workspaceId }: ITimerDTO) => {
+        const workspaceIndex = workspacesStore.findIndex(workspace => workspace.id === workspaceId);
+
+        const timers = [
+            ...workspacesStore[workspaceIndex].timers,
+            {
+                time,
+                name,
+                id: v4()
+            }
+        ]
+
+        workspacesStore[workspaceIndex].timers = timers;
+    },
     'create-workspace': (ev, workspaceDto: WorkspaceDTO) => {
         const workspace = {
             timers: [],
