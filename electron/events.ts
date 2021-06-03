@@ -6,7 +6,7 @@ import timer from "./timer";
 
 interface ITimerProps {
     time: number;
-    title?: string;
+    name?: string;
 }
 
 type Events = {
@@ -22,7 +22,7 @@ export default {
         ev.returnValue = {
             storedTime: window?.time,
             storedMaxTime: window?.maxTime,
-            title: window?.title
+            name: window?.name
         }
 
         getTimeCalledTimes++;
@@ -30,10 +30,10 @@ export default {
             ipcMain.emit('initial-windows-created');
         }
     },
-    'create-timer-window': (_, { time, title }: ITimerProps) => {
+    'create-timer-window': (_, { time, name }: ITimerProps) => {
         timer.create({
             time,
-            title
+            name
         });
     },
     'create-timer': (_, { time, name, workspaceId }: ITimerDTO) => {

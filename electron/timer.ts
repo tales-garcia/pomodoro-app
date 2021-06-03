@@ -4,15 +4,15 @@ import windows from "./windows";
 
 interface ITimerProps {
     time: number;
-    title?: string;
+    name?: string;
 }
 
 export default {
-    create: ({ time, title }: ITimerProps) => {
+    create: ({ time, name }: ITimerProps) => {
         ipcMain.prependOnceListener('get-timer-props', (ev) => {
             ev.returnValue = {
                 storedTime: time,
-                title,
+                name,
                 storedMaxTime: time
             };
         });

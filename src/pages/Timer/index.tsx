@@ -4,13 +4,13 @@ import Clock from '../../components/Clock';
 import { Title } from './styles';
 
 const {
-        storedTime, storedMaxTime, title
+        storedTime, storedMaxTime, name
     } = ipcRenderer.sendSync('get-timer-props', remote.getCurrentWindow().id);
 
 const Timer: React.FC = () => {
     return (
         <>
-            <Title>{title}</Title>
+            <Title>{name}</Title>
             <Clock maxTime={storedMaxTime} time={storedTime} />
         </>
     );

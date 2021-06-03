@@ -74,12 +74,12 @@ const Dashboard: React.FC = () => {
     setContent(
       (
         <Formik
-          initialValues={{ title: '', time: '' }}
+          initialValues={{ name: '', time: '' }}
           onSubmit={console.log}
         >
           <Form>
             <h2>New timer</h2>
-            <Input name="title" type="text" placeholder="Name" />
+            <Input name="name" type="text" placeholder="Name" />
             <Input name="time" type="text" placeholder="Time" />
             <div>
               <button type="button" onClick={hide}>Cancel</button>

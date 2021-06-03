@@ -12,7 +12,7 @@ interface Window {
     type: 'timer' | 'dashboard';
     time?: number;
     maxTime?: number;
-    title?: string;
+    name?: string;
 }
 
 

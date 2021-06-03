@@ -22,7 +22,7 @@ const TimerItem: React.FC<TimerItemProps> = ({ name, time }) => {
     const openTimer = useCallback(() => {
         ipcRenderer.send('create-timer-window', {
             time,
-            title: name
+            name
         });
     }, [time, name]);
 
