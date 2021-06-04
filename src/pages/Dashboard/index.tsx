@@ -119,7 +119,7 @@ const Dashboard: React.FC = () => {
           <>
             <h1>
               {selectedWorkspace.name}
-              <button>
+              <button onClick={createNewTimerModal}>
                 <FiPlus size={20} color={text} />
                 New
               </button>
