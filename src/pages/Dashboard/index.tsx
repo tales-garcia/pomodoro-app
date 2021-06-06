@@ -7,6 +7,11 @@ import Input from '../../components/Input';
 import TimerItem from '../../components/TimerItem';
 import { useModal } from '../../hooks/modal';
 import { Container, WorkspaceItem } from './styles';
+import * as yup from 'yup';
+
+const workspaceValidation = yup.object().shape({
+  name: yup.string().required('Nome obrigatório')
+});
 
 const Dashboard: React.FC = () => {
   const { red, text } = useTheme();
@@ -53,6 +58,9 @@ const Dashboard: React.FC = () => {
       (
         <Formik
           initialValues={{ name: '' }}
+          validationSchema={workspaceValidation}
+          validateOnBlur={false}
+          validateOnChange={false}
           onSubmit={createWorkspace}
         >
           <Form>
