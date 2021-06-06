@@ -55,7 +55,8 @@
     "react-icons": "^4.2.0",
     "react-router-dom": "^5.2.0",
     "styled-components": "^5.1.1",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "yup": "^0.32.9"
   },
   "build": {
     "appId": "br.com.tales-garcia.pomodoro",
