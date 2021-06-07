@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from './styles';
+import { Container, Error } from './styles';
 import { useField } from 'formik';
 
 interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -11,7 +11,10 @@ const Input: React.FC<IInputProps> = React.memo(({ name, placeholder, ...rest })
     const [, { error }] = useField(name);
 
     return (
-        <Container placeholder={placeholder} name={name} {...rest} />
+        <>
+            <Container hasError={Number(!!error)} placeholder={placeholder} name={name} {...rest} />
+            {error && <Error>{error}</Error>}
+        </>
     );
 });
 
