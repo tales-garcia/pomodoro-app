@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container } from './styles';
-import { IconBaseProps } from 'react-icons';
 import { useField } from 'formik';
 
 interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
