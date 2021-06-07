@@ -10,7 +10,7 @@ import { Container, WorkspaceItem } from './styles';
 import * as yup from 'yup';
 
 const workspaceValidation = yup.object().shape({
-  name: yup.string().required('Nome obrigatório')
+  name: yup.string().required('Name is required')
 });
 
 const Dashboard: React.FC = () => {
