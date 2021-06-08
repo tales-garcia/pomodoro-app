@@ -13,6 +13,11 @@ const workspaceValidation = yup.object().shape({
   name: yup.string().required('Name is required')
 });
 
+const timerValidation = yup.object().shape({
+  name: yup.string().required('Name is required'),
+  time: yup.number().required('Time is required')
+});
+
 const Dashboard: React.FC = () => {
   const { red, text } = useTheme();
   const [workspaces, setWorkspaces] = useState<Workspace[]>(ipcRenderer.sendSync('get-workspaces'));
@@ -84,6 +89,9 @@ const Dashboard: React.FC = () => {
         <Formik
           initialValues={{ name: '', time: '' }}
           onSubmit={console.log}
+          validateOnBlur={false}
+          validateOnChange={false}
+          validationSchema={timerValidation}
         >
           <Form>
             <h2>New timer</h2>
