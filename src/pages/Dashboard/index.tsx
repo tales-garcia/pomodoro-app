@@ -148,7 +148,7 @@ const Dashboard: React.FC = () => {
             </h1>
             <ul>
               {selectedWorkspace.timers.map(timer => (
-                <TimerItem name={timer.name} time={timer.time} />
+                <TimerItem name={timer.name} key={timer.id} time={timer.time} />
               ))}
             </ul>
           </>
