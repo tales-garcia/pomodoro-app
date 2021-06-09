@@ -38,7 +38,7 @@ export const Container = styled.main`
             font: 600 1.4rem Montserrat, sans-serif;
         }
 
-        > div {
+        > div:last-child {
             min-width: 50%;
             display: grid;
             gap: 8px;
