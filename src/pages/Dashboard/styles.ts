@@ -127,3 +127,11 @@ export const WorkspaceItem = styled.li<WorkspaceItemProps>`
         background: ${theme.blue};
     `}
 `;
+
+export const TimeInput = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 1.6rem;
+`;
