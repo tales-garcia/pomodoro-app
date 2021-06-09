@@ -37,40 +37,5 @@ export const Container = styled.main`
         > h2 {
             font: 600 1.4rem Montserrat, sans-serif;
         }
-
-        > div:last-child {
-            min-width: 50%;
-            display: grid;
-            gap: 8px;
-            grid-template-columns: 1fr 1fr;
-
-            > button {
-                padding: 12px 16px;
-                border-radius: 4px;
-                border: 0;
-                font: 500 0.8rem Montserrat, sans-serif;
-                color: ${({ theme }) => theme.text};
-                cursor: pointer;
-                transition: filter .2s;
-
-                :hover {
-                    filter: brightness(0.85);
-                }
-
-                :active {
-                    filter: brightness(0.75);
-                }
-            }
-
-            > button:first-child {
-                background: ${({ theme }) => theme.blue};
-            }
-
-            > button:last-child {
-                background: ${({ theme }) => theme.red};
-                font-weight: 600;
-            }
-
-        }
     }
 `;
