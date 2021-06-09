@@ -121,7 +121,7 @@ const Dashboard: React.FC = () => {
         <h1>Workspaces</h1>
         <ul>
           {workspaces.map((workspace) => (
-            <WorkspaceItem onClick={() => setSelectedWorkspace(workspace)} isActive={Number((selectedWorkspace || { id: null }).id === workspace.id)}>
+            <WorkspaceItem key={workspace.id} onClick={() => setSelectedWorkspace(workspace)} isActive={Number((selectedWorkspace || { id: null }).id === workspace.id)}>
               {workspace.name}
               <FiTrash2 size={16} color={red} onClick={e => {
                 e.stopPropagation();
