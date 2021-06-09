@@ -15,7 +15,9 @@ const workspaceValidation = yup.object().shape({
 
 const timerValidation = yup.object().shape({
   name: yup.string().required('Name is required'),
-  time: yup.number().required('Time is required')
+  hours: yup.number(),
+  minutes: yup.number(),
+  seconds: yup.number().required('Seconds are required')
 });
 
 const Dashboard: React.FC = () => {
