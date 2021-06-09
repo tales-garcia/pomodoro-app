@@ -6,7 +6,7 @@ import { useTheme } from 'styled-components';
 import Input from '../../components/Input';
 import TimerItem from '../../components/TimerItem';
 import { useModal } from '../../hooks/modal';
-import { Container, WorkspaceItem } from './styles';
+import { Container, WorkspaceItem, TimeInput } from './styles';
 import * as yup from 'yup';
 
 const workspaceValidation = yup.object().shape({
@@ -87,7 +87,7 @@ const Dashboard: React.FC = () => {
     setContent(
       (
         <Formik
-          initialValues={{ name: '', time: '' }}
+          initialValues={{ name: '', hours: '', minutes: '', seconds: '' }}
           onSubmit={console.log}
           validateOnBlur={false}
           validateOnChange={false}
@@ -96,7 +96,11 @@ const Dashboard: React.FC = () => {
           <Form>
             <h2>New timer</h2>
             <Input name="name" type="text" placeholder="Name" />
-            <Input name="time" type="text" placeholder="Time" />
+            <TimeInput>
+              <Input name="hours" type="number" placeholder="Hours" />:
+              <Input name="minutes" type="number" placeholder="Minutes" />:
+              <Input name="seconds" type="number" placeholder="Seconds" />
+            </TimeInput>
             <div>
               <button type="button" onClick={hide}>Cancel</button>
               <button type="submit">Confirm</button>
