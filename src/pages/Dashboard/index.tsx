@@ -6,7 +6,7 @@ import { useTheme } from 'styled-components';
 import Input from '../../components/Input';
 import TimerItem from '../../components/TimerItem';
 import { useModal } from '../../hooks/modal';
-import { Container, WorkspaceItem, TimeInput } from './styles';
+import { Container, WorkspaceItem, TimeInput, ButtonsContainer } from './styles';
 import * as yup from 'yup';
 
 const workspaceValidation = yup.object().shape({
@@ -73,10 +73,10 @@ const Dashboard: React.FC = () => {
           <Form>
             <h2>New workspace</h2>
             <Input name="name" type="text" placeholder="Name" />
-            <div>
+            <ButtonsContainer>
               <button type="button" onClick={hide}>Cancel</button>
               <button type="submit">Confirm</button>
-            </div>
+            </ButtonsContainer>
           </Form>
         </Formik>
       )
@@ -103,10 +103,10 @@ const Dashboard: React.FC = () => {
               <Input name="minutes" type="number" placeholder="Minutes" />:
               <Input name="seconds" type="number" placeholder="Seconds" />
             </TimeInput>
-            <div>
+            <ButtonsContainer>
               <button type="button" onClick={hide}>Cancel</button>
               <button type="submit">Confirm</button>
-            </div>
+            </ButtonsContainer>
           </Form>
         </Formik>
       )
