@@ -85,12 +85,29 @@ const Dashboard: React.FC = () => {
     show();
   }, []);
 
+  const createTimer = useCallback(({ name, hours, minutes, seconds, workspaceId }) => {
+    hide();
+
+    const finalTimer: ITimerDTO = {
+      name,
+      time: (hours * 60 * 60) + (minutes * 60) + seconds,
+      workspaceId
+    }
+    
+    ipcRenderer.sendSync('create-timer', finalTimer);
+
+    setSelectedWorkspace((ipcRenderer.sendSync('get-workspaces') as Workspace[]).find(workspace => workspace.id === workspaceId) || null);
+    setWorkspaces(ipcRenderer.sendSync('get-workspaces'));
+  }, []);
+
   const createNewTimerModal = useCallback(() => {
+    if (!selectedWorkspace) return;
+
     setContent(
       (
         <Formik
-          initialValues={{ name: '', hours: '', minutes: '', seconds: '' }}
-          onSubmit={console.log}
+          initialValues={{ name: '', hours: '', minutes: '', seconds: '', workspaceId: selectedWorkspace.id }}
+          onSubmit={createTimer}
           validateOnBlur={false}
           validateOnChange={false}
           validationSchema={timerValidation}
@@ -113,7 +130,7 @@ const Dashboard: React.FC = () => {
     );
 
     show();
-  }, []);
+  }, [selectedWorkspace]);
 
   return (
     <Container>
