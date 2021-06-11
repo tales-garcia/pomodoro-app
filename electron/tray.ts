@@ -28,19 +28,19 @@ export default {
                         label: 'Presets',
                         submenu: [
                             {
-                                label: '25min', click: () => timer.create(25 * 60)
+                                label: '25min', click: () => timer.create({ time: 25 * 60 })
                             },
                             {
-                                label: '15min', click: () => timer.create(15 * 60)
+                                label: '15min', click: () => timer.create({ time: 15 * 60 })
                             },
                             {
-                                label: '10min', click: () => timer.create(10 * 60)
+                                label: '10min', click: () => timer.create({ time: 10 * 60 })
                             },
                             {
-                                label: '5min', click: () => timer.create(5 * 60)
+                                label: '5min', click: () => timer.create({ time: 5 * 60 })
                             },
                             {
-                                label: '1min', click: () => timer.create(60)
+                                label: '1min', click: () => timer.create({ time: 60 })
                             }
                         ]
                     }
