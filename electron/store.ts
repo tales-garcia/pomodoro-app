@@ -18,7 +18,7 @@ class Store<T = any> {
                     target[key] = value;
 
                     fs.writeFileSync(filepath, JSON.stringify(target));
-                    return true;
+                    return Reflect.set(target, key, value);
                 } catch (e) {
                     return false;
                 }
