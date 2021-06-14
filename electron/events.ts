@@ -45,8 +45,10 @@ export default {
             id: v4()
         }
 
+        const originalTimers = workspacesStore[workspaceIndex].timers;
+
         const timers = [
-            ...workspacesStore[workspaceIndex].timers,
+            ...originalTimers,
             generatedTimer
         ]
 
