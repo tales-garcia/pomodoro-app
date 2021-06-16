@@ -47,12 +47,12 @@ export default {
 
         const originalTimers = workspacesStore[workspaceIndex].timers;
 
-        const timers = [
-            ...originalTimers,
-            generatedTimer
-        ]
+        const updatedWorkspace: Workspace = {
+            ...workspacesStore[workspaceIndex],
+            timers: [...originalTimers, generatedTimer]
+        }
 
-        workspacesStore[workspaceIndex].timers = timers;
+        workspacesStore[workspaceIndex] = updatedWorkspace;
 
         ev.returnValue = generatedTimer;
     },
