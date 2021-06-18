@@ -15,8 +15,6 @@ class Store<T = any> {
         return new Proxy<Store<T>>(parseDataFile(filepath, opts.default), {
             set(target: any, key, value) {
                 try {
-                    target[key] = value;
-
                     fs.writeFileSync(filepath, JSON.stringify(target));
                     return Reflect.set(target, key, value);
                 } catch (e) {
