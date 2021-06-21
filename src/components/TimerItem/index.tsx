@@ -6,11 +6,10 @@ import { useTheme } from 'styled-components';
 import { Container } from './styles';
 
 interface TimerItemProps {
-    name: string;
-    time: number;
+    data: Timer;
 }
 
-const TimerItem: React.FC<TimerItemProps> = ({ name, time }) => {
+const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id } }) => {
     const { red, text } = useTheme();
 
     const minutes = useMemo(() => time ? Math.floor(time / 60) : null, [time]);
