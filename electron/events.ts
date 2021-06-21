@@ -40,7 +40,7 @@ export default {
         const workspaceIndex = workspacesStore.findIndex(workspace => !!workspace.timers.find(timer => timer.id === id));
         const timers = workspacesStore[workspaceIndex].timers;
 
-        timers.splice(timers.findIndex(timer => timer.id === id));
+        timers.splice(timers.findIndex(timer => timer.id === id), 1);
 
         const updatedWorkspace = {
             ...workspacesStore[workspaceIndex],
