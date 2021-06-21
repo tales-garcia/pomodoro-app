@@ -41,6 +41,10 @@ const Dashboard: React.FC = () => {
     }
   }, []);
 
+  const deleteTimer = useCallback((id: string) => {
+    setWorkspaces(ipcRenderer.sendSync('delete-timer', id))
+  }, []);
+
   const handleWorkspaceDelete = (id: string) => {
     if (!selectedWorkspace || id !== selectedWorkspace.id) {
       setWorkspaces(ipcRenderer.sendSync('delete-workspace', id));
