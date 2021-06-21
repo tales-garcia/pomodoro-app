@@ -36,6 +36,21 @@ export default {
             name
         });
     },
+    'delete-timer': (ev, id: string) => {
+        const workspaceIndex = workspacesStore.findIndex(workspace => !!workspace.timers.find(timer => timer.id === id));
+        const timers = workspacesStore[workspaceIndex].timers;
+
+        timers.splice(timers.findIndex(timer => timer.id === id));
+
+        const updatedWorkspace = {
+            ...workspacesStore[workspaceIndex],
+            timers
+        }
+
+        workspacesStore[workspaceIndex] = updatedWorkspace;
+
+        ev.returnValue = JSON.parse(JSON.stringify(workspacesStore));
+    },
     'create-timer': (ev, { time, name, workspaceId }: ITimerDTO) => {
         const workspaceIndex = workspacesStore.findIndex(workspace => workspace.id === workspaceId);
 
