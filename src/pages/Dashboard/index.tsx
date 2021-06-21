@@ -97,7 +97,7 @@ const Dashboard: React.FC = () => {
       time: (hours * 60 * 60) + (minutes * 60) + seconds,
       workspaceId
     }
-    
+
     ipcRenderer.sendSync('create-timer', finalTimer);
 
     setSelectedWorkspace((ipcRenderer.sendSync('get-workspaces') as Workspace[]).find(workspace => workspace.id === workspaceId) || null);
