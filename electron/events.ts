@@ -49,7 +49,7 @@ export default {
 
         workspacesStore[workspaceIndex] = updatedWorkspace;
 
-        ev.returnValue = JSON.parse(JSON.stringify(workspacesStore));
+        ev.returnValue = updatedWorkspace;
     },
     'create-timer': (ev, { time, name, workspaceId }: ITimerDTO) => {
         const workspaceIndex = workspacesStore.findIndex(workspace => workspace.id === workspaceId);

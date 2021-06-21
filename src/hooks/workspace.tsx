@@ -105,7 +105,8 @@ export const WorkspaceProvider: React.FC = ({ children }) => {
   }, []);
 
   const deleteTimer = useCallback((id: string) => {
-    setWorkspaces(ipcRenderer.sendSync('delete-timer', id))
+    setWorkspaces(ipcRenderer.sendSync('get-workspaces'));
+    setSelectedWorkspace(ipcRenderer.sendSync('delete-timer', id));
   }, []);
 
   const deleteWorkspace = (id: string) => {
