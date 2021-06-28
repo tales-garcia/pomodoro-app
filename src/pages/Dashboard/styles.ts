@@ -84,21 +84,37 @@ export const Container = styled.main`
             margin-top: 54px;
         }
 
-        > h1 > button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: ${({ theme }) => theme.darkBlue};
-            border: 1px solid ${({ theme }) => theme.red};
-            border-radius: 8px;
-            padding: 12px 18px;
-            cursor: pointer;
+        > h1 {
+            > span {
+                padding: 2px 6px;
+                border-radius: 8px;
+                border: 4px solid transparent;
+                outline: 0;
 
-            color: ${({ theme }) => theme.text};
-            font: 400 1rem Montserrat, sans-serif;
+                :hover {
+                    border: 4px solid ${({ theme }) => theme.blue};
+                }
+                :focus {
+                    border: 4px solid ${({ theme }) => theme.blue};
+                }
+            }
 
-            svg {
-                margin-right: 6px;
+            > button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: ${({ theme }) => theme.darkBlue};
+                border: 1px solid ${({ theme }) => theme.red};
+                border-radius: 8px;
+                padding: 12px 18px;
+                cursor: pointer;
+
+                color: ${({ theme }) => theme.text};
+                font: 400 1rem Montserrat, sans-serif;
+
+                svg {
+                    margin-right: 6px;
+                }
             }
         }
 
