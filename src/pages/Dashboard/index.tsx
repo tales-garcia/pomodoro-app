@@ -7,7 +7,7 @@ import { useWorkspace } from '../../hooks/workspace';
 
 const Dashboard: React.FC = () => {
   const { red, text } = useTheme();
-  const { createNewTimerModal, workspaces, selectedWorkspace, createWorkspaceModal, setSelectedWorkspace, deleteWorkspace } = useWorkspace();
+  const { editWorkspace, createNewTimerModal, workspaces, selectedWorkspace, createWorkspaceModal, setSelectedWorkspace, deleteWorkspace } = useWorkspace();
 
   return (
     <Container>
@@ -34,7 +34,31 @@ const Dashboard: React.FC = () => {
         {selectedWorkspace && (
           <>
             <h1>
-              {selectedWorkspace.name}
+              <span
+                suppressContentEditableWarning
+                contentEditable
+                onKeyDown={ev => {
+                  switch(ev.key) {
+                    case 'Enter': {
+                      ev.preventDefault();
+
+                      if (!ev.currentTarget.innerText) return;
+
+                      ev.currentTarget.blur();
+                      editWorkspace(selectedWorkspace.id, { ...selectedWorkspace, name: ev.currentTarget.innerText })
+                      break;
+                    }
+                    case 'Escape': {
+                      ev.preventDefault();
+                      ev.currentTarget.blur();
+                      ev.currentTarget.innerText = selectedWorkspace.name;
+                      break;
+                    }
+                  }
+                }}
+              >
+                {selectedWorkspace.name}
+              </span>
               <button onClick={createNewTimerModal}>
                 <FiPlus size={20} color={text} />
                 New
