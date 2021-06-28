@@ -57,7 +57,8 @@ interface WorkspaceContextContent {
   createWorkspaceModal(): void,
   createTimer(props: { name: string, hours: number, minutes: number, seconds: number, workspaceId: string }): void,
   createNewTimerModal(): void,
-  setSelectedWorkspace: React.Dispatch<React.SetStateAction<Workspace | null>>
+  setSelectedWorkspace: React.Dispatch<React.SetStateAction<Workspace | null>>,
+  editWorkspace(id: string, data: Partial<Workspace>): void
 }
 
 const WorkspaceContext = createContext<WorkspaceContextContent>({} as WorkspaceContextContent);
@@ -168,6 +169,11 @@ export const WorkspaceProvider: React.FC = ({ children }) => {
     setWorkspaces(ipcRenderer.sendSync('get-workspaces'));
   }, []);
 
+  const editWorkspace = useCallback((id, data) => {
+    setSelectedWorkspace((ipcRenderer.sendSync('edit-workspace', id, data) as Workspace[]).find(workspace => workspace.id === id) || null);
+    setWorkspaces(ipcRenderer.sendSync('get-workspaces'));
+  }, []);
+
   const createNewTimerModal = useCallback(() => {
     if (!selectedWorkspace) return;
 
@@ -204,6 +210,7 @@ export const WorkspaceProvider: React.FC = ({ children }) => {
     <WorkspaceContext.Provider
       value={{
         workspaces,
+        editWorkspace,
         selectedWorkspace,
         createWorkspace,
         deleteTimer,
