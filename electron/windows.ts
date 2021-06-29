@@ -61,12 +61,11 @@ export default {
             minimizable: true,
             fullscreen: windowProps?.fullscreen || true,
             fullscreenable: true,
-            title: 'Dashboard',
             ...windowProps
         })
 
         if (process.env.NODE_ENV === 'development') {
-            dashboardWindow.loadURL('http://localhost:4000/#/dashboard')
+            dashboardWindow.loadURL('http://localhost:4000/#/dashboard').then(() => dashboardWindow?.setTitle('Dashboard'));
         } else {
             dashboardWindow.loadURL(
                 url.format({
@@ -75,7 +74,7 @@ export default {
                     hash: '/dashboard',
                     slashes: true
                 })
-            )
+            ).then(() => dashboardWindow?.setTitle('Dashboard'))
         }
 
         return dashboardWindow;
