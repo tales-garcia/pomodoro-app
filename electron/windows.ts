@@ -61,6 +61,7 @@ export default {
             minimizable: true,
             fullscreen: windowProps?.fullscreen || true,
             fullscreenable: true,
+            titleBarStyle: 'hiddenInset',
             ...windowProps
         })
 
