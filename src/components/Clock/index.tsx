@@ -101,7 +101,7 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
                         suppressContentEditableWarning
                         contentEditable={!isActive}
                         onInput={(e) => {
-                            if (!(/(0|1|2|3|4|5|6|7|8|9)/.test(e.currentTarget.textContent!)) && e.currentTarget.textContent) {
+                            if (!(/(0|1|2|3|4|5|6|7|8|9|-)/.test(e.currentTarget.textContent!)) && e.currentTarget.textContent) {
                                 e.currentTarget.textContent = inputTime[0];
                             }
                         }}
@@ -116,7 +116,7 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
                         suppressContentEditableWarning
                         contentEditable={!isActive}
                         onInput={(e) => {
-                            if (!(/(0|1|2|3|4|5|6|7|8|9)/.test(e.currentTarget.textContent!)) && e.currentTarget.textContent) {
+                            if (!(/(0|1|2|3|4|5|6|7|8|9|-)/.test(e.currentTarget.textContent!)) && e.currentTarget.textContent) {
                                 e.currentTarget.textContent = inputTime[1];
                             }
                         }}
