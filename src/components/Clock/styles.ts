@@ -18,6 +18,8 @@ export const Container = styled.div`
     background: ${({ theme }) => theme.darkBlue};
     border-radius: 50%;
 
+    span { outline: 0; }
+
     p {
       margin-top: 2rem;
       font: 700 1.5rem 'Montserrat', sans-serif;
