@@ -105,6 +105,9 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
                                 e.currentTarget.textContent = inputTime[0];
                             }
                         }}
+                        onKeyPress={e => {
+                            if (isNaN(Number(e.key)) || e.key === ' ') e.preventDefault();
+                        }}
                         onBlur={e => {
                             if (!e.currentTarget.textContent?.match(/(0|1|2|3|4|5|6|7|8|9)/)) {
                                 e.currentTarget.textContent = '--';
@@ -123,6 +126,9 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
                             if (!(/(0|1|2|3|4|5|6|7|8|9|-)/.test(e.currentTarget.textContent!)) && e.currentTarget.textContent) {
                                 e.currentTarget.textContent = inputTime[1];
                             }
+                        }}
+                        onKeyPress={e => {
+                            if (isNaN(Number(e.key)) || e.key === ' ') e.preventDefault();
                         }}
                         onBlur={e => {
                             if (!e.currentTarget.textContent?.match(/(0|1|2|3|4|5|6|7|8|9)/)) {
