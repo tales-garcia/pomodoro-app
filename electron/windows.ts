@@ -21,7 +21,7 @@ export default {
             maximizable: false,
             minimizable: false,
             titleBarStyle: 'hiddenInset',
-            alwaysOnTop: true,
+            alwaysOnTop: false,
             fullscreenable: false,
             frame: process.platform === 'darwin',
             transparent: process.platform === 'darwin',
