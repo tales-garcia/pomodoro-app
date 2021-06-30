@@ -79,9 +79,24 @@ const workspaceValidation = yup.object().shape({
 
 const timerValidation = yup.object().shape({
   name: yup.string().required('Name is required'),
-  hours: yup.number(),
-  minutes: yup.number(),
-  seconds: yup.number().required('Seconds are required')
+  hours: yup.number().test({
+    message: 'Please add a value to a field.',
+    test: function () {
+      return !((!this.parent.seconds && !this.parent.minutes) && !this.parent[this.path]);
+    }
+  }),
+  minutes: yup.number().test({
+    message: 'Please add a value to a field.',
+    test: function () {
+      return !((!this.parent.hours && !this.parent.seconds) && !this.parent[this.path]);
+    }
+  }),
+  seconds: yup.number().test({
+    message: 'Please add a value to a field.',
+    test: function () {
+      return !((!this.parent.hours && !this.parent.minutes) && !this.parent[this.path]);
+    }
+  })
 });
 
 
