@@ -114,7 +114,7 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
                                 e.currentTarget.textContent = '--';
                                 return;
                             }
-                            setInputTime([e.currentTarget.textContent!.replace(/[^0-9]/g, ''), inputTime[1]]);
+                            setInputTime([e.currentTarget.textContent!.replace(/[^0-9]/g, '').padStart(2, '0'), inputTime[1]]);
                         }}
                     >
                         {!!time ? splittedMinutes : inputTime[0]}
@@ -136,7 +136,7 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
                                 e.currentTarget.textContent = '--';
                                 return;
                             }
-                            setInputTime([inputTime[0], e.currentTarget.textContent!.replace(/[^0-9]/g, '')]);
+                            setInputTime([inputTime[0], e.currentTarget.textContent!.replace(/[^0-9]/g, '').padStart(2, '0')]);
                         }}
                     >
                         {!!time ? splittedSeconds : inputTime[1]}
