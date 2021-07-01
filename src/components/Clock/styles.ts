@@ -10,7 +10,7 @@ export const Container = styled.div`
   background: linear-gradient(132.99deg, #151423 18.31%, #31314E 84.07%);
   box-shadow: 31px 31px 54px 11px #151424, -31px -31px 54px 11px #31314E;
 
-  font: 700 6rem 'Open Sans', sans-serif;
+  font: 700 clamp(0, calc((15vh + 15vw) / 2), 6rem) 'Open Sans', sans-serif;
 
 
   > div {
