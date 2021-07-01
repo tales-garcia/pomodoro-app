@@ -14,7 +14,7 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
     const [time, setTime] = useState<number | null>(propsTime || null);
     const [isActive, setIsActive] = useState(false);
     const [inputTime, setInputTime] = useState(['--', '--']);
-    const [maxTime, setMaxTime] = useState<number | null>(propsMaxTime || time || null);
+    const [maxTime, setMaxTime] = useState<number | null>(propsMaxTime || propsTime || null);
 
     const minutes = useMemo(() => time ? Math.floor(time / 60) : null, [time]);
     const seconds = useMemo(() => time ? time % 60 : null, [time]);
@@ -24,9 +24,10 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
 
     useEffect(() => {
         ipcRenderer.on('set-time', (_, time) => {
-            setInputTime([String(Math.floor(time / 60)), String(time % 60)])
             if (!time) {
                 setInputTime(['--', '--']);
+            } else {
+                setInputTime([String(Math.floor(time / 60)), String(time % 60)])
             }
             setMaxTime(time || null);
             setTime(time || null);
