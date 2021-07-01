@@ -49,7 +49,10 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
         }
 
         if (isActive && time && time > 0) {
-            const timeout = setTimeout(() => setTime(time - 1), 1000);
+            const timeout = setTimeout(() => {
+                setTime(time - 1);
+                setInputTime([String(Math.floor((time - 1) / 60)).padStart(2, '0'), String((time - 1) % 60).padStart(2, '0')]);
+            }, 1000);
             return () => clearTimeout(timeout);
         } else if (isActive && time === 0) {
             resetCounter()
