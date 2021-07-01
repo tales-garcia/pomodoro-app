@@ -61,9 +61,14 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
         if (!inputTime.some(text => !text)) {
             const [minutes, seconds] = inputTime;
 
-            const time = (Number(minutes) * 60) + Number(seconds);
-            setTime(time);
-            setMaxTime(time);
+            const textTime = (Number(minutes) * 60) + Number(seconds);
+
+            if (textTime === time) {
+                return;
+            }
+
+            setTime(textTime);
+            setMaxTime(textTime);
         }
     }, [inputTime]);
 
