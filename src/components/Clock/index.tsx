@@ -19,8 +19,8 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
     const minutes = useMemo(() => time ? Math.floor(time / 60) : null, [time]);
     const seconds = useMemo(() => time ? time % 60 : null, [time]);
 
-    const splittedMinutes = useMemo(() => String(minutes).padStart(2, '0').split(''), [minutes]);
-    const splittedSeconds = useMemo(() => String(seconds).padStart(2, '0').split(''), [seconds]);
+    const stringMinutes = useMemo(() => String(minutes).padStart(2, '0'), [minutes]);
+    const stringSeconds = useMemo(() => String(seconds).padStart(2, '0'), [seconds]);
 
     useEffect(() => {
         ipcRenderer.on('set-time', (_, time) => {
@@ -117,7 +117,7 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
                             setInputTime([e.currentTarget.textContent!.replace(/[^0-9]/g, '').padStart(2, '0'), inputTime[1]]);
                         }}
                     >
-                        {!!time ? splittedMinutes : inputTime[0]}
+                        {!!time ? stringMinutes : inputTime[0]}
                     </span>
                     :
                     <span
@@ -139,7 +139,7 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
                             setInputTime([inputTime[0], e.currentTarget.textContent!.replace(/[^0-9]/g, '').padStart(2, '0')]);
                         }}
                     >
-                        {!!time ? splittedSeconds : inputTime[1]}
+                        {!!time ? stringSeconds : inputTime[1]}
                     </span>
                 </div>
 
