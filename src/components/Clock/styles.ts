@@ -21,8 +21,8 @@ export const Container = styled.div`
     span { outline: 0; }
 
     p {
-      margin-top: 2rem;
-      font: 700 1.5rem 'Montserrat', sans-serif;
+      margin-top: clamp(2px, calc((10vh + 10vw) / 2), 2rem);
+      font: 700 clamp(8px, calc((5vh + 5vw) / 2), 2rem) 'Montserrat', sans-serif;
       letter-spacing: 0.3rem;
       cursor: pointer;
     }
@@ -30,8 +30,8 @@ export const Container = styled.div`
 
   > p {
     color: ${({ theme }) => theme.red};
-    margin-top: 3rem;
-    font: 700 1.5rem 'Montserrat', sans-serif;
+    margin-top: clamp(2px, calc((15vh + 15vw) / 2), 3rem);
+    font: 700 clamp(8px, calc((5vh + 5vw) / 2), 2rem) 'Montserrat', sans-serif;
     letter-spacing: 0.3rem;
     cursor: pointer;
     width: 100%;
