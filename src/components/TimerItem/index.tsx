@@ -27,6 +27,8 @@ const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id } }) => {
         });
     }, [time, name]);
 
+    const handleDeleteTimer = useCallback(() => deleteTimer(id), [id]);
+
     return (
         <Container>
             <h2>{splittedMinutes}<span>:</span>{splittedSeconds}</h2>
@@ -34,7 +36,7 @@ const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id } }) => {
             <footer>
                 <FiPlay onClick={openTimer} size={20} color={text} />
                 <FiEdit size={20} color={text} />
-                <FiTrash size={20} color={red} onClick={() => deleteTimer(id)} />
+                <FiTrash size={20} color={red} onClick={handleDeleteTimer} />
             </footer>
         </Container>
     );
