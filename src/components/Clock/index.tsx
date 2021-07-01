@@ -58,7 +58,7 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
     }, [isActive, time]);
 
     useEffect(() => {
-        if (!inputTime.some(text => !text)) {
+        if (!inputTime.some(text => !text || isNaN(Number(text)))) {
             const [minutes, seconds] = inputTime;
 
             const textTime = (Number(minutes) * 60) + Number(seconds);
