@@ -16,9 +16,11 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
     const [inputTime, setInputTime] = useState(['--', '--']);
     const [maxTime, setMaxTime] = useState<number | null>(propsMaxTime || propsTime || null);
 
-    const minutes = useMemo(() => time ? Math.floor(time / 60) : null, [time]);
-    const seconds = useMemo(() => time ? time % 60 : null, [time]);
+    const hours = useMemo(() => time ? Math.floor(time / 3600) : null, [time]);
+    const minutes = useMemo(() => time ? Math.floor(time % 3600 / 60) : null, [time]);
+    const seconds = useMemo(() => time ? Math.floor(time % 3600 % 60) : null, [time]);
 
+    const stringHours = useMemo(() => String(hours).padStart(2, '0'), [hours]);
     const stringMinutes = useMemo(() => String(minutes).padStart(2, '0'), [minutes]);
     const stringSeconds = useMemo(() => String(seconds).padStart(2, '0'), [seconds]);
 
