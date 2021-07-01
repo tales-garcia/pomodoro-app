@@ -47,11 +47,21 @@ export const Container = styled.main`
                 display: none;
             }
 
-            > li > svg {
-                cursor: pointer;
-
+            > li {
                 :hover {
-                    opacity: 0.8;
+                    svg {
+                        opacity: 1;
+                    }
+                }
+
+                > svg {
+                    transition: opacity 0.4s ease-in-out;
+                    cursor: pointer;
+                    opacity: 0;
+
+                    :hover {
+                        opacity: 0.8;
+                    }
                 }
             }
         }
