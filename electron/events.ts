@@ -101,5 +101,25 @@ export default {
         workspacesStore[workspaceIndex] = finalWorkspace;
 
         ev.returnValue = JSON.parse(JSON.stringify(workspacesStore));
+    },
+    'edit-timer': (ev, id: string, data: Partial<Timer>) => {
+        const workspaceIndex = workspacesStore.findIndex(workspace => !!workspace.timers.find(timer => timer.id === id));
+
+        const oldTimerIndex = workspacesStore[workspaceIndex].timers.findIndex(timer => timer.id === id);
+
+        const updatedTimers = workspacesStore[workspaceIndex].timers;
+
+        updatedTimers[oldTimerIndex] = {
+            ...workspacesStore[workspaceIndex].timers[oldTimerIndex],
+            ...data,
+        }
+
+        const updatedWorkspace: Workspace = {
+            ...workspacesStore[workspaceIndex],
+            timers: updatedTimers
+        }
+
+        workspacesStore[workspaceIndex] = updatedWorkspace;
+        ev.returnValue = JSON.parse(JSON.stringify(workspacesStore));
     }
 } as Events;
