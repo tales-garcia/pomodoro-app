@@ -1,11 +1,11 @@
-import { ipcRenderer, remote } from 'electron';
+import { ipcRenderer } from 'electron';
 import React from 'react';
 import Clock from '../../components/Clock';
 import { Title } from './styles';
 
 const {
         storedTime, storedMaxTime, name
-    } = ipcRenderer.sendSync('get-timer-props', remote.getCurrentWindow().id);
+    } = ipcRenderer.sendSync('get-timer-props');
 
 const Timer: React.FC = () => {
     return (
