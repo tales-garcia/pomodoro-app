@@ -13,7 +13,11 @@ interface ClockProps {
 const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime }) => {
     const [time, setTime] = useState<number | null>(propsTime || null);
     const [isActive, setIsActive] = useState(false);
-    const [inputTime, setInputTime] = useState(['--', '--']);
+    const [inputTime, setInputTime] = useState({
+        seconds: '--',
+        minutes: '--',
+        hours: '00'
+    });
     const [maxTime, setMaxTime] = useState<number | null>(propsMaxTime || propsTime || null);
 
     const hours = useMemo(() => time ? Math.floor(time / 3600) : null, [time]);
@@ -27,9 +31,17 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
     useEffect(() => {
         ipcRenderer.on('set-time', (_, time) => {
             if (!time) {
-                setInputTime(['--', '--']);
+                setInputTime({
+                    seconds: '--',
+                    minutes: '--',
+                    hours: '--'
+                });
             } else {
-                setInputTime([String(Math.floor(time / 60)), String(time % 60)])
+                setInputTime({
+                    hours: String(Math.floor(time / 3600)).padStart(2, '0'),
+                    minutes: String(Math.floor(time % 3600 / 60)).padStart(2, '0'),
+                    seconds: String(Math.floor(time % 3600 % 60)).padStart(2, '0')
+                })
             }
             setMaxTime(time || null);
             setTime(time || null);
@@ -53,7 +65,11 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
         if (isActive && time && time > 0) {
             const timeout = setTimeout(() => {
                 setTime(time - 1);
-                setInputTime([String(Math.floor((time - 1) / 60)).padStart(2, '0'), String((time - 1) % 60).padStart(2, '0')]);
+                setInputTime({
+                    hours: String(Math.floor((time - 1) / 3600)).padStart(2, '0'),
+                    minutes: String(Math.floor((time - 1) % 3600 / 60)).padStart(2, '0'),
+                    seconds: String(Math.floor((time - 1) % 3600 % 60)).padStart(2, '0')
+                });
             }, 1000);
             return () => clearTimeout(timeout);
         } else if (isActive && time === 0) {
@@ -63,10 +79,10 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
     }, [isActive, time]);
 
     useEffect(() => {
-        if (!inputTime.some(text => !text || isNaN(Number(text)))) {
-            const [minutes, seconds] = inputTime;
+        if (!Object.keys(inputTime).some(text => !(inputTime as any)[text] || isNaN(Number((inputTime as any)[text])))) {
+            const { minutes, seconds, hours } = inputTime;
 
-            const textTime = (Number(minutes) * 60) + Number(seconds);
+            const textTime = (Number(hours) * 3600) + (Number(minutes) * 60) + Number(seconds);
 
             if (textTime === time) {
                 return;
@@ -88,7 +104,11 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
         () => {
             setIsActive(false);
             setTime(maxTime);
-            setInputTime(['--', '--']);
+            setInputTime({
+                seconds: '--',
+                minutes: '--',
+                hours: '--'
+            });
         },
         [maxTime]
     )
@@ -108,12 +128,41 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
             >
 
                 <div>
+                    {!!hours && (
+                        <>
+                            <span
+                                suppressContentEditableWarning
+                                contentEditable={!isActive}
+                                onInput={(e) => {
+                                    if (e.currentTarget.textContent && !(/(0|1|2|3|4|5|6|7|8|9|-)/.test(e.currentTarget.textContent))) {
+                                        e.currentTarget.textContent = inputTime.hours;
+                                    }
+                                }}
+                                onKeyPress={e => {
+                                    if (isNaN(Number(e.key)) || e.key === ' ') e.preventDefault();
+                                }}
+                                onBlur={e => {
+                                    if (!e.currentTarget.textContent?.match(/(0|1|2|3|4|5|6|7|8|9)/)) {
+                                        e.currentTarget.textContent = '--';
+                                        return;
+                                    }
+                                    setInputTime({
+                                        ...inputTime,
+                                        hours: e.currentTarget.textContent!.replace(/[^0-9]/g, '').padStart(2, '0')
+                                    });
+                                }}
+                            >
+                                {!!time ? stringHours : inputTime.hours}
+                            </span>
+                            :
+                        </>
+                    )}
                     <span
                         suppressContentEditableWarning
                         contentEditable={!isActive}
                         onInput={(e) => {
                             if (e.currentTarget.textContent && !(/(0|1|2|3|4|5|6|7|8|9|-)/.test(e.currentTarget.textContent))) {
-                                e.currentTarget.textContent = inputTime[0];
+                                e.currentTarget.textContent = inputTime.minutes;
                             }
                         }}
                         onKeyPress={e => {
@@ -124,10 +173,13 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
                                 e.currentTarget.textContent = '--';
                                 return;
                             }
-                            setInputTime([e.currentTarget.textContent!.replace(/[^0-9]/g, '').padStart(2, '0'), inputTime[1]]);
+                            setInputTime({
+                                ...inputTime,
+                                minutes: e.currentTarget.textContent!.replace(/[^0-9]/g, '').padStart(2, '0')
+                            });
                         }}
                     >
-                        {!!time ? stringMinutes : inputTime[0]}
+                        {!!time ? stringMinutes : inputTime.minutes}
                     </span>
                     :
                     <span
@@ -135,7 +187,7 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
                         contentEditable={!isActive}
                         onInput={(e) => {
                             if (e.currentTarget.textContent && !(/(0|1|2|3|4|5|6|7|8|9|-)/.test(e.currentTarget.textContent))) {
-                                e.currentTarget.textContent = inputTime[1];
+                                e.currentTarget.textContent = inputTime.seconds;
                             }
                         }}
                         onKeyPress={e => {
@@ -146,17 +198,20 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
                                 e.currentTarget.textContent = '--';
                                 return;
                             }
-                            setInputTime([inputTime[0], e.currentTarget.textContent!.replace(/[^0-9]/g, '').padStart(2, '0')]);
+                            setInputTime({
+                                ...inputTime,
+                                seconds: e.currentTarget.textContent!.replace(/[^0-9]/g, '').padStart(2, '0')
+                            });
                         }}
                     >
-                        {!!time ? stringSeconds : inputTime[1]}
+                        {!!time ? stringSeconds : inputTime.seconds}
                     </span>
                 </div>
 
                 <p style={{ opacity: time ? 1 : 0.5, cursor: time ? 'pointer' : 'not-allowed' }} onClick={!!time ? toggleCounter : undefined}>{isActive ? 'PAUSE' : 'START'}</p>
             </CircularProgressbarWithChildren>
 
-            <p style={{ opacity: (time || inputTime.some(input => /(0|1|2|3|4|5|6|7|8|9)/i.test(input))) ? 1 : 0.5, cursor: (time || inputTime.some(input => /(0|1|2|3|4|5|6|7|8|9)/i.test(input))) ? 'pointer' : 'not-allowed' }} onClick={resetCounter}>RESET</p>
+            <p style={{ opacity: (time || Object.keys(inputTime).some(key => /(0|1|2|3|4|5|6|7|8|9)/i.test((inputTime as any)[key]))) ? 1 : 0.5, cursor: (time || Object.keys(inputTime).some(key => /(0|1|2|3|4|5|6|7|8|9)/i.test((inputTime as any)[key]))) ? 'pointer' : 'not-allowed' }} onClick={resetCounter}>RESET</p>
         </Container>
     );
 }
