@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 export const Container = styled.li`
     background: ${({ theme }) => theme.darkBlue};
@@ -15,10 +16,6 @@ export const Container = styled.li`
 
     &:hover {
         box-shadow: 12px 12px 34px 0px #00000047;
-
-        > footer {
-            opacity: 1;
-        }
     }
 
     span {
@@ -40,11 +37,10 @@ export const Container = styled.li`
         display: grid;
         margin-top: 16px;
         grid-auto-flow: column;
-        opacity: 0;
-        transition: opacity .4s ease-in-out;
         gap: 8px;
 
         > svg {
+            transition: opacity .4s ease-in-out;
             cursor: pointer;
 
             :hover {
@@ -54,7 +50,7 @@ export const Container = styled.li`
     }
 `;
 
-export const ButtonsContainer = styled.div`
+export const ButtonsContainer = styled(motion.div)`
     position: absolute;
     bottom: 0.8rem;
     right: 0.8rem;
