@@ -14,6 +14,14 @@ export const Container = styled.li`
     flex-direction: column;
     transition: box-shadow .4s ease-out;
 
+    * {
+        outline: 0;
+    }
+
+    strong:focus, h3:focus {
+        outline: ${({ theme }) => theme.blue} solid 2px;
+    }
+
     &:hover {
         box-shadow: 12px 12px 34px 0px #00000047;
     }
