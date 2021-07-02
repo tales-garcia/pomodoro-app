@@ -40,11 +40,13 @@ const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id } }) => {
         <Container>
             <h2>{!!hours && <>{stringHours}<span>:</span></>}{stringMinutes}<span>:</span>{stringSeconds}</h2>
             <h3>{name}</h3>
-            <footer>
-                <FiPlay onClick={openTimer} size={20} color={text} />
-                <FiEdit size={20} color={text} onClick={toggleEditMode} />
-                <FiTrash size={20} color={red} onClick={handleDeleteTimer} />
-            </footer>
+            {!editMode && (
+                <footer>
+                    <FiPlay onClick={openTimer} size={20} color={text} />
+                    <FiEdit size={20} color={text} onClick={toggleEditMode} />
+                    <FiTrash size={20} color={red} onClick={handleDeleteTimer} />
+                </footer>
+            )}
             {editMode && (
                 <ButtonsContainer>
                     <Button onClick={toggleEditMode}>Cancel</Button>
