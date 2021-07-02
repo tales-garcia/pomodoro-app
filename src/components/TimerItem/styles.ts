@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.li`
     background: ${({ theme }) => theme.darkBlue};
     border-radius: 10px;
+    position: relative;
 
     padding: 24px;
 
@@ -50,5 +51,25 @@ export const Container = styled.li`
                 opacity: 0.8;
             }
         }
+    }
+`;
+
+export const ButtonsContainer = styled.div`
+    position: absolute;
+    bottom: 0.8rem;
+    right: 0.8rem;
+    left: 0.8rem;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+
+    * + * {
+        margin-left: 0.4rem;
+    }
+
+    > button {
+        width: 100%;
     }
 `;
