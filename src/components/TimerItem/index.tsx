@@ -17,8 +17,8 @@ const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id } }) => {
     const minutes = useMemo(() => time ? Math.floor(time / 60) : null, [time]);
     const seconds = useMemo(() => time ? time % 60 : null, [time]);
 
-    const splittedMinutes = useMemo(() => String(minutes).padStart(2, '0'), [minutes]);
-    const splittedSeconds = useMemo(() => String(seconds).padStart(2, '0'), [seconds]);
+    const stringMinutes = useMemo(() => String(minutes).padStart(2, '0'), [minutes]);
+    const stringSeconds = useMemo(() => String(seconds).padStart(2, '0'), [seconds]);
 
     const openTimer = useCallback(() => {
         ipcRenderer.send('create-timer-window', {
@@ -31,7 +31,7 @@ const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id } }) => {
 
     return (
         <Container>
-            <h2>{splittedMinutes}<span>:</span>{splittedSeconds}</h2>
+            <h2>{stringMinutes}<span>:</span>{stringSeconds}</h2>
             <h3>{name}</h3>
             <footer>
                 <FiPlay onClick={openTimer} size={20} color={text} />
