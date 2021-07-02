@@ -25,7 +25,7 @@ export const Container = styled.li`
     }
 
     > h2 {
-        font-size: 64px;
+        font-size: 52px;
         font-weight: 700;
     }
 
