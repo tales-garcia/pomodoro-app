@@ -5,6 +5,7 @@ import Input from '../components/Input';
 import { useModal } from './modal';
 import * as yup from 'yup';
 import styled from 'styled-components';
+import Button from '../components/Button';
 
 const TimeInput = styled.div`
     width: 100%;
@@ -19,33 +20,6 @@ const ButtonsContainer = styled.div`
     display: grid;
     gap: 8px;
     grid-template-columns: 1fr 1fr;
-
-    > button {
-        padding: 12px 16px;
-        border-radius: 4px;
-        border: 0;
-        font: 500 0.8rem Montserrat, sans-serif;
-        color: ${({ theme }) => theme.text};
-        cursor: pointer;
-        transition: filter .2s;
-
-        :hover {
-            filter: brightness(0.85);
-        }
-
-        :active {
-            filter: brightness(0.75);
-        }
-    }
-
-    > button:first-child {
-        background: ${({ theme }) => theme.blue};
-    }
-
-    > button:last-child {
-        background: ${({ theme }) => theme.red};
-        font-weight: 600;
-    }
 `;
 
 interface WorkspaceContextContent {
@@ -159,8 +133,8 @@ export const WorkspaceProvider: React.FC = ({ children }) => {
             <h2>New workspace</h2>
             <Input name="name" type="text" placeholder="Name" />
             <ButtonsContainer>
-              <button type="button" onClick={hide}>Cancel</button>
-              <button type="submit">Confirm</button>
+              <Button type="button" onClick={hide}>Cancel</Button>
+              <Button type="submit" confirmButton>Confirm</Button>
             </ButtonsContainer>
           </Form>
         </Formik>
@@ -211,8 +185,8 @@ export const WorkspaceProvider: React.FC = ({ children }) => {
               <Input name="seconds" type="number" placeholder="Seconds" />
             </TimeInput>
             <ButtonsContainer>
-              <button type="button" onClick={hide}>Cancel</button>
-              <button type="submit">Confirm</button>
+              <Button type="button" onClick={hide}>Cancel</Button>
+              <Button confirmButton type="submit">Confirm</Button>
             </ButtonsContainer>
           </Form>
         </Formik>
