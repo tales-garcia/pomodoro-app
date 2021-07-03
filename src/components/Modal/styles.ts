@@ -8,6 +8,7 @@ export const Overlay = styled.div`
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.5);
+    z-index: 4000;
 
     display: flex;
     justify-content: center;
@@ -17,6 +18,7 @@ export const Overlay = styled.div`
 export const Container = styled.main`
     background: ${({ theme }) => theme.darkBlue};
     border-radius: 8px;
+    z-index: 5000;
     border: 2px solid ${({ theme }) => theme.red};
 
     padding: 32px;
