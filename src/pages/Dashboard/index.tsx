@@ -1,29 +1,56 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { FiTrash2, FiPlus, FiFolderPlus, FiSliders } from 'react-icons/fi';
 import { useTheme } from 'styled-components';
 import TimerItem from '../../components/TimerItem';
 import { Container, WorkspaceItem } from './styles';
 import { useWorkspace } from '../../hooks/workspace';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
 const Dashboard: React.FC = () => {
   const { red, text } = useTheme();
-  const { editWorkspace, createNewTimerModal, workspaces, selectedWorkspace, createWorkspaceModal, setSelectedWorkspace, deleteWorkspace } = useWorkspace();
+  const { editWorkspace, saveWorkspaces, createNewTimerModal, workspaces, selectedWorkspace, createWorkspaceModal, setSelectedWorkspace, deleteWorkspace } = useWorkspace();
+
+  const handleDragEnd = useCallback(result => {
+    const workspacesCopy = workspaces;
+
+    const [reorderedItem] = workspacesCopy.splice(result.source.index, 1);
+    workspacesCopy.splice(result.destination.index, 0, reorderedItem);
+
+    saveWorkspaces(workspacesCopy);
+  }, [workspaces]);
 
   return (
     <Container>
       <aside>
         <h1>Workspaces</h1>
-        <ul>
-          {workspaces.map((workspace) => (
-            <WorkspaceItem key={workspace.id} onClick={() => setSelectedWorkspace(workspace)} isActive={Number((selectedWorkspace || { id: null }).id === workspace.id)}>
-              {workspace.name}
-              <FiTrash2 size={16} color={red} onClick={e => {
-                e.stopPropagation();
-                deleteWorkspace(workspace.id);
-              }} />
-            </WorkspaceItem>
-          ))}
-        </ul>
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <Droppable droppableId="workspaces">
+            {provided => (
+              <ul {...provided.droppableProps} ref={provided.innerRef}>
+                {workspaces.map((workspace, index) => (
+                  <Draggable key={workspace.id} index={index} draggableId={workspace.id}>
+                    {provided => (
+                      <WorkspaceItem
+                        onClick={() => setSelectedWorkspace(workspace)}
+                        isActive={Number((selectedWorkspace || { id: null }).id === workspace.id)}
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        {workspace.name}
+                        <FiTrash2 size={16} color={red} onClick={e => {
+                          e.stopPropagation();
+                          deleteWorkspace(workspace.id);
+                        }} />
+                      </WorkspaceItem>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </ul>
+            )}
+          </Droppable>
+        </DragDropContext>
 
         <footer>
           <FiSliders size={20} color={text} />
