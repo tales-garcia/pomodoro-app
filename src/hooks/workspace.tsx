@@ -160,7 +160,7 @@ export const WorkspaceProvider: React.FC = ({ children }) => {
   }, []);
 
   const editWorkspace = useCallback((id, data) => {
-    setSelectedWorkspace((ipcRenderer.sendSync('edit-workspace', id, data) as Workspace[]).find(workspace => workspace.id === id) || null);
+    setSelectedWorkspace(ipcRenderer.sendSync('edit-workspace', id, data) as Workspace);
     setWorkspaces(ipcRenderer.sendSync('get-workspaces'));
   }, []);
 

@@ -100,7 +100,7 @@ export default {
 
         workspacesStore[workspaceIndex] = finalWorkspace;
 
-        ev.returnValue = JSON.parse(JSON.stringify(workspacesStore));
+        ev.returnValue = finalWorkspace;
     },
     'edit-timer': (ev, id: string, data: Partial<Timer>) => {
         const workspaceIndex = workspacesStore.findIndex(workspace => !!workspace.timers.find(timer => timer.id === id));
