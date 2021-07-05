@@ -121,5 +121,11 @@ export default {
 
         workspacesStore[workspaceIndex] = updatedWorkspace;
         ev.returnValue = JSON.parse(JSON.stringify(workspacesStore));
+    },
+    'save-workspaces': (_, workspaces: Workspace[]) => {
+        workspacesStore.splice(0, workspacesStore.length);
+        workspaces.forEach((workspace, index) => {
+            workspacesStore[index] = workspace;
+        });
     }
 } as Events;
