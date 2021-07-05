@@ -47,9 +47,11 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "@types/react-beautiful-dnd": "^13.1.0",
     "formik": "^2.2.8",
     "framer-motion": "^4.1.17",
     "react": "^16.13.1",
+    "react-beautiful-dnd": "^13.1.0",
     "react-circular-progressbar": "^2.0.3",
     "react-dom": "^16.13.1",
     "react-icons": "^4.2.0",
