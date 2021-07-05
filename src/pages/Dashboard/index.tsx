@@ -11,6 +11,8 @@ const Dashboard: React.FC = () => {
   const { editWorkspace, saveWorkspaces, createNewTimerModal, workspaces, selectedWorkspace, createWorkspaceModal, setSelectedWorkspace, deleteWorkspace } = useWorkspace();
 
   const handleDragEnd = useCallback(result => {
+    if (!result.destination) return;
+
     const workspacesCopy = workspaces;
 
     const [reorderedItem] = workspacesCopy.splice(result.source.index, 1);
