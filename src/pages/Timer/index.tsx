@@ -1,5 +1,5 @@
-import { ipcRenderer } from 'electron';
-import React from 'react';
+import { ipcRenderer, remote } from 'electron';
+import React, { useEffect } from 'react';
 import Clock from '../../components/Clock';
 import { Title } from './styles';
 
@@ -8,6 +8,9 @@ const {
     } = ipcRenderer.sendSync('get-timer-props');
 
 const Timer: React.FC = () => {
+
+    useEffect(() => remote.getCurrentWindow().setTitle(`${!!name ? `${name} - ` : 'Unkown - '}Timer`), []);
+
     return (
         <>
             <Title>{name}</Title>
