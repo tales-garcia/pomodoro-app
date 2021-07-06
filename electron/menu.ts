@@ -8,36 +8,36 @@ export default function createMenu() {
             role: 'appMenu'
         }] : [] as any),
         {
-            label: 'New Timer',
-            submenu: [
-                { label: 'Custom', click: windows.createTimer },
-                {
-                    label: 'Presets',
-                    submenu: [
-                        {
-                            label: '25min', click: () => timer.create({ time: 25 * 60 })
-                        },
-                        {
-                            label: '15min', click: () => timer.create({ time: 15 * 60 })
-                        },
-                        {
-                            label: '10min', click: () => timer.create({ time: 10 * 60 })
-                        },
-                        {
-                            label: '5min', click: () => timer.create({ time: 5 * 60 })
-                        },
-                        {
-                            label: '1min', click: () => timer.create({ time: 60 })
-                        }
-                    ]
-                }
-            ],
-        },
-        {
-            label: 'Edit',
+            label: 'File',
             submenu: [
                 { label: 'Close', click: timer.close },
                 { label: 'Reset', click: timer.reset },
+                {
+                    label: 'New Timer',
+                    submenu: [
+                        { label: 'Custom', click: windows.createTimer },
+                        {
+                            label: 'Presets',
+                            submenu: [
+                                {
+                                    label: '25min', click: () => timer.create({ time: 25 * 60 })
+                                },
+                                {
+                                    label: '15min', click: () => timer.create({ time: 15 * 60 })
+                                },
+                                {
+                                    label: '10min', click: () => timer.create({ time: 10 * 60 })
+                                },
+                                {
+                                    label: '5min', click: () => timer.create({ time: 5 * 60 })
+                                },
+                                {
+                                    label: '1min', click: () => timer.create({ time: 60 })
+                                }
+                            ]
+                        }
+                    ],
+                },
                 {
                     label: 'Set time',
                     submenu: [
@@ -59,7 +59,9 @@ export default function createMenu() {
                     ]
                 }
             ],
-        }
+        },
+        { role: 'editMenu' },
+        { role: 'windowMenu' }
     ])
 
     app.whenReady().then(() => {
