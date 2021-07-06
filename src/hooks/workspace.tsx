@@ -93,6 +93,7 @@ export const WorkspaceProvider: React.FC = ({ children }) => {
 
     if (generatedWorkspace) {
       setWorkspaces((prevState) => [...prevState, generatedWorkspace]);
+      setSelectedWorkspace(generatedWorkspace);
     }
   }, []);
 
