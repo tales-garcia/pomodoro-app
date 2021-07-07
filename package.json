@@ -53,6 +53,8 @@
     "react": "^16.13.1",
     "react-beautiful-dnd": "^13.1.0",
     "react-circular-progressbar": "^2.0.3",
+    "react-dnd": "^14.0.2",
+    "react-dnd-html5-backend": "^14.0.0",
     "react-dom": "^16.13.1",
     "react-icons": "^4.2.0",
     "react-router-dom": "^5.2.0",
