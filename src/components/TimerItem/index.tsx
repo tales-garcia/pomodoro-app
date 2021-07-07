@@ -7,17 +7,73 @@ import Button from '../Button';
 import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
 import NumberEditableContent from '../NumberEditableContent';
 import { Container, ButtonsContainer } from './styles';
+import { useDrag, useDrop } from 'react-dnd';
 
 interface TimerItemProps {
     data: Timer;
+    index: number;
 }
 
-const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id } }) => {
+const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id }, index }) => {
     const { red, text } = useTheme();
-    const { deleteTimer, editTimer } = useWorkspace();
+    const { deleteTimer, editTimer, setSelectedWorkspace } = useWorkspace();
+    const ref = React.useRef<HTMLLIElement>(null);
 
     const [editMode, setEditMode] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
+
+    const [{ isDragging }, drag] = useDrag({
+        item: { index },
+        type: 'TIMER_ITEM',
+        collect: (monitor) => ({ isDragging: monitor.isDragging() })
+    });
+
+    const moveTimerHandler = useCallback((dragIndex, hoverIndex) => {
+        setSelectedWorkspace(prevState => {
+            if (!prevState) return null;
+
+            const prevStateCopy = {...prevState};
+            const timers = prevStateCopy.timers;
+
+            if (!timers || !timers[dragIndex] || !timers[hoverIndex]) return prevState;
+
+            const [dragItem] = timers.splice(dragIndex, 1);
+            timers.splice(hoverIndex, 0, dragItem);
+
+            return { ...prevState, timers };
+        })
+    }, []);
+
+    const [{}, drop] = useDrop<Pick<TimerItemProps, 'index'>, any, any>({
+        accept: 'TIMER_ITEM',
+        hover(item, monitor) {
+            if (!ref.current) {
+                return;
+            }
+
+            const dragIndex = item.index;
+            const hoverIndex = index;
+
+            if (dragIndex === hoverIndex) {
+                return;
+            }
+            const hoverBoundingRect = ref.current?.getBoundingClientRect();
+            const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+            const clientOffset = monitor.getClientOffset();
+
+            if (!clientOffset) return;
+
+            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+                return;
+            }
+            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+                return;
+            }
+            moveTimerHandler(dragIndex, hoverIndex);
+            item.index = hoverIndex;
+        },
+    });
 
     const hours = useMemo(() => time ? Math.floor(time / 3600) : null, [time]);
     const minutes = useMemo(() => time ? Math.floor(time % 3600 / 60) : null, [time]);
@@ -58,11 +114,18 @@ const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id } }) => {
         editTimer(id, finalValues);
     }, [showingValues, id, editValues]);
 
+    drag(drop(ref));
+
+    const opacity = useMemo(() => isDragging ? 0 : 1, [isDragging]);
+
     return (
         <AnimateSharedLayout>
             <Container
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
+                ref={ref}
+                style={{ opacity }}
+                layoutId={id}
             >
                 {editMode ? (
                     <motion.h2 layoutId="time">
