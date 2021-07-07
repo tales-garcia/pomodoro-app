@@ -59,11 +59,11 @@ const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id } }) => {
     }, [showingValues, id, editValues]);
 
     return (
-        <Container
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-        >
-            <AnimateSharedLayout>
+        <AnimateSharedLayout>
+            <Container
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+            >
                 {editMode ? (
                     <motion.h2 layoutId="time">
                         {!!hours && (
@@ -145,8 +145,8 @@ const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id } }) => {
                         </ButtonsContainer>
                     )}
                 </AnimatePresence>
-            </AnimateSharedLayout>
-        </Container>
+            </Container>
+        </AnimateSharedLayout>
     );
 }
 
