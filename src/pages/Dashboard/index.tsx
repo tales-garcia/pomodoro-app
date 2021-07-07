@@ -5,6 +5,7 @@ import TimerItem from '../../components/TimerItem';
 import { Container, WorkspaceItem } from './styles';
 import { useWorkspace } from '../../hooks/workspace';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { useDrop } from 'react-dnd';
 
 const Dashboard: React.FC = () => {
   const { red, text } = useTheme();
@@ -20,6 +21,11 @@ const Dashboard: React.FC = () => {
 
     saveWorkspaces(workspacesCopy);
   }, [workspaces]);
+
+  const [{ }, dropRef] = useDrop({
+    accept: 'TIMER_ITEM',
+    drop: console.log
+  });
 
   return (
     <Container>
@@ -67,7 +73,7 @@ const Dashboard: React.FC = () => {
                 suppressContentEditableWarning
                 contentEditable
                 onKeyDown={ev => {
-                  switch(ev.key) {
+                  switch (ev.key) {
                     case 'Enter': {
                       ev.preventDefault();
 
@@ -93,9 +99,9 @@ const Dashboard: React.FC = () => {
                 New
               </button>
             </h1>
-            <ul>
-              {selectedWorkspace.timers.map(timer => (
-                <TimerItem data={timer} key={timer.id} />
+            <ul ref={dropRef}>
+              {selectedWorkspace.timers.map((timer, index) => (
+                <TimerItem index={index} data={timer} key={timer.id} />
               ))}
             </ul>
           </>
