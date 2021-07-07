@@ -1,5 +1,7 @@
 import React from 'react'
 import 'react-circular-progressbar/dist/styles.css';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { render } from 'react-dom'
 import { ThemeProvider } from 'styled-components'
 import { ModalProvider } from './hooks/modal';
@@ -23,14 +25,16 @@ const theme = {
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <ModalProvider>
-        <WorkspaceProvider>
-          <Routes />
-        </WorkspaceProvider>
-      </ModalProvider>
-    </ThemeProvider>
+    <DndProvider backend={HTML5Backend}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <ModalProvider>
+          <WorkspaceProvider>
+            <Routes />
+          </WorkspaceProvider>
+        </ModalProvider>
+      </ThemeProvider>
+    </DndProvider>
   )
 }
 
