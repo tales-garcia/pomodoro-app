@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-export const Container = styled.li`
+export const Container = styled(motion.li)`
     background: ${({ theme }) => theme.darkBlue};
     border-radius: 10px;
     position: relative;
