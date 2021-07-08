@@ -15,14 +15,14 @@ interface TimerItemProps {
 }
 
 const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id }, index }) => {
-    const { red, text } = useTheme();
+    const { red, text, blue } = useTheme();
     const { deleteTimer, editTimer, setSelectedWorkspace } = useWorkspace();
     const ref = React.useRef<HTMLLIElement>(null);
 
     const [editMode, setEditMode] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
 
-    const [{ isDragging }, drag] = useDrag({
+    const [{ isDragging }, drag, dragPreview] = useDrag({
         item: { index },
         type: 'TIMER_ITEM',
         collect: (monitor) => ({ isDragging: monitor.isDragging() })
@@ -116,15 +116,26 @@ const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id }, index }
 
     drag(drop(ref));
 
-    const opacity = useMemo(() => isDragging ? 0 : 1, [isDragging]);
+    const display = useMemo(() => isDragging ? 'none' : 'flex', [isDragging]);
 
     return (
         <AnimateSharedLayout>
+            {isDragging && (
+                <Container
+                    ref={dragPreview}
+                    style={{
+                        backgroundColor: blue,
+                        borderColor: red,
+                        borderWidth: 2,
+                        borderStyle: 'solid'
+                    }}
+                />
+            )}
             <Container
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 ref={ref}
-                style={{ opacity }}
+                style={{ display }}
                 layoutId={id}
             >
                 {editMode ? (
