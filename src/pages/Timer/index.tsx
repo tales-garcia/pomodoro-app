@@ -4,8 +4,8 @@ import Clock from '../../components/Clock';
 import { Title } from './styles';
 
 const {
-        storedTime, storedMaxTime, name
-    } = ipcRenderer.sendSync('get-timer-props');
+    storedTime, storedMaxTime, name
+} = ipcRenderer.sendSync('get-timer-props');
 
 const Timer: React.FC = () => {
 

@@ -32,7 +32,7 @@ const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id }, index }
         setSelectedWorkspace(prevState => {
             if (!prevState) return null;
 
-            const prevStateCopy = {...prevState};
+            const prevStateCopy = { ...prevState };
             const timers = prevStateCopy.timers;
 
             if (!timers || !timers[dragIndex] || !timers[hoverIndex]) return prevState;
@@ -44,7 +44,7 @@ const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id }, index }
         })
     }, []);
 
-    const [{}, drop] = useDrop<Pick<TimerItemProps, 'index'>, any, any>({
+    const [{ }, drop] = useDrop<Pick<TimerItemProps, 'index'>, any, any>({
         accept: 'TIMER_ITEM',
         hover(item, monitor) {
             if (!ref.current) {
@@ -145,7 +145,7 @@ const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id }, index }
                                 <NumberEditableContent
                                     onChange={value => setEditValues({ ...editValues, hours: value })}
                                 >
-                                        {showingValues.hours}
+                                    {showingValues.hours}
                                 </NumberEditableContent>
                                 <span>:</span>
                             </>
@@ -207,7 +207,7 @@ const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id }, index }
                             exit={{ opacity: 0 }}
                             initial={{ opacity: 0 }}
                         >
-                            <Button 
+                            <Button
                                 onClick={() => {
                                     toggleEditMode();
                                     setEditValues(showingValues);

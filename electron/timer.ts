@@ -29,7 +29,7 @@ export default {
     },
     reset() {
         if (mainWindow)
-        mainWindow.webContents.send('set-time', 0);
+            mainWindow.webContents.send('set-time', 0);
     },
     close: () => {
         mainWindow?.close();
