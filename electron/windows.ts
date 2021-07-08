@@ -7,7 +7,7 @@ let dashboardWindow: BrowserWindow | null;
 
 export default {
     createTimer: (windowProps?: Electron.BrowserWindowConstructorOptions) => {
-        
+
         const window = new BrowserWindow({
             width: 400,
             height: 550,
@@ -48,8 +48,8 @@ export default {
     },
     createDashboard: (windowProps?: Electron.BrowserWindowConstructorOptions) => {
         if (dashboardWindow && !dashboardWindow.isDestroyed()) return;
-        
-        dashboardWindow = new BrowserWindow({
+
+        let finalProps: Electron.BrowserWindowConstructorOptions = {
             backgroundColor: '#1A1A29',
             webPreferences: {
                 nodeIntegration: true,
@@ -59,11 +59,20 @@ export default {
             resizable: true,
             maximizable: true,
             minimizable: true,
-            fullscreen: windowProps?.fullscreen || true,
             fullscreenable: true,
             titleBarStyle: 'hiddenInset',
-            ...windowProps
-        })
+        }
+
+        if (!windowProps?.fullscreen) {
+            finalProps = {
+                ...finalProps,
+                ...windowProps
+            }
+        } else {
+            finalProps.fullscreen = true;
+        }
+
+        dashboardWindow = new BrowserWindow(finalProps)
 
         if (process.env.NODE_ENV === 'development') {
             dashboardWindow.loadURL('http://localhost:4000/#/dashboard').then(() => dashboardWindow?.setTitle('Dashboard'));
