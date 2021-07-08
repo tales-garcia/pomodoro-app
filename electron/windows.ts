@@ -78,6 +78,8 @@ export default {
             ).then(() => dashboardWindow?.setTitle('Dashboard'))
         }
 
+        createMenu()
+
         return dashboardWindow;
     }
 }
