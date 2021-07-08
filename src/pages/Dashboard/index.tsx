@@ -24,7 +24,10 @@ const Dashboard: React.FC = () => {
 
   const [{ }, dropRef] = useDrop({
     accept: 'TIMER_ITEM',
-    drop: console.log
+    drop: () => {
+      if (!selectedWorkspace) return;
+      editWorkspace(selectedWorkspace.id, { timers: selectedWorkspace.timers });
+    }
   });
 
   return (
