@@ -34,3 +34,8 @@ export const workspacesStore = new Store<Workspace[]>({
     filename: 'workspaces',
     default: []
 });
+
+export const recentStore = new Store<Timer[]>({
+    default: [],
+    filename: 'recent'
+});
