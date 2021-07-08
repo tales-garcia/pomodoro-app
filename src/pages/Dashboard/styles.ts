@@ -48,6 +48,8 @@ export const Container = styled.main`
             }
 
             > li {
+                cursor: pointer;
+
                 :hover {
                     svg {
                         opacity: 1;
