@@ -1,7 +1,7 @@
 import { ipcMain } from "electron";
 import { v4 } from "uuid";
 import { idsTranslator } from "./main";
-import { windowsStore, workspacesStore } from './stores';
+import { recentStore, windowsStore, workspacesStore } from './stores';
 import timer from "./timer";
 
 interface ITimerProps {
@@ -127,5 +127,29 @@ export default {
         workspaces.forEach((workspace, index) => {
             workspacesStore[index] = workspace;
         });
+    },
+    'save-recent': (_, idOrData) => {
+        switch (typeof idOrData) {
+            case 'string': {
+                const workspace = workspacesStore.find(workspace => !!workspace.timers.find(timer => timer.id === idOrData));
+
+                if (!workspace) return;
+
+                const timer = workspace.timers.find(timer => timer.id === idOrData);
+                const timerIndex = recentStore.findIndex(timer => timer.id === idOrData);
+
+                if (timerIndex !== -1) recentStore.splice(timerIndex, 1);
+
+                recentStore.unshift(timer!);
+                recentStore.splice(8, Number.MAX_SAFE_INTEGER);
+                break;
+            }
+
+            case 'object': {
+                recentStore.unshift(idOrData);
+                recentStore.splice(8, Number.MAX_SAFE_INTEGER);
+                break;
+            }
+        }
     }
 } as Events;
