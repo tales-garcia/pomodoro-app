@@ -6,6 +6,7 @@ import timer from "./timer";
 
 interface ITimerProps {
     time: number;
+    id?: string;
     name?: string;
 }
 
@@ -30,10 +31,11 @@ export default {
             ipcMain.emit('initial-windows-created');
         }
     },
-    'create-timer-window': (_, { time, name }: ITimerProps) => {
+    'create-timer-window': (_, { time, name, id }: ITimerProps) => {
         timer.create({
             time,
-            name
+            name,
+            id
         });
     },
     'delete-timer': (ev, id: string) => {

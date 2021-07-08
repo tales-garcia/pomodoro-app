@@ -89,9 +89,10 @@ const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id }, index }
     const openTimer = useCallback(() => {
         ipcRenderer.send('create-timer-window', {
             time,
-            name
+            name,
+            id
         });
-    }, [time, name]);
+    }, [time, name, id]);
 
     const handleDeleteTimer = useCallback(() => deleteTimer(id), [id]);
 
