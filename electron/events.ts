@@ -153,5 +153,8 @@ export default {
                 break;
             }
         }
+    },
+    'get-recents': (ev) => {
+        ev.returnValue = JSON.parse(JSON.stringify(recentStore));
     }
 } as Events;
