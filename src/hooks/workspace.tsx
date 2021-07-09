@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron';
 import { Formik, Form } from 'formik';
-import React, { createContext, useCallback, useContext, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import Input from '../components/Input';
 import { useModal } from './modal';
 import * as yup from 'yup';
@@ -34,7 +34,8 @@ interface WorkspaceContextContent {
   setSelectedWorkspace: React.Dispatch<React.SetStateAction<Workspace | null>>,
   editWorkspace(id: string, data: Partial<Workspace>): void,
   editTimer(id: string, data: Partial<Timer>): void,
-  saveWorkspaces(workspaces: Workspace[]): void;
+  saveWorkspaces(workspaces: Workspace[]): void,
+  recents: Timer[]
 }
 
 const WorkspaceContext = createContext<WorkspaceContextContent>({} as WorkspaceContextContent);
@@ -79,6 +80,7 @@ const timerValidation = yup.object().shape({
 export const WorkspaceProvider: React.FC = ({ children }) => {
   const [workspaces, setWorkspaces] = useState<Workspace[]>(ipcRenderer.sendSync('get-workspaces'));
   const [selectedWorkspace, setSelectedWorkspace] = useState<Workspace | null>(null);
+  const [recents, setRecents] = useState<Timer[]>(ipcRenderer.sendSync('get-recents'));
   const { setContent, show, hide } = useModal();
 
   const createWorkspace = useCallback(({ name }) => {
@@ -125,6 +127,12 @@ export const WorkspaceProvider: React.FC = ({ children }) => {
     setSelectedWorkspace(workspaces[selectedWorkspaceIndex]);
     setWorkspaces(ipcRenderer.sendSync('delete-workspace', id));
   }
+
+  useEffect(() => {
+    if (!selectedWorkspace) {
+      setRecents(ipcRenderer.sendSync('get-recents'));
+    }
+  }, [selectedWorkspace]);
 
   const createWorkspaceModal = useCallback(() => {
     setContent(
@@ -224,7 +232,8 @@ export const WorkspaceProvider: React.FC = ({ children }) => {
         createTimer,
         createNewTimerModal,
         editTimer,
-        saveWorkspaces
+        saveWorkspaces,
+        recents
       }}
     >
       {children}
