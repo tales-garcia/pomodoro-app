@@ -155,3 +155,76 @@ export const WorkspaceItem = styled.li<WorkspaceItemProps>`
         background: ${theme.blue};
     `}
 `;
+
+export const NoSelectedWorkspace = styled.main`
+    display: flex;
+
+    width: 100%;
+    height: 100%;
+
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+
+    padding-top: 6rem;
+
+    > img {
+        margin-bottom: 1.8rem;
+    }
+
+    > p {
+        font: 500 1.2rem Montserrat, sans-serif;
+        opacity: 0.8;
+        margin-bottom: 4rem;
+    }
+
+    > div {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: 0 6rem;
+    }
+`;
+
+export const Commands = styled.ul`
+    li {
+        list-style: none;
+        opacity: 0.6;
+        font: 500 0.96rem Montserrat, sans-serif;
+
+        & + li {
+            margin-top: 1.2rem;
+        }
+
+        > span:last-of-type {
+            margin-right: 0.6rem;
+        }
+    }
+
+`;
+
+export const Recent = styled.ul`
+    opacity: 0.8;
+    font: 500 1rem Montserrat, sans-serif;
+
+    > p {
+        margin-bottom: 1.4rem;
+    }
+
+    li {
+        list-style: none;
+        opacity: 0.8;
+        font: 500 0.96rem Montserrat, sans-serif;
+        color: ${({ theme }) => theme.text};
+
+        > span {
+            color: ${({ theme }) => theme.red};
+            cursor: pointer;
+        }
+
+        & + li {
+            margin-top: 0.4rem;
+        }
+    }
+
+`;
