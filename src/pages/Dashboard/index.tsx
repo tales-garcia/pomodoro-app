@@ -141,6 +141,7 @@ const Dashboard: React.FC = () => {
                     </span> — {formatTime(timer.time)}
                   </li>
                 ))}
+                {!recents.length && <li>No recent opened timers.</li>}
               </Recent>
             </div>
           </NoSelectedWorkspace>
