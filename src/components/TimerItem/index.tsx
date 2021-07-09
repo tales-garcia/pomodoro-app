@@ -8,6 +8,7 @@ import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
 import NumberEditableContent from '../NumberEditableContent';
 import { Container, ButtonsContainer } from './styles';
 import { useDrag, useDrop } from 'react-dnd';
+import formatTime from '../../utils/formatTime';
 
 interface TimerItemProps {
     data: Timer;
@@ -75,13 +76,13 @@ const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id }, index }
         },
     });
 
-    const hours = useMemo(() => time ? Math.floor(time / 3600) : null, [time]);
-    const minutes = useMemo(() => time ? Math.floor(time % 3600 / 60) : null, [time]);
-    const seconds = useMemo(() => time ? Math.floor(time % 3600 % 60) : null, [time]);
+    const [stringHours, stringMinutes, stringSeconds] = useMemo(() => {
+        const splittedTime = formatTime(time).split(':') as (string | undefined)[];
 
-    const stringHours = useMemo(() => String(hours).padStart(2, '0'), [hours]);
-    const stringMinutes = useMemo(() => String(minutes).padStart(2, '0'), [minutes]);
-    const stringSeconds = useMemo(() => String(seconds).padStart(2, '0'), [seconds]);
+        if (splittedTime.length === 2) splittedTime.unshift(undefined);
+
+        return splittedTime;
+    }, [time]);
 
     const [showingValues, setShowingValues] = useState<{ [key: string]: any }>({ hours: stringHours, minutes: stringMinutes, seconds: stringSeconds, name });
     const [editValues, setEditValues] = useState<{ [key: string]: any }>({ hours: stringHours, minutes: stringMinutes, seconds: stringSeconds, name });
@@ -141,7 +142,7 @@ const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id }, index }
             >
                 {editMode ? (
                     <motion.h2 layoutId="time">
-                        {!!hours && (
+                        {!!stringHours && (
                             <>
                                 <NumberEditableContent
                                     onChange={value => setEditValues({ ...editValues, hours: value })}
@@ -164,7 +165,7 @@ const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id }, index }
                         </NumberEditableContent>
                     </motion.h2>
                 ) : (
-                    <motion.h2 layoutId="time">{!!hours && <>{showingValues.hours}<span>:</span></>}{showingValues.minutes}<span>:</span>{showingValues.seconds}</motion.h2>
+                    <motion.h2 layoutId="time">{!!stringHours && <>{showingValues.hours}<span>:</span></>}{showingValues.minutes}<span>:</span>{showingValues.seconds}</motion.h2>
                 )}
                 <motion.h3
                     contentEditable={editMode}
