@@ -2,6 +2,7 @@ import { ipcRenderer, remote } from 'electron';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { buildStyles, CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import { ThemeContext } from 'styled-components';
+import formatTime from '../../utils/formatTime';
 
 import { Container } from './styles';
 
@@ -20,13 +21,15 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
     });
     const [maxTime, setMaxTime] = useState<number | null>(propsMaxTime || propsTime || null);
 
-    const hours = useMemo(() => time ? Math.floor(time / 3600) : null, [time]);
-    const minutes = useMemo(() => time ? Math.floor(time % 3600 / 60) : null, [time]);
-    const seconds = useMemo(() => time ? Math.floor(time % 3600 % 60) : null, [time]);
+    const [stringHours, stringMinutes, stringSeconds] = useMemo(() => {
+        if (!time) return [];
 
-    const stringHours = useMemo(() => String(hours).padStart(2, '0'), [hours]);
-    const stringMinutes = useMemo(() => String(minutes).padStart(2, '0'), [minutes]);
-    const stringSeconds = useMemo(() => String(seconds).padStart(2, '0'), [seconds]);
+        const splittedTime = formatTime(time).split(':') as (string | undefined)[];
+
+        if (splittedTime.length === 2) splittedTime.unshift(undefined);
+
+        return splittedTime;
+    }, [time]);
 
     useEffect(() => {
         ipcRenderer.on('set-time', (_, time) => {
@@ -128,7 +131,7 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
             >
 
                 <div>
-                    {!!hours && (
+                    {!!stringHours && (
                         <>
                             <span
                                 suppressContentEditableWarning
