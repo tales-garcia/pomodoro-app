@@ -2,14 +2,18 @@ import React, { useCallback } from 'react';
 import { FiTrash2, FiPlus, FiFolderPlus, FiSliders } from 'react-icons/fi';
 import { useTheme } from 'styled-components';
 import TimerItem from '../../components/TimerItem';
-import { Container, WorkspaceItem } from './styles';
+import { Container, WorkspaceItem, NoSelectedWorkspace, Commands, Recent } from './styles';
 import { useWorkspace } from '../../hooks/workspace';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useDrop } from 'react-dnd';
+import welcomeLogo from '../../assets/welcomeLogo.png';
+import Key from '../../components/Key';
+import formatTime from '../../utils/formatTime';
+import { ipcRenderer } from 'electron';
 
 const Dashboard: React.FC = () => {
   const { red, text } = useTheme();
-  const { editWorkspace, saveWorkspaces, createNewTimerModal, workspaces, selectedWorkspace, createWorkspaceModal, setSelectedWorkspace, deleteWorkspace } = useWorkspace();
+  const { editWorkspace, recents, saveWorkspaces, createNewTimerModal, workspaces, selectedWorkspace, createWorkspaceModal, setSelectedWorkspace, deleteWorkspace } = useWorkspace();
 
   const handleDragEnd = useCallback(result => {
     if (!result.destination) return;
@@ -69,7 +73,7 @@ const Dashboard: React.FC = () => {
         </footer>
       </aside>
       <main>
-        {selectedWorkspace && (
+        {selectedWorkspace ? (
           <>
             <h1>
               <span
@@ -108,6 +112,38 @@ const Dashboard: React.FC = () => {
               ))}
             </ul>
           </>
+        ) : (
+          <NoSelectedWorkspace>
+            <img src={welcomeLogo} alt="Logo" />
+            <p>Select or create a workspace to get started.</p>
+            <div>
+              <Commands>
+                <li>
+                  <Key>⌘</Key> <Key>N</Key> New Untitled Timer
+                </li>
+                <li>
+                  <Key>⌘</Key> <Key>W</Key> Close Window
+                </li>
+                <li>
+                  <Key>⇧</Key> <Key>⌘</Key> <Key>T</Key> Open Dashboard
+                </li>
+              </Commands>
+              <Recent>
+                <p>Recent</p>
+                {recents.map(timer => (
+                  <li>
+                    <span
+                      onClick={() => {
+                        ipcRenderer.send('create-timer-window', timer);
+                      }}
+                    >
+                      {timer.name}
+                    </span> — {formatTime(timer.time)}
+                  </li>
+                ))}
+              </Recent>
+            </div>
+          </NoSelectedWorkspace>
         )}
       </main>
     </Container>
