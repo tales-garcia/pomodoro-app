@@ -108,5 +108,6 @@ app.on('before-quit', event => {
 });
 app.setAboutPanelOptions({
   applicationName: 'Pomodoro',
-  authors: ['Tales Garcia<garcia.tales@gmail.com>']
+  authors: ['Tales Garcia<garcia.tales@gmail.com>'],
+  copyright: 'Copyright © 2021 Tales Garcia'
 });
