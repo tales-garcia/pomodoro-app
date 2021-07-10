@@ -20,7 +20,7 @@ export const windowsStore = new Store<{ windows: Array<Window> }>({
     default: {
         windows: [
             {
-                bounds: { x: 500, y: 195, width: 400, height: 550 },
+                bounds: { width: 400, height: 550 } as any,
                 id: v4(),
                 type: 'timer'
             }
