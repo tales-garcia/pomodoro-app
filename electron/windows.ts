@@ -63,7 +63,7 @@ export default {
             titleBarStyle: 'hiddenInset',
         }
 
-        if (!windowProps?.fullscreen) {
+        if (!!windowProps && !windowProps.fullscreen) {
             finalProps = {
                 ...finalProps,
                 ...windowProps
