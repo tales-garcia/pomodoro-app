@@ -18,17 +18,17 @@ export default {
         this.setContextMenu(Menu.buildFromTemplate([
             {
                 label: 'Dashboard',
-                click: windows.createDashboard
+                click: () => windows.createDashboard()
             },
             {
                 label: 'File',
                 submenu: [
-                    { label: 'Close', click: timer.close },
-                    { label: 'Reset', click: timer.reset },
+                    { label: 'Close', click: () => timer.close() },
+                    { label: 'Reset', click: () => timer.reset() },
                     {
                         label: 'New Timer',
                         submenu: [
-                            { label: 'Custom', click: windows.createTimer },
+                            { label: 'Custom', click: () => windows.createTimer() },
                             {
                                 label: 'Presets',
                                 submenu: [

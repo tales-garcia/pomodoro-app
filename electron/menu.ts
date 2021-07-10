@@ -10,13 +10,13 @@ export default function createMenu() {
         {
             label: 'File',
             submenu: [
-                { label: 'Close', click: timer.close, accelerator: 'CommandOrControl+W' },
-                { label: 'Reset', click: timer.reset, accelerator: 'Shift+CommandOrControl+R' },
-                { label: 'Dashboard', click: windows.createDashboard, accelerator: 'Shift+CommandOrControl+T' },
+                { label: 'Close', click: () => timer.close(), accelerator: 'CommandOrControl+W' },
+                { label: 'Reset', click: () => timer.reset(), accelerator: 'Shift+CommandOrControl+R' },
+                { label: 'Dashboard', click: () => windows.createDashboard(), accelerator: 'Shift+CommandOrControl+T' },
                 {
                     label: 'New Timer',
                     submenu: [
-                        { label: 'Custom', click: windows.createTimer, accelerator: 'CommandOrControl+N' },
+                        { label: 'Custom', click: () => windows.createTimer(), accelerator: 'CommandOrControl+N' },
                         {
                             label: 'Presets',
                             submenu: [
