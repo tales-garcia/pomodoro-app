@@ -106,3 +106,7 @@ app.on('before-quit', event => {
     browserWindow.webContents.send('get-time');
   });
 });
+app.setAboutPanelOptions({
+  applicationName: 'Pomodoro',
+  authors: ['Tales Garcia<garcia.tales@gmail.com>']
+});
