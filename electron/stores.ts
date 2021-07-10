@@ -9,7 +9,7 @@ interface Window {
         height: number;
     };
     id: string;
-    type: 'timer' | 'dashboard';
+    type: 'timer' | 'dashboard' | 'settings';
     time?: number;
     maxTime?: number;
     name?: string;

@@ -90,5 +90,41 @@ export default {
         createMenu()
 
         return dashboardWindow;
+    },
+    createSettings: () => {
+
+        const window = new BrowserWindow({
+            width: 700,
+            height: 600,
+            backgroundColor: '#1A1A29',
+            webPreferences: {
+                nodeIntegration: true,
+                enableRemoteModule: true
+            },
+            movable: true,
+            resizable: true,
+            titleBarStyle: 'hiddenInset',
+            fullscreenable: true,
+            frame: process.platform === 'darwin',
+            transparent: process.platform === 'darwin',
+            acceptFirstMouse: true,
+        })
+
+        if (process.env.NODE_ENV === 'development') {
+            window.loadURL('http://localhost:4000/#/settings').then(() => dashboardWindow?.setTitle('Settings'));
+        } else {
+            window.loadURL(
+                url.format({
+                    pathname: path.join(__dirname, 'renderer/index.html'),
+                    protocol: 'file:',
+                    slashes: true,
+                    hash: '/settings'
+                })
+            ).then(() => dashboardWindow?.setTitle('Settings'));
+        }
+
+        createMenu();
+
+        return window;
     }
 }

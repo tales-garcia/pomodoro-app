@@ -17,7 +17,8 @@ function createInitialWindows() {
       [key in typeof type]: keyof typeof windows;
     } = {
       dashboard: 'createDashboard',
-      timer: 'createTimer'
+      timer: 'createTimer',
+      settings: 'createSettings'
     };
 
     mainWindow = windows[typeToMethod[type]](bounds) || null;
