@@ -175,6 +175,7 @@ export const NoSelectedWorkspace = styled.main`
     > p {
         font: 500 1.2rem Montserrat, sans-serif;
         opacity: 0.8;
+        text-align: center;
         margin-bottom: 4rem;
     }
 
@@ -183,6 +184,11 @@ export const NoSelectedWorkspace = styled.main`
         display: grid;
         grid-template-columns: 1fr 1fr;
         padding: 0 6rem;
+        grid-gap: 1rem;
+
+        @media(max-width: 900px) {
+            padding: 0 2rem;
+        }
     }
 `;
 
@@ -191,6 +197,7 @@ export const Commands = styled.ul`
         list-style: none;
         opacity: 0.6;
         font: 500 0.96rem Montserrat, sans-serif;
+        white-space: nowrap;
 
         & + li {
             margin-top: 1.2rem;
