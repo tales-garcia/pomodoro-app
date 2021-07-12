@@ -85,7 +85,24 @@ app.on('before-quit', event => {
       }
 
       return;
+    } else if (browserWindow.webContents.getURL().includes('settings')) {
+      windowsBounds.push({
+        bounds: {
+          ...browserWindow.getBounds(),
+          fullscreen: browserWindow.isFullScreen()
+        },
+        type: 'settings',
+        id: v4()
+      });
+
+      if (windowsBounds.length >= BrowserWindow.getAllWindows().length) {
+        windowsStore.windows = windowsBounds;
+        app.exit()
+      }
+
+      return;
     }
+
     ipcMain.removeAllListeners('get-time-reply');
     const handleGetTimeReply = (_: any, time: number, maxTime: number) => {
       windowsBounds.push({
