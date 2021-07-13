@@ -6,7 +6,7 @@ import { v4 } from 'uuid';
 
 const {
     storedTime, storedMaxTime, name, id
-} = ipcRenderer.sendSync('get-timer-props');
+} = ipcRenderer.sendSync('get-timer-props', remote.getCurrentWindow().id);
 
 const Timer: React.FC = () => {
 
