@@ -101,26 +101,26 @@ app.on('before-quit', event => {
       }
 
       return;
-    }
+    } else if (browserWindow.webContents.getURL().includes('timer')) {
+      ipcMain.removeAllListeners('get-time-reply');
+      const handleGetTimeReply = (_: any, time: number, maxTime: number) => {
+        windowsBounds.push({
+          bounds: BrowserWindow.fromWebContents(_.sender)!.getBounds(),
+          time,
+          type: 'timer',
+          maxTime,
+          id: v4()
+        })
 
-    ipcMain.removeAllListeners('get-time-reply');
-    const handleGetTimeReply = (_: any, time: number, maxTime: number) => {
-      windowsBounds.push({
-        bounds: BrowserWindow.fromWebContents(_.sender)!.getBounds(),
-        time,
-        type: 'timer',
-        maxTime,
-        id: v4()
-      })
-
-      if (windowsBounds.length >= BrowserWindow.getAllWindows().length) {
-        windowsStore.windows = windowsBounds;
-        app.exit()
+        if (windowsBounds.length >= BrowserWindow.getAllWindows().length) {
+          windowsStore.windows = windowsBounds;
+          app.exit()
+        }
       }
-    }
 
-    ipcMain.on('get-time-reply', handleGetTimeReply);
-    browserWindow.webContents.send('get-time');
+      ipcMain.on('get-time-reply', handleGetTimeReply);
+      browserWindow.webContents.send('get-time');
+    }
   });
 });
 app.setAboutPanelOptions({
