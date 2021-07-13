@@ -11,7 +11,7 @@ const {
 const Timer: React.FC = () => {
 
     useEffect(() => {
-        remote.getCurrentWindow().setTitle(`${!!name ? `${name} - ` : 'Unkown - '}Timer`);
+        remote.getCurrentWindow().setTitle(`${!!name ? `${name} - ` : 'Untitled - '}Timer`);
 
         if (!!id) {
             ipcRenderer.send('save-recent', id);
