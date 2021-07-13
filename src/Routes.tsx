@@ -8,7 +8,7 @@ const Routes: React.FC = () => {
   return (
     <HashRouter>
       <Switch>
-        <Route path="/" exact component={Timer} />
+        <Route path="/timer" exact component={Timer} />
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/settings" component={Settings} />
       </Switch>

@@ -31,13 +31,14 @@ export default {
         })
 
         if (process.env.NODE_ENV === 'development') {
-            window.loadURL('http://localhost:4000')
+            window.loadURL('http://localhost:4000/#/timer')
         } else {
             window.loadURL(
                 url.format({
                     pathname: path.join(__dirname, 'renderer/index.html'),
                     protocol: 'file:',
-                    slashes: true
+                    slashes: true,
+                    hash: '/timer'
                 })
             )
         }
