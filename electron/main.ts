@@ -69,39 +69,9 @@ app.on('before-quit', event => {
   const windowsBounds: any[] = [];
 
   BrowserWindow.getAllWindows().forEach(browserWindow => {
-    if (browserWindow.webContents.getURL().includes('dashboard')) {
-      windowsBounds.push({
-        bounds: {
-          ...browserWindow.getBounds(),
-          fullscreen: browserWindow.isFullScreen()
-        },
-        type: 'dashboard',
-        id: v4()
-      });
+    const type = new URL(browserWindow.webContents.getURL()).hash.replace('#/', '');
 
-      if (windowsBounds.length >= BrowserWindow.getAllWindows().length) {
-        windowsStore.windows = windowsBounds;
-        app.exit()
-      }
-
-      return;
-    } else if (browserWindow.webContents.getURL().includes('settings')) {
-      windowsBounds.push({
-        bounds: {
-          ...browserWindow.getBounds(),
-          fullscreen: browserWindow.isFullScreen()
-        },
-        type: 'settings',
-        id: v4()
-      });
-
-      if (windowsBounds.length >= BrowserWindow.getAllWindows().length) {
-        windowsStore.windows = windowsBounds;
-        app.exit()
-      }
-
-      return;
-    } else if (browserWindow.webContents.getURL().includes('timer')) {
+    if (type === 'timer') {
       ipcMain.removeAllListeners('get-time-reply');
       const handleGetTimeReply = (_: any, time: number, maxTime: number) => {
         windowsBounds.push({
@@ -120,6 +90,22 @@ app.on('before-quit', event => {
 
       ipcMain.on('get-time-reply', handleGetTimeReply);
       browserWindow.webContents.send('get-time');
+
+      return;
+    }
+
+    windowsBounds.push({
+      bounds: {
+        ...browserWindow.getBounds(),
+        fullscreen: browserWindow.isFullScreen()
+      },
+      type,
+      id: v4()
+    });
+
+    if (windowsBounds.length >= BrowserWindow.getAllWindows().length) {
+      windowsStore.windows = windowsBounds;
+      app.exit()
     }
   });
 });
