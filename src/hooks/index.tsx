@@ -6,6 +6,7 @@ import { ThemeProvider } from 'styled-components'
 import { ModalProvider } from '../hooks/modal';
 import { WorkspaceProvider } from '../hooks/workspace';
 import { GlobalStyle } from '../styles/GlobalStyle'
+import { TimerProvider } from './timer';
 
 const theme = {
     blue: '#24243B',
@@ -21,7 +22,9 @@ const AppProvider: React.FC = ({ children }) => {
                 <GlobalStyle />
                 <ModalProvider>
                     <WorkspaceProvider>
-                        {children}
+                        <TimerProvider>
+                            {children}
+                        </TimerProvider>
                     </WorkspaceProvider>
                 </ModalProvider>
             </ThemeProvider>
