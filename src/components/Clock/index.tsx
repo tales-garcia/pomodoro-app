@@ -1,25 +1,13 @@
-import { ipcRenderer, remote } from 'electron';
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { buildStyles, CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import { ThemeContext } from 'styled-components';
+import { useTimer } from '../../hooks/timer';
 import formatTime from '../../utils/formatTime';
 
 import { Container } from './styles';
 
-interface ClockProps {
-    time: number;
-    maxTime: number;
-}
-
-const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime }) => {
-    const [time, setTime] = useState<number | null>(propsTime || null);
-    const [isActive, setIsActive] = useState(false);
-    const [inputTime, setInputTime] = useState({
-        seconds: '--',
-        minutes: '--',
-        hours: '00'
-    });
-    const [maxTime, setMaxTime] = useState<number | null>(propsMaxTime || propsTime || null);
+const Clock: React.FC = () => {
+    const { time, isActive, maxTime, inputTime, setInputTime, toggleCounter, resetCounter } = useTimer();
 
     const [stringHours, stringMinutes, stringSeconds] = useMemo(() => {
         if (!time) return [];
@@ -30,91 +18,6 @@ const Clock: React.FC<ClockProps> = ({ time: propsTime, maxTime: propsMaxTime })
 
         return splittedTime;
     }, [time]);
-
-    useEffect(() => {
-        ipcRenderer.on('set-time', (_, time) => {
-            if (!time) {
-                setInputTime({
-                    seconds: '--',
-                    minutes: '--',
-                    hours: '--'
-                });
-            } else {
-                setInputTime({
-                    hours: String(Math.floor(time / 3600)).padStart(2, '0'),
-                    minutes: String(Math.floor(time % 3600 / 60)).padStart(2, '0'),
-                    seconds: String(Math.floor(time % 3600 % 60)).padStart(2, '0')
-                })
-            }
-            setMaxTime(time || null);
-            setTime(time || null);
-            setIsActive(false);
-        });
-    }, []);
-
-    const handleGetTimeReply = useCallback(() => {
-        ipcRenderer.send('get-time-reply', time, maxTime)
-    }, [time, maxTime])
-
-    useEffect(() => {
-        ipcRenderer.removeAllListeners('get-time');
-
-        if (time) {
-            ipcRenderer.addListener('get-time', handleGetTimeReply);
-        } else {
-            ipcRenderer.addListener('get-time', () => ipcRenderer.send('get-time-reply', null));
-        }
-
-        if (isActive && time && time > 0) {
-            const timeout = setTimeout(() => {
-                setTime(time - 1);
-                setInputTime({
-                    hours: String(Math.floor((time - 1) / 3600)).padStart(2, '0'),
-                    minutes: String(Math.floor((time - 1) % 3600 / 60)).padStart(2, '0'),
-                    seconds: String(Math.floor((time - 1) % 3600 % 60)).padStart(2, '0')
-                });
-            }, 1000);
-            return () => clearTimeout(timeout);
-        } else if (isActive && time === 0) {
-            resetCounter()
-            new Notification('Timer finished');
-        }
-    }, [isActive, time]);
-
-    useEffect(() => {
-        if (!Object.keys(inputTime).some(text => !(inputTime as any)[text] || isNaN(Number((inputTime as any)[text])))) {
-            const { minutes, seconds, hours } = inputTime;
-
-            const textTime = (Number(hours) * 3600) + (Number(minutes) * 60) + Number(seconds);
-
-            if (textTime === time) {
-                return;
-            }
-
-            setTime(textTime);
-            setMaxTime(textTime);
-        }
-    }, [inputTime]);
-
-    const toggleCounter = useCallback(
-        () => {
-            setIsActive(!isActive);
-        },
-        [isActive, setIsActive],
-    );
-
-    const resetCounter = useCallback(
-        () => {
-            setIsActive(false);
-            setTime(maxTime);
-            setInputTime({
-                seconds: '--',
-                minutes: '--',
-                hours: '--'
-            });
-        },
-        [maxTime]
-    )
 
     const { red } = useContext(ThemeContext);
 
