@@ -19,6 +19,7 @@ interface TimerContextContent {
     }>>;
     toggleCounter: () => void;
     resetCounter: () => void;
+    saveTimer: () => void;
 }
 
 const TimerContext = createContext<TimerContextContent>({} as TimerContextContent);
@@ -149,6 +150,15 @@ export const TimerProvider: React.FC = ({ children }) => {
         }
     }, [inputTime]);
 
+    const saveTimer = useCallback(() => {
+        if (!maxTime) return;
+
+        if (id) {
+            ipcRenderer.sendSync('edit-timer', id, { maxTime });
+        }
+
+    }, [maxTime, name]);
+
     return (
         <TimerContext.Provider
             value={{
@@ -159,7 +169,8 @@ export const TimerProvider: React.FC = ({ children }) => {
                 inputTime,
                 setInputTime,
                 toggleCounter,
-                resetCounter
+                resetCounter,
+                saveTimer
             }}
         >
             {children}
