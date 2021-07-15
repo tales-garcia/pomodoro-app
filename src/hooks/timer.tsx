@@ -154,7 +154,7 @@ export const TimerProvider: React.FC = ({ children }) => {
         if (!maxTime) return;
 
         if (id) {
-            ipcRenderer.sendSync('edit-timer', id, { maxTime });
+            ipcRenderer.sendSync('edit-timer', id, { time: maxTime } as Timer);
         }
 
     }, [maxTime, name]);
