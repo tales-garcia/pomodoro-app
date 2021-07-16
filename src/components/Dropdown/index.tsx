@@ -88,6 +88,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
         }),
         valueContainer: base => ({ ...base, padding: 0 }),
         menuList: base => ({ ...base, padding: 0 }),
+        noOptionsMessage: base => ({ ...base, padding: 15 })
       }}
     />
   );
