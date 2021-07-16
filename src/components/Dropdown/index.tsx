@@ -54,6 +54,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
           overflow: 'hidden',
           borderRadius: 8
         }),
+        indicatorSeparator: () => ({ display: 'none' }),
         dropdownIndicator: base => ({
           ...base,
           color: text,
