@@ -25,6 +25,14 @@ export const Container = styled.main`
 
     width: 40%;
 
+    @media(max-width: 900px) {
+        width: 60%;
+    }
+
+    @media(max-width: 600px) {
+        width: 80%;
+    }
+
     > * {
         display: flex;
         flex-direction: column;
