@@ -47,13 +47,14 @@ export const useTimer = () => {
 }
 
 const {
-    storedTime, storedMaxTime, name, id
+    storedTime, storedMaxTime, name, initialId
 } = ipcRenderer.sendSync('get-timer-props', remote.getCurrentWindow().id);
 
 export const TimerProvider: React.FC = ({ children }) => {
     const [time, setTime] = useState<number | null>(storedTime || null);
     const [isActive, setIsActive] = useState(false);
     const [maxTime, setMaxTime] = useState<number | null>(storedMaxTime || storedTime || null);
+    const [id, setId] = useState<string>(initialId);
     const modal = useModal();
 
     const [inputTime, setInputTime] = useState({
@@ -76,7 +77,7 @@ export const TimerProvider: React.FC = ({ children }) => {
 
             ipcRenderer.send('save-recent', finalTimer);
         }
-    }, []);
+    }, [id]);
 
     useEffect(() => {
         ipcRenderer.on('set-time', (_, time) => {
@@ -179,7 +180,7 @@ export const TimerProvider: React.FC = ({ children }) => {
             modal.setContent((
                 <Formik
                     initialValues={{ workspace: '' }}
-                    onSubmit={values => console.log(values)}
+                    onSubmit={handleSaveSubmit}
                 >
                     <Form>
                         <Dropdown
@@ -199,6 +200,19 @@ export const TimerProvider: React.FC = ({ children }) => {
         }
 
     }, [maxTime, name]);
+
+    const handleSaveSubmit = useCallback(({ workspace }) => {
+        if (!time || !workspace) return;
+
+        const timerDto = {
+            name: !!name ? name : 'Untitled',
+            time,
+            workspaceId: workspace
+        } as ITimerDTO;
+
+        const generatedTimer = ipcRenderer.sendSync('create-timer', timerDto);
+        setId(generatedTimer.id);
+    }, [time, name]);
 
     return (
         <TimerContext.Provider
