@@ -160,6 +160,13 @@ export const TimerProvider: React.FC = ({ children }) => {
         if (id) {
             ipcRenderer.sendSync('edit-timer', id, { time: maxTime } as Timer);
         } else {
+            const workspaces = ipcRenderer.sendSync('get-workspaces') as Workspace[];
+
+            const formattedWorkspaces = workspaces.map(workspace => ({
+                label: workspace.name,
+                value: workspace.id
+            }));
+
             modal.setContent((
                 <Formik
                     initialValues={{ workspace: '' }}
@@ -169,7 +176,7 @@ export const TimerProvider: React.FC = ({ children }) => {
                         <Dropdown
                             placeholder='Select a workspace.'
                             noOptionsMessage={() => 'No workspaces.'}
-                            options={[]}
+                            options={formattedWorkspaces}
                             name='workspace'
                         />
                     </Form>
