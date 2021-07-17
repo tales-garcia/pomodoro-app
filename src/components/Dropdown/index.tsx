@@ -14,19 +14,29 @@ interface DropdownProps {
   noOptionsMessage?: ((obj: {
     inputValue: string;
   }) => string | null);
-  onChange?: (((value: DropdownOption | null, actionMeta: ActionMeta<DropdownOption>) => void) & ((value: DropdownOption | null, action: ActionMeta<DropdownOption>) => void)) | undefined;
   defaultValue?: DropdownOption;
   value?: DropdownOption;
+  name: string;
 }
 
 const Dropdown: React.FC<DropdownProps> = (props) => {
   const { red, blue, text, darkBlue } = useTheme();
+  const [field, _, helpers] = useField(props.name);
+  const value = useMemo(() => props.options.find(option => option.value === field.value), [field.value]);
+
+  const handleChange: (((value: DropdownOption | null, actionMeta: ActionMeta<DropdownOption>) => void) & ((value: DropdownOption | null, action: ActionMeta<any>) => void)) = useCallback((option) => {
+    if (!option) return;
+    helpers.setValue(option.value);
+  }, [field]);
 
   return (
     <Select
       isSearchable
       hideSelectedOptions
       {...props}
+      onChange={handleChange}
+      value={value}
+      onBlur={field.onBlur}
       styles={{
         control: (base, state) => ({
           ...base,
