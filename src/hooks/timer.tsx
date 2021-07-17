@@ -215,6 +215,7 @@ export const TimerProvider: React.FC = ({ children }) => {
         } as ITimerDTO;
 
         const generatedTimer = ipcRenderer.sendSync('create-timer', timerDto);
+        modal.hide();
         setId(generatedTimer.id);
     }, [time, name]);
 
