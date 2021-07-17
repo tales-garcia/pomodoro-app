@@ -1,4 +1,5 @@
-import React from 'react';
+import { useField } from 'formik';
+import React, { useCallback, useMemo } from 'react';
 import Select, { ActionMeta } from 'react-select';
 import { useTheme } from 'styled-components';
 
@@ -67,7 +68,8 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
           ...base,
           backgroundColor: state.isFocused ? darkBlue : blue,
           font: '500 1rem Montserrat, sans-serif',
-          padding: 15
+          padding: 15,
+          ':active': ({})
         }),
         singleValue: base => ({
           ...base,
