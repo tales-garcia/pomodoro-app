@@ -1,9 +1,18 @@
 import { ipcRenderer, remote } from 'electron';
 import { Form, Formik } from 'formik';
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { v4 } from 'uuid';
+import Button from '../components/Button';
 import Dropdown from '../components/Dropdown';
 import { useModal } from './modal';
+
+const ButtonsContainer = styled.div`
+    min-width: 50%;
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 1fr 1fr;
+`;
 
 interface TimerContextContent {
     time: number | null;
@@ -179,6 +188,10 @@ export const TimerProvider: React.FC = ({ children }) => {
                             options={formattedWorkspaces}
                             name='workspace'
                         />
+                        <ButtonsContainer>
+                            <Button type="button">Cancel</Button>
+                            <Button type="submit" confirmButton>Confirm</Button>
+                        </ButtonsContainer>
                     </Form>
                 </Formik>
             ));
