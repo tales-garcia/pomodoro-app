@@ -100,6 +100,10 @@ export const TimerProvider: React.FC = ({ children }) => {
         });
     }, []);
 
+    useEffect(() => {
+        ipcRenderer.on('save-timer', saveTimer);
+    }, [time]);
+
     const toggleCounter = useCallback(
         () => {
             setIsActive(!isActive);
@@ -165,10 +169,10 @@ export const TimerProvider: React.FC = ({ children }) => {
     }, [inputTime]);
 
     const saveTimer = useCallback(() => {
-        if (!maxTime) return;
+        if (!time) return;
 
         if (id) {
-            ipcRenderer.sendSync('edit-timer', id, { time: maxTime } as Timer);
+            ipcRenderer.sendSync('edit-timer', id, { time } as Timer);
         } else {
             const workspaces = ipcRenderer.sendSync('get-workspaces') as Workspace[];
 
@@ -199,7 +203,7 @@ export const TimerProvider: React.FC = ({ children }) => {
             modal.show();
         }
 
-    }, [maxTime, name]);
+    }, [time, id]);
 
     const handleSaveSubmit = useCallback(({ workspace }) => {
         if (!time || !workspace) return;
