@@ -35,5 +35,9 @@ export default {
     },
     close: () => {
         mainWindow?.close();
+    },
+    save: () => {
+        if (!mainWindow) return;
+        mainWindow.webContents.send('save-timer');
     }
 }
