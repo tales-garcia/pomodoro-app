@@ -1,6 +1,9 @@
 import { ipcRenderer, remote } from 'electron';
+import { Form, Formik } from 'formik';
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { v4 } from 'uuid';
+import Dropdown from '../components/Dropdown';
+import { useModal } from './modal';
 
 interface TimerContextContent {
     time: number | null;
@@ -42,6 +45,7 @@ export const TimerProvider: React.FC = ({ children }) => {
     const [time, setTime] = useState<number | null>(storedTime || null);
     const [isActive, setIsActive] = useState(false);
     const [maxTime, setMaxTime] = useState<number | null>(storedMaxTime || storedTime || null);
+    const modal = useModal();
 
     const [inputTime, setInputTime] = useState({
         seconds: '--',
@@ -155,6 +159,23 @@ export const TimerProvider: React.FC = ({ children }) => {
 
         if (id) {
             ipcRenderer.sendSync('edit-timer', id, { time: maxTime } as Timer);
+        } else {
+            modal.setContent((
+                <Formik
+                    initialValues={{ workspace: '' }}
+                    onSubmit={values => console.log(values)}
+                >
+                    <Form>
+                        <Dropdown
+                            placeholder='Select a workspace.'
+                            noOptionsMessage={() => 'No workspaces.'}
+                            options={[]}
+                            name='workspace'
+                        />
+                    </Form>
+                </Formik>
+            ));
+            modal.show();
         }
 
     }, [maxTime, name]);
