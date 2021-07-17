@@ -194,7 +194,7 @@ export const TimerProvider: React.FC = ({ children }) => {
                             name='workspace'
                         />
                         <ButtonsContainer>
-                            <Button type="button">Cancel</Button>
+                            <Button onClick={modal.hide} type="button">Cancel</Button>
                             <Button type="submit" confirmButton>Confirm</Button>
                         </ButtonsContainer>
                     </Form>
