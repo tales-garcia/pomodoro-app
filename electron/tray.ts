@@ -23,6 +23,7 @@ export default {
             {
                 label: 'File',
                 submenu: [
+                    { label: 'Save', click: () => timer.save() },
                     { label: 'Close', click: () => timer.close() },
                     { label: 'Reset', click: () => timer.reset() },
                     {
