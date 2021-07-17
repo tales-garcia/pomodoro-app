@@ -6,6 +6,11 @@ import { v4 } from 'uuid';
 import Button from '../components/Button';
 import Dropdown from '../components/Dropdown';
 import { useModal } from './modal';
+import * as Yup from 'yup';
+
+const workspaceSelectValidation = Yup.object().shape({
+    workspace: Yup.string().required('Invalid selection.')
+});
 
 const ButtonsContainer = styled.div`
     min-width: 50%;
@@ -185,6 +190,9 @@ export const TimerProvider: React.FC = ({ children }) => {
                 <Formik
                     initialValues={{ workspace: '' }}
                     onSubmit={handleSaveSubmit}
+                    validateOnBlur={false}
+                    validateOnChange={false}
+                    validationSchema={workspaceSelectValidation}
                 >
                     <Form>
                         <Dropdown
