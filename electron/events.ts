@@ -1,4 +1,4 @@
-import { ipcMain } from "electron";
+import { BrowserWindow, ipcMain } from "electron";
 import { v4 } from "uuid";
 import { idsTranslator } from "./main";
 import { recentStore, windowsStore, workspacesStore } from './stores';
@@ -153,6 +153,12 @@ export default {
                 break;
             }
         }
+
+        const dashboardWindow = BrowserWindow.getAllWindows().find(win => win.webContents.getURL().includes('dashboard'));
+
+        if (!dashboardWindow) return;
+
+        dashboardWindow.webContents.send('update-recents', JSON.parse(JSON.stringify(recentStore)));
     },
     'get-recents': (ev) => {
         ev.returnValue = JSON.parse(JSON.stringify(recentStore));
