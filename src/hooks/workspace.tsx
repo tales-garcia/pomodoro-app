@@ -109,7 +109,7 @@ export const WorkspaceProvider: React.FC = ({ children }) => {
     setWorkspaces(newWorkspaces);
   }, []);
 
-  const deleteWorkspace = (id: string) => {
+  const deleteWorkspace = useCallback((id: string) => {
     if (!selectedWorkspace || id !== selectedWorkspace.id) {
       setWorkspaces(ipcRenderer.sendSync('delete-workspace', id));
       return;
@@ -126,7 +126,7 @@ export const WorkspaceProvider: React.FC = ({ children }) => {
     }
     setSelectedWorkspace(workspaces[selectedWorkspaceIndex]);
     setWorkspaces(ipcRenderer.sendSync('delete-workspace', id));
-  }
+  }, [selectedWorkspace, workspaces])
 
   useEffect(() => {
     if (!selectedWorkspace) {
