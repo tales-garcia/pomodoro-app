@@ -83,6 +83,10 @@ export const WorkspaceProvider: React.FC = ({ children }) => {
   const [recents, setRecents] = useState<Timer[]>(ipcRenderer.sendSync('get-recents'));
   const { setContent, show, hide } = useModal();
 
+  useEffect(() => {
+    ipcRenderer.on('update-recents', (_, value) => setRecents(value));
+  }, []);
+
   const createWorkspace = useCallback(({ name }) => {
     hide();
 
