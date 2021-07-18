@@ -20,9 +20,9 @@ export const windowsStore = new Store<{ windows: Array<Window> }>({
     default: {
         windows: [
             {
-                bounds: { width: 400, height: 550 } as any,
+                bounds: { fullscreen: true } as any,
                 id: v4(),
-                type: 'timer'
+                type: 'dashboard'
             }
         ]
     },
