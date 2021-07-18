@@ -52,7 +52,7 @@ export const useTimer = () => {
 }
 
 const {
-    storedTime, storedMaxTime, name, initialId
+    storedTime, storedMaxTime, name, id: initialId
 } = ipcRenderer.sendSync('get-timer-props', remote.getCurrentWindow().id);
 
 export const TimerProvider: React.FC = ({ children }) => {
