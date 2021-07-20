@@ -1,5 +1,6 @@
 import { BrowserWindow, ipcMain } from "electron";
 import { v4 } from "uuid";
+import getLocalization from "./localization";
 import { idsTranslator } from "./main";
 import { recentStore, windowsStore, workspacesStore } from './stores';
 import timer from "./timer";
@@ -162,5 +163,8 @@ export default {
     },
     'get-recents': (ev) => {
         ev.returnValue = JSON.parse(JSON.stringify(recentStore));
+    },
+    'get-localized-messages': (ev, locale?: string) => {
+        ev.returnValue = getLocalization(locale);
     }
 } as Events;
