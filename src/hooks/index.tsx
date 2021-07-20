@@ -6,6 +6,7 @@ import { ThemeProvider } from 'styled-components'
 import { ModalProvider } from '../hooks/modal';
 import { WorkspaceProvider } from '../hooks/workspace';
 import { GlobalStyle } from '../styles/GlobalStyle'
+import { LocalizationProvider } from './localization';
 import { TimerProvider } from './timer';
 
 const theme = {
@@ -17,18 +18,20 @@ const theme = {
 
 const AppProvider: React.FC = ({ children }) => {
     return (
-        <DndProvider backend={HTML5Backend}>
-            <ThemeProvider theme={theme}>
-                <GlobalStyle />
-                <ModalProvider>
-                    <WorkspaceProvider>
-                        <TimerProvider>
-                            {children}
-                        </TimerProvider>
-                    </WorkspaceProvider>
-                </ModalProvider>
-            </ThemeProvider>
-        </DndProvider>
+        <LocalizationProvider>
+            <DndProvider backend={HTML5Backend}>
+                <ThemeProvider theme={theme}>
+                    <GlobalStyle />
+                    <ModalProvider>
+                        <WorkspaceProvider>
+                            <TimerProvider>
+                                {children}
+                            </TimerProvider>
+                        </WorkspaceProvider>
+                    </ModalProvider>
+                </ThemeProvider>
+            </DndProvider>
+        </LocalizationProvider>
     );
 }
 
