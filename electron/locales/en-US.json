@@ -2,5 +2,15 @@
     "timer": {
         "pause": "PAUSE",
         "start": "START"
+    },
+    "dashboard": {
+        "workspaces": "Workspaces",
+        "new": "New",
+        "getStarted": "Select or create a workspace to get started.",
+        "newTimer": "New Untitled Timer",
+        "close": "Close Window",
+        "openDashboard": "Open Dashboard",
+        "recent": "Recent",
+        "noRecent": "No recent opened timers."
     }
 }
