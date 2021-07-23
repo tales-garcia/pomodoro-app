@@ -1,13 +1,10 @@
 import { ipcRenderer } from 'electron';
 import React, { createContext, useCallback, useContext, useMemo } from 'react';
 import { useState } from 'react';
-
-type Messages = {
-    [key: string]: Messages | string;
-}
+import { FileLocale } from '../../@types/locale';
 
 interface LocalizationContextContent {
-    messages: Messages;
+    messages: FileLocale;
     changeLocale(locale: keyof Locales): void;
 }
 
