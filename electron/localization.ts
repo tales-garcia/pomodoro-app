@@ -1,8 +1,9 @@
 import { app } from 'electron';
 import fs from 'fs';
 import path from 'path';
+import { FileLocale } from '../@types/locale';
 
-export default function getLocalization(locale?: string) {
+export default function getLocalization(locale?: string) : FileLocale {
     const finalLocale = !!locale ? locale : app.getLocale();
     const localesDir = path.join(__dirname, '/locales/');
 
