@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { FiTrash2, FiPlus, FiFolderPlus, FiSliders } from 'react-icons/fi';
 import { useTheme } from 'styled-components';
 import TimerItem from '../../components/TimerItem';
@@ -33,6 +33,8 @@ const Dashboard: React.FC = () => {
       editWorkspace(selectedWorkspace.id, { timers: selectedWorkspace.timers });
     }
   });
+
+  const comandOrControl = useMemo(() => process.platform === 'darwin' ? '⌘' : '⌃', [process.platform]);
 
   return (
     <Container>
@@ -119,13 +121,13 @@ const Dashboard: React.FC = () => {
             <div>
               <Commands>
                 <li>
-                  <Key>⌘</Key> <Key>N</Key> New Untitled Timer
+                  <Key>{comandOrControl}</Key> <Key>N</Key> New Untitled Timer
                 </li>
                 <li>
-                  <Key>⌘</Key> <Key>W</Key> Close Window
+                  <Key>{comandOrControl}</Key> <Key>W</Key> Close Window
                 </li>
                 <li>
-                  <Key>⇧</Key> <Key>⌘</Key> <Key>T</Key> Open Dashboard
+                  <Key>⇧</Key> <Key>{comandOrControl}</Key> <Key>T</Key> Open Dashboard
                 </li>
               </Commands>
               <Recent>
