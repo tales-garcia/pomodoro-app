@@ -1,6 +1,7 @@
 import React, { useContext, useMemo } from 'react';
 import { buildStyles, CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import { ThemeContext } from 'styled-components';
+import { useLocalization } from '../../hooks/localization';
 import { useTimer } from '../../hooks/timer';
 import formatTime from '../../utils/formatTime';
 
@@ -8,6 +9,7 @@ import { Container } from './styles';
 
 const Clock: React.FC = () => {
     const { time, isActive, maxTime, inputTime, setInputTime, toggleCounter, resetCounter } = useTimer();
+    const { messages: { timer: { start, pause } } } = useLocalization()
 
     const [stringHours, stringMinutes, stringSeconds] = useMemo(() => {
         if (!time) return [];
@@ -114,7 +116,7 @@ const Clock: React.FC = () => {
                     </span>
                 </div>
 
-                <p style={{ opacity: time ? 1 : 0.5, cursor: time ? 'pointer' : 'not-allowed' }} onClick={!!time ? toggleCounter : undefined}>{isActive ? 'PAUSE' : 'START'}</p>
+                <p style={{ opacity: time ? 1 : 0.5, cursor: time ? 'pointer' : 'not-allowed' }} onClick={!!time ? toggleCounter : undefined}>{isActive ? pause : start}</p>
             </CircularProgressbarWithChildren>
 
             <p style={{ opacity: (time || Object.keys(inputTime).some(key => /(0|1|2|3|4|5|6|7|8|9)/i.test((inputTime as any)[key]))) ? 1 : 0.5, cursor: (time || Object.keys(inputTime).some(key => /(0|1|2|3|4|5|6|7|8|9)/i.test((inputTime as any)[key]))) ? 'pointer' : 'not-allowed' }} onClick={resetCounter}>RESET</p>
