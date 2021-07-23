@@ -10,10 +10,12 @@ import welcomeLogo from '../../assets/welcomeLogo.png';
 import Key from '../../components/Key';
 import formatTime from '../../utils/formatTime';
 import { ipcRenderer } from 'electron';
+import { useLocalization } from '../../hooks/localization';
 
 const Dashboard: React.FC = () => {
   const { red, text } = useTheme();
   const { editWorkspace, recents, saveWorkspaces, createNewTimerModal, workspaces, selectedWorkspace, createWorkspaceModal, setSelectedWorkspace, deleteWorkspace } = useWorkspace();
+  const { messages: { dashboard: { close, getStarted, create, newTimer, noRecent, openDashboard, recent, workspacesTitle } } } = useLocalization();
 
   const handleDragEnd = useCallback(result => {
     if (!result.destination) return;
@@ -39,7 +41,7 @@ const Dashboard: React.FC = () => {
   return (
     <Container>
       <aside>
-        <h1>Workspaces</h1>
+        <h1>{workspacesTitle}</h1>
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="workspaces">
             {provided => (
@@ -105,7 +107,7 @@ const Dashboard: React.FC = () => {
               </span>
               <button onClick={createNewTimerModal}>
                 <FiPlus size={20} color={text} />
-                New
+                {create}
               </button>
             </h1>
             <ul ref={dropRef}>
@@ -117,21 +119,21 @@ const Dashboard: React.FC = () => {
         ) : (
           <NoSelectedWorkspace>
             <img src={welcomeLogo} alt="Logo" />
-            <p>Select or create a workspace to get started.</p>
+            <p>{getStarted}</p>
             <div>
               <Commands>
                 <li>
-                  <Key>{comandOrControl}</Key> <Key>N</Key> New Untitled Timer
+                  <Key>{comandOrControl}</Key> <Key>N</Key> {newTimer}
                 </li>
                 <li>
-                  <Key>{comandOrControl}</Key> <Key>W</Key> Close Window
+                  <Key>{comandOrControl}</Key> <Key>W</Key> {close}
                 </li>
                 <li>
-                  <Key>⇧</Key> <Key>{comandOrControl}</Key> <Key>T</Key> Open Dashboard
+                  <Key>⇧</Key> <Key>{comandOrControl}</Key> <Key>T</Key> {openDashboard}
                 </li>
               </Commands>
               <Recent>
-                <p>Recent</p>
+                <p>{recent}</p>
                 {recents.map(timer => (
                   <li>
                     <span
@@ -143,7 +145,7 @@ const Dashboard: React.FC = () => {
                     </span> — {formatTime(timer.time)}
                   </li>
                 ))}
-                {!recents.length && <li>No recent opened timers.</li>}
+                {!recents.length && <li>{noRecent}</li>}
               </Recent>
             </div>
           </NoSelectedWorkspace>
