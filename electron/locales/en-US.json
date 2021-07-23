@@ -4,8 +4,8 @@
         "start": "START"
     },
     "dashboard": {
-        "workspaces": "Workspaces",
-        "new": "New",
+        "workspacesTitle": "Workspaces",
+        "create": "New",
         "getStarted": "Select or create a workspace to get started.",
         "newTimer": "New Untitled Timer",
         "close": "Close Window",
