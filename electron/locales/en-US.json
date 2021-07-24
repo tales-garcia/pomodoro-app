@@ -12,5 +12,11 @@
         "openDashboard": "Open Dashboard",
         "recent": "Recent",
         "noRecent": "No recent opened timers."
+    },
+    "shared": {
+        "buttons": {
+            "confirm": "Confirm",
+            "cancel": "Cancel"
+        }
     }
 }
