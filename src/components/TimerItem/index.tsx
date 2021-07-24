@@ -9,6 +9,7 @@ import NumberEditableContent from '../NumberEditableContent';
 import { Container, ButtonsContainer } from './styles';
 import { useDrag, useDrop } from 'react-dnd';
 import formatTime from '../../utils/formatTime';
+import { useLocalization } from '../../hooks/localization';
 
 interface TimerItemProps {
     data: Timer;
@@ -18,6 +19,7 @@ interface TimerItemProps {
 const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id }, index }) => {
     const { red, text, blue } = useTheme();
     const { deleteTimer, editTimer, setSelectedWorkspace } = useWorkspace();
+    const { messages: { shared: { buttons: { cancel, confirm } } } } = useLocalization()
     const ref = React.useRef<HTMLLIElement>(null);
 
     const [editMode, setEditMode] = useState(false);
@@ -215,9 +217,9 @@ const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id }, index }
                                     setEditValues(showingValues);
                                 }}
                             >
-                                Cancel
+                                {cancel}
                             </Button>
-                            <Button confirmButton onClick={handleEditTimer}>Confirm</Button>
+                            <Button confirmButton onClick={handleEditTimer}>{confirm}</Button>
                         </ButtonsContainer>
                     )}
                 </AnimatePresence>
