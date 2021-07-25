@@ -1,6 +1,6 @@
 import { ipcRenderer, remote } from 'electron';
 import { Form, Formik } from 'formik';
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { v4 } from 'uuid';
 import Button from '../components/Button';
@@ -8,10 +8,6 @@ import Dropdown from '../components/Dropdown';
 import { useModal } from './modal';
 import * as Yup from 'yup';
 import { useLocalization } from './localization';
-
-const workspaceSelectValidation = Yup.object().shape({
-    workspace: Yup.string().required('Invalid selection.')
-});
 
 const ButtonsContainer = styled.div`
     min-width: 50%;
@@ -62,13 +58,17 @@ export const TimerProvider: React.FC = ({ children }) => {
     const [maxTime, setMaxTime] = useState<number | null>(storedMaxTime || storedTime || null);
     const [id, setId] = useState<string>(initialId);
     const modal = useModal();
-    const { messages: { shared: { untitled } } } = useLocalization()
+    const { messages: { shared: { untitled, validation: { invalidSelection } } } } = useLocalization()
 
     const [inputTime, setInputTime] = useState({
         seconds: '--',
         minutes: '--',
         hours: '00'
     });
+
+    const workspaceSelectValidation = useMemo(() => Yup.object().shape({
+        workspace: Yup.string().required(invalidSelection)
+    }), [invalidSelection]);
 
     useEffect(() => {
         remote.getCurrentWindow().setTitle(`${!!name ? `${name} - ` : `${untitled} - `}Timer`);
