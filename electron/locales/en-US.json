@@ -22,6 +22,10 @@
         "validation": {
             "invalidSelection": "Invalid selection"
         },
-        "timerFinished": "Timer finished"
+        "timerFinished": "Timer finished",
+        "dropdown": {
+            "selectAWorkspace": "Select a workspace",
+            "noWorkspaces": "No workspaces"
+        }
     }
 }
