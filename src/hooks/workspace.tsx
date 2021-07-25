@@ -1,11 +1,12 @@
 import { ipcRenderer } from 'electron';
 import { Formik, Form } from 'formik';
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import Input from '../components/Input';
 import { useModal } from './modal';
 import * as yup from 'yup';
 import styled from 'styled-components';
 import Button from '../components/Button';
+import { useLocalization } from './localization';
 
 const TimeInput = styled.div`
     width: 100%;
@@ -50,38 +51,38 @@ export const useWorkspace = () => {
   return context;
 }
 
-const workspaceValidation = yup.object().shape({
-  name: yup.string().required('Name is required')
-});
-
-const timerValidation = yup.object().shape({
-  name: yup.string().required('Name is required'),
-  hours: yup.number().positive('Negative numbers are not allowed.').test({
-    message: 'Please add a value to a field.',
-    test: function () {
-      return !((!this.parent.seconds && !this.parent.minutes) && !this.parent[this.path]);
-    }
-  }),
-  minutes: yup.number().positive('Negative numbers are not allowed.').test({
-    message: 'Please add a value to a field.',
-    test: function () {
-      return !((!this.parent.hours && !this.parent.seconds) && !this.parent[this.path]);
-    }
-  }),
-  seconds: yup.number().positive('Negative numbers are not allowed.').test({
-    message: 'Please add a value to a field.',
-    test: function () {
-      return !((!this.parent.hours && !this.parent.minutes) && !this.parent[this.path]);
-    }
-  })
-});
-
-
 export const WorkspaceProvider: React.FC = ({ children }) => {
   const [workspaces, setWorkspaces] = useState<Workspace[]>(ipcRenderer.sendSync('get-workspaces'));
   const [selectedWorkspace, setSelectedWorkspace] = useState<Workspace | null>(null);
   const [recents, setRecents] = useState<Timer[]>(ipcRenderer.sendSync('get-recents'));
   const { setContent, show, hide } = useModal();
+  const { messages: { shared: { validation: { nameIsRequired, negativeNumbersAreNotAllowed, addValueToField } } } } = useLocalization()
+
+  const workspaceValidation = useMemo(() => yup.object().shape({
+    name: yup.string().required(nameIsRequired)
+  }), [nameIsRequired]);
+
+  const timerValidation = useMemo(() => yup.object().shape({
+    name: yup.string().required(nameIsRequired),
+    hours: yup.number().positive(negativeNumbersAreNotAllowed).test({
+      message: addValueToField,
+      test: function () {
+        return !((!this.parent.seconds && !this.parent.minutes) && !this.parent[this.path]);
+      }
+    }),
+    minutes: yup.number().positive(negativeNumbersAreNotAllowed).test({
+      message: addValueToField,
+      test: function () {
+        return !((!this.parent.hours && !this.parent.seconds) && !this.parent[this.path]);
+      }
+    }),
+    seconds: yup.number().positive(negativeNumbersAreNotAllowed).test({
+      message: addValueToField,
+      test: function () {
+        return !((!this.parent.hours && !this.parent.minutes) && !this.parent[this.path]);
+      }
+    })
+  }), [nameIsRequired, negativeNumbersAreNotAllowed, addValueToField]);
 
   useEffect(() => {
     ipcRenderer.on('update-recents', (_, value) => setRecents(value));
