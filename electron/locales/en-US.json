@@ -29,6 +29,8 @@
         "dropdown": {
             "selectAWorkspace": "Select a workspace",
             "noWorkspaces": "No workspaces"
-        }
+        },
+        "newWorkspace": "New workspace",
+        "namePlaceholder": "Name"
     }
 }
