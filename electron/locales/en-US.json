@@ -21,6 +21,7 @@
         "untitled": "Untitled",
         "validation": {
             "invalidSelection": "Invalid selection"
-        }
+        },
+        "timerFinished": "Timer finished"
     }
 }
