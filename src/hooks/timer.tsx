@@ -7,6 +7,7 @@ import Button from '../components/Button';
 import Dropdown from '../components/Dropdown';
 import { useModal } from './modal';
 import * as Yup from 'yup';
+import { useLocalization } from './localization';
 
 const workspaceSelectValidation = Yup.object().shape({
     workspace: Yup.string().required('Invalid selection.')
@@ -61,6 +62,7 @@ export const TimerProvider: React.FC = ({ children }) => {
     const [maxTime, setMaxTime] = useState<number | null>(storedMaxTime || storedTime || null);
     const [id, setId] = useState<string>(initialId);
     const modal = useModal();
+    const { messages: { shared: { untitled } } } = useLocalization()
 
     const [inputTime, setInputTime] = useState({
         seconds: '--',
@@ -69,14 +71,14 @@ export const TimerProvider: React.FC = ({ children }) => {
     });
 
     useEffect(() => {
-        remote.getCurrentWindow().setTitle(`${!!name ? `${name} - ` : 'Untitled - '}Timer`);
+        remote.getCurrentWindow().setTitle(`${!!name ? `${name} - ` : `${untitled} - `}Timer`);
 
         if (!!id) {
             ipcRenderer.send('save-recent', id);
         } else if (!!storedMaxTime) {
             const finalTimer: Timer = {
                 id: v4(),
-                name: !!name ? name : 'Untitled',
+                name: !!name ? name : untitled,
                 time: storedMaxTime
             };
 
@@ -217,7 +219,7 @@ export const TimerProvider: React.FC = ({ children }) => {
         if (!time || !workspace) return;
 
         const timerDto = {
-            name: !!name ? name : 'Untitled',
+            name: !!name ? name : untitled,
             time,
             workspaceId: workspace
         } as ITimerDTO;
