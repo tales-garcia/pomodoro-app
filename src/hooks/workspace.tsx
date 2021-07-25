@@ -56,7 +56,7 @@ export const WorkspaceProvider: React.FC = ({ children }) => {
   const [selectedWorkspace, setSelectedWorkspace] = useState<Workspace | null>(null);
   const [recents, setRecents] = useState<Timer[]>(ipcRenderer.sendSync('get-recents'));
   const { setContent, show, hide } = useModal();
-  const { messages: { shared: { buttons: { confirm, cancel }, namePlaceholder, newWorkspace, validation: { nameIsRequired, negativeNumbersAreNotAllowed, addValueToField } } } } = useLocalization()
+  const { messages: { shared: { buttons: { confirm, cancel }, namePlaceholder, newWorkspace, validation: { nameIsRequired, negativeNumbersAreNotAllowed, addValueToField }, hours, minutes, seconds } } } = useLocalization()
 
   const workspaceValidation = useMemo(() => yup.object().shape({
     name: yup.string().required(nameIsRequired)
@@ -198,11 +198,11 @@ export const WorkspaceProvider: React.FC = ({ children }) => {
         >
           <Form>
             <h2>New timer</h2>
-            <Input name="name" type="text" placeholder="Name" />
+            <Input name="name" type="text" placeholder={namePlaceholder} />
             <TimeInput>
-              <Input name="hours" type="number" placeholder="Hours" />:
-              <Input name="minutes" type="number" placeholder="Minutes" />:
-              <Input name="seconds" type="number" placeholder="Seconds" />
+              <Input name="hours" type="number" placeholder={hours} />:
+              <Input name="minutes" type="number" placeholder={minutes} />:
+              <Input name="seconds" type="number" placeholder={seconds} />
             </TimeInput>
             <ButtonsContainer>
               <Button type="button" onClick={hide}>{cancel}</Button>
