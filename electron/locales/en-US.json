@@ -20,7 +20,10 @@
         },
         "untitled": "Untitled",
         "validation": {
-            "invalidSelection": "Invalid selection"
+            "invalidSelection": "Invalid selection",
+            "nameIsRequired": "Name is required",
+            "negativeNumbersAreNotAllowed": "Negative numbers are not allowed",
+            "addValueToField": "Please add a value to at least one field"
         },
         "timerFinished": "Timer finished",
         "dropdown": {
