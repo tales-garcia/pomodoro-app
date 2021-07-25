@@ -56,7 +56,7 @@ export const WorkspaceProvider: React.FC = ({ children }) => {
   const [selectedWorkspace, setSelectedWorkspace] = useState<Workspace | null>(null);
   const [recents, setRecents] = useState<Timer[]>(ipcRenderer.sendSync('get-recents'));
   const { setContent, show, hide } = useModal();
-  const { messages: { shared: { validation: { nameIsRequired, negativeNumbersAreNotAllowed, addValueToField } } } } = useLocalization()
+  const { messages: { shared: { buttons: { confirm, cancel }, namePlaceholder, newWorkspace, validation: { nameIsRequired, negativeNumbersAreNotAllowed, addValueToField } } } } = useLocalization()
 
   const workspaceValidation = useMemo(() => yup.object().shape({
     name: yup.string().required(nameIsRequired)
@@ -150,11 +150,11 @@ export const WorkspaceProvider: React.FC = ({ children }) => {
           onSubmit={createWorkspace}
         >
           <Form>
-            <h2>New workspace</h2>
-            <Input name="name" type="text" placeholder="Name" />
+            <h2>{newWorkspace}</h2>
+            <Input name="name" type="text" placeholder={namePlaceholder} />
             <ButtonsContainer>
-              <Button type="button" onClick={hide}>Cancel</Button>
-              <Button type="submit" confirmButton>Confirm</Button>
+              <Button type="button" onClick={hide}>{cancel}</Button>
+              <Button type="submit" confirmButton>{confirm}</Button>
             </ButtonsContainer>
           </Form>
         </Formik>
