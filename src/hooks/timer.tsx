@@ -58,7 +58,7 @@ export const TimerProvider: React.FC = ({ children }) => {
     const [maxTime, setMaxTime] = useState<number | null>(storedMaxTime || storedTime || null);
     const [id, setId] = useState<string>(initialId);
     const modal = useModal();
-    const { messages: { shared: { untitled, validation: { invalidSelection } } } } = useLocalization()
+    const { messages: { shared: { untitled, validation: { invalidSelection }, timerFinished } } } = useLocalization()
 
     const [inputTime, setInputTime] = useState({
         seconds: '--',
@@ -156,7 +156,7 @@ export const TimerProvider: React.FC = ({ children }) => {
             return () => clearTimeout(timeout);
         } else if (isActive && time === 0) {
             resetCounter()
-            new Notification('Timer finished');
+            new Notification(timerFinished);
         }
     }, [isActive, time]);
 
