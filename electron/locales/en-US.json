@@ -17,6 +17,7 @@
         "buttons": {
             "confirm": "Confirm",
             "cancel": "Cancel"
-        }
+        },
+        "untitled": "Untitled"
     }
 }
