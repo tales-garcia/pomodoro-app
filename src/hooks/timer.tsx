@@ -58,7 +58,7 @@ export const TimerProvider: React.FC = ({ children }) => {
     const [maxTime, setMaxTime] = useState<number | null>(storedMaxTime || storedTime || null);
     const [id, setId] = useState<string>(initialId);
     const modal = useModal();
-    const { messages: { shared: { untitled, validation: { invalidSelection }, timerFinished } } } = useLocalization()
+    const { messages: { shared: { untitled, validation: { invalidSelection }, timerFinished, buttons: { cancel, confirm } } } } = useLocalization()
 
     const [inputTime, setInputTime] = useState({
         seconds: '--',
@@ -204,8 +204,8 @@ export const TimerProvider: React.FC = ({ children }) => {
                             name='workspace'
                         />
                         <ButtonsContainer>
-                            <Button onClick={modal.hide} type="button">Cancel</Button>
-                            <Button type="submit" confirmButton>Confirm</Button>
+                            <Button onClick={modal.hide} type="button">{cancel}</Button>
+                            <Button type="submit" confirmButton>{confirm}</Button>
                         </ButtonsContainer>
                     </Form>
                 </Formik>
