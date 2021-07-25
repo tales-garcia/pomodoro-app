@@ -31,6 +31,10 @@
             "noWorkspaces": "No workspaces"
         },
         "newWorkspace": "New workspace",
-        "namePlaceholder": "Name"
+        "namePlaceholder": "Name",
+        "newTimer": "New timer",
+        "hours": "Hours",
+        "minutes": "Minutes",
+        "seconds": "Seconds"
     }
 }
