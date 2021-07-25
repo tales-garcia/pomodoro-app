@@ -58,7 +58,7 @@ export const TimerProvider: React.FC = ({ children }) => {
     const [maxTime, setMaxTime] = useState<number | null>(storedMaxTime || storedTime || null);
     const [id, setId] = useState<string>(initialId);
     const modal = useModal();
-    const { messages: { shared: { untitled, validation: { invalidSelection }, timerFinished, buttons: { cancel, confirm } } } } = useLocalization()
+    const { messages: { shared: { untitled, validation: { invalidSelection }, timerFinished, buttons: { cancel, confirm }, dropdown: { selectAWorkspace, noWorkspaces } } } } = useLocalization()
 
     const [inputTime, setInputTime] = useState({
         seconds: '--',
@@ -198,8 +198,8 @@ export const TimerProvider: React.FC = ({ children }) => {
                 >
                     <Form>
                         <Dropdown
-                            placeholder='Select a workspace.'
-                            noOptionsMessage={() => 'No workspaces.'}
+                            placeholder={selectAWorkspace}
+                            noOptionsMessage={() => noWorkspaces}
                             options={formattedWorkspaces}
                             name='workspace'
                         />
