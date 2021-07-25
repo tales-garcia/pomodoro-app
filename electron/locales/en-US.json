@@ -18,6 +18,9 @@
             "confirm": "Confirm",
             "cancel": "Cancel"
         },
-        "untitled": "Untitled"
+        "untitled": "Untitled",
+        "validation": {
+            "invalidSelection": "Invalid selection"
+        }
     }
 }
