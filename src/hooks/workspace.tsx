@@ -205,8 +205,8 @@ export const WorkspaceProvider: React.FC = ({ children }) => {
               <Input name="seconds" type="number" placeholder="Seconds" />
             </TimeInput>
             <ButtonsContainer>
-              <Button type="button" onClick={hide}>Cancel</Button>
-              <Button confirmButton type="submit">Confirm</Button>
+              <Button type="button" onClick={hide}>{cancel}</Button>
+              <Button confirmButton type="submit">{confirm}</Button>
             </ButtonsContainer>
           </Form>
         </Formik>
