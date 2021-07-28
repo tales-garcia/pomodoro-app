@@ -166,5 +166,14 @@ export default {
     },
     'get-localized-messages': (ev, locale?: string) => {
         ev.returnValue = getLocalization(locale);
+    },
+    'set-locale': (ev, locale: keyof Locales) => {
+        const senderId = BrowserWindow.fromWebContents(ev.sender)?.id;
+
+        BrowserWindow.getAllWindows().forEach(win => {
+            if (win.id !== senderId) {
+                win.webContents.send('set-locale', locale);
+            }
+        });
     }
 } as Events;
