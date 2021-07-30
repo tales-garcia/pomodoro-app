@@ -12,21 +12,27 @@ export let mainWindow: Electron.BrowserWindow | null;
 Object.keys(events).forEach(event => ipcMain.on(event, events[event]));
 
 function createInitialWindows() {
-  windowsStore.windows.forEach(({ bounds, id, type }) => {
-    const typeToMethod: {
-      [key in typeof type]: keyof typeof windows;
-    } = {
-      dashboard: 'createDashboard',
-      timer: 'createTimer',
-      settings: 'createSettings'
-    };
+  const splash = windows.createSplash();
 
-    mainWindow = windows[typeToMethod[type]](bounds) || null;
+  setTimeout(() => {
+    splash.close();
 
-    idsTranslator[mainWindow!.id] = id;
+    windowsStore.windows.forEach(({ bounds, id, type }) => {
+      const typeToMethod: {
+        [key in typeof type]: keyof typeof windows;
+      } = {
+        dashboard: 'createDashboard',
+        timer: 'createTimer',
+        settings: 'createSettings'
+      };
 
-    mainWindow!.on('close', () => mainWindow = null);
-  });
+      mainWindow = windows[typeToMethod[type]](bounds) || null;
+
+      idsTranslator[mainWindow!.id] = id;
+
+      mainWindow!.on('close', () => mainWindow = null);
+    });
+  }, 6000);
 }
 
 app.on('window-all-closed', () => {
@@ -70,6 +76,8 @@ app.on('before-quit', event => {
 
   BrowserWindow.getAllWindows().forEach(browserWindow => {
     const type = new URL(browserWindow.webContents.getURL()).hash.replace('#/', '');
+
+    if (type === 'splash') return;
 
     if (type === 'timer') {
       ipcMain.removeAllListeners('get-time-reply');
