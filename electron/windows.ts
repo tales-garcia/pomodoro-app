@@ -112,7 +112,7 @@ export default {
         })
 
         if (process.env.NODE_ENV === 'development') {
-            window.loadURL('http://localhost:4000/#/settings').then(() => dashboardWindow?.setTitle('Settings'));
+            window.loadURL('http://localhost:4000/#/settings').then(() => window?.setTitle('Settings'));
         } else {
             window.loadURL(
                 url.format({
@@ -121,7 +121,7 @@ export default {
                     slashes: true,
                     hash: '/settings'
                 })
-            ).then(() => dashboardWindow?.setTitle('Settings'));
+            ).then(() => window?.setTitle('Settings'));
         }
 
         createMenu();
