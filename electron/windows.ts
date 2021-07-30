@@ -127,5 +127,37 @@ export default {
         createMenu();
 
         return window;
+    },
+    createSplash: () => {
+        const window = new BrowserWindow({
+            width: 400,
+            height: 400,
+            backgroundColor: '#1A1A29',
+            webPreferences: {
+                nodeIntegration: true
+            },
+            movable: true,
+            resizable: false,
+            fullscreenable: false,
+            frame: false,
+            transparent: true
+        })
+
+        if (process.env.NODE_ENV === 'development') {
+            window.loadURL('http://localhost:4000/#/splash').then(() => window?.setTitle('Splash'));
+        } else {
+            window.loadURL(
+                url.format({
+                    pathname: path.join(__dirname, 'renderer/index.html'),
+                    protocol: 'file:',
+                    slashes: true,
+                    hash: '/splash'
+                })
+            ).then(() => window?.setTitle('Splash'));
+        }
+
+        createMenu();
+
+        return window;
     }
 }
