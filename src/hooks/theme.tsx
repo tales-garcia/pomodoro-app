@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
+import { ipcRenderer } from 'electron';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { DefaultTheme, ThemeProvider } from 'styled-components';
 
 interface ThemeHelperContextContent {
@@ -37,7 +38,13 @@ export const useThemeHelper = () => {
 }
 
 export const ThemeHelperProvider: React.FC = ({ children }) => {
-    const [mode, setMode] = useState<'light' | 'dark'>('light');
+    const [mode, setMode] = useState<'light' | 'dark'>(ipcRenderer.sendSync('get-theme'));
+
+    useEffect(() => {
+        ipcRenderer.on('update-theme', () => {
+            setMode(ipcRenderer.sendSync('get-theme'))
+        });
+    }, []);
 
     return (
         <ThemeHelperContext.Provider
