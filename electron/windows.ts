@@ -2,6 +2,7 @@ import { BrowserWindow } from "electron";
 import createMenu from "./menu";
 import path from 'path';
 import * as url from 'url';
+import getTheme from "./theme";
 
 let dashboardWindow: BrowserWindow | null;
 
@@ -11,7 +12,7 @@ export default {
         const window = new BrowserWindow({
             width: 400,
             height: 550,
-            backgroundColor: '#1A1A29',
+            backgroundColor: getTheme() === 'light' ? '#ECECEC' : '#1A1A29',
             webPreferences: {
                 nodeIntegration: true,
                 enableRemoteModule: true
@@ -51,7 +52,7 @@ export default {
         if (dashboardWindow && !dashboardWindow.isDestroyed()) return;
 
         let finalProps: Electron.BrowserWindowConstructorOptions = {
-            backgroundColor: '#1A1A29',
+            backgroundColor: getTheme() === 'light' ? '#ECECEC' : '#1A1A29',
             webPreferences: {
                 nodeIntegration: true,
                 enableRemoteModule: true
@@ -97,7 +98,7 @@ export default {
         const window = new BrowserWindow({
             width: 700,
             height: 600,
-            backgroundColor: '#1A1A29',
+            backgroundColor: getTheme() === 'light' ? '#ECECEC' : '#1A1A29',
             webPreferences: {
                 nodeIntegration: true,
                 enableRemoteModule: true
@@ -132,7 +133,7 @@ export default {
         const window = new BrowserWindow({
             width: 400,
             height: 400,
-            backgroundColor: '#1A1A29',
+            backgroundColor: getTheme() === 'light' ? '#ECECEC' : '#1A1A29',
             webPreferences: {
                 nodeIntegration: true
             },
