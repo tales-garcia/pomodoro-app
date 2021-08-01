@@ -175,5 +175,8 @@ export default {
                 win.webContents.send('set-locale', locale);
             }
         });
+    },
+    'get-theme': (ev) => {
+        ev.returnValue = 'light';
     }
 } as Events;
