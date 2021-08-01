@@ -5,6 +5,7 @@ declare module 'styled-components' {
     blue: string,
     darkBlue: string,
     red: string,
-    text: string
+    text: string,
+    gradient: string
   }
 }

@@ -1,15 +1,23 @@
 import React, { createContext, useContext } from 'react';
-import { ThemeProvider } from 'styled-components';
+import { DefaultTheme, ThemeProvider } from 'styled-components';
 
 interface ThemeHelperContextContent {
 }
 
-const themes = {
+const themes: { [key in 'dark' | 'light']: DefaultTheme } = {
     dark: {
         blue: '#24243B',
         darkBlue: '#151423',
         red: '#D93C3C',
-        text: '#E4E4E4'
+        text: '#E4E4E4',
+        gradient: 'linear-gradient(146.1deg, #1D1C30 0%, #31314E 100%)'
+    },
+    light: {
+        blue: '#24243B',
+        darkBlue: '#151423',
+        red: '#D93C3C',
+        text: '#E4E4E4',
+        gradient: 'linear-gradient(146.1deg, #1D1C30 0%, #31314E 100%)'
     }
 }
 
