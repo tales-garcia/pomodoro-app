@@ -7,13 +7,16 @@ import { useWorkspace } from '../../hooks/workspace';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useDrop } from 'react-dnd';
 import welcomeLogo from '../../assets/welcomeLogo.png';
+import welcomeLogoLight from '../../assets/welcomeLogoLight.png';
 import Key from '../../components/Key';
 import formatTime from '../../utils/formatTime';
 import { ipcRenderer } from 'electron';
 import { useLocalization } from '../../hooks/localization';
+import { useThemeHelper } from '../../hooks/theme';
 
 const Dashboard: React.FC = () => {
   const { red, text } = useTheme();
+  const { mode } = useThemeHelper();
   const { editWorkspace, recents, saveWorkspaces, createNewTimerModal, workspaces, selectedWorkspace, createWorkspaceModal, setSelectedWorkspace, deleteWorkspace } = useWorkspace();
   const { messages: { dashboard: { close, getStarted, create, newTimer, noRecent, openDashboard, recent, workspacesTitle } } } = useLocalization();
 
@@ -118,7 +121,7 @@ const Dashboard: React.FC = () => {
           </>
         ) : (
           <NoSelectedWorkspace>
-            <img src={welcomeLogo} alt="Logo" />
+            <img src={mode === 'dark' ? welcomeLogo : welcomeLogoLight} alt="Logo" />
             <p>{getStarted}</p>
             <div>
               <Commands>
