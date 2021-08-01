@@ -1,7 +1,8 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { DefaultTheme, ThemeProvider } from 'styled-components';
 
 interface ThemeHelperContextContent {
+    mode: 'light' | 'dark'
 }
 
 const themes: { [key in 'dark' | 'light']: DefaultTheme } = {
@@ -36,12 +37,15 @@ export const useThemeHelper = () => {
 }
 
 export const ThemeHelperProvider: React.FC = ({ children }) => {
+    const [mode, setMode] = useState<'light' | 'dark'>('light');
+
     return (
         <ThemeHelperContext.Provider
             value={{
+                mode
             }}
         >
-            <ThemeProvider theme={themes.light}>
+            <ThemeProvider theme={themes[mode]}>
                 {children}
             </ThemeProvider>
         </ThemeHelperContext.Provider>
