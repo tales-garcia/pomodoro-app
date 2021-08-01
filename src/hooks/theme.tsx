@@ -10,14 +10,16 @@ const themes: { [key in 'dark' | 'light']: DefaultTheme } = {
         darkBlue: '#151423',
         red: '#D93C3C',
         text: '#E4E4E4',
-        gradient: 'linear-gradient(146.1deg, #1D1C30 0%, #31314E 100%)'
+        gradient: 'linear-gradient(146.1deg, #1D1C30 0%, #31314E 100%)',
+        keyBackground: '#1f1f33'
     },
     light: {
-        blue: '#24243B',
-        darkBlue: '#151423',
+        blue: '#F9F9F9',
+        darkBlue: '#E0E0E0',
         red: '#D93C3C',
-        text: '#E4E4E4',
-        gradient: 'linear-gradient(146.1deg, #1D1C30 0%, #31314E 100%)'
+        text: '#272727',
+        gradient: 'linear-gradient(146.1deg, #E0E0E0 0%, #F9F9F9 100%)',
+        keyBackground: '#e6e6e6'
     }
 }
 
@@ -39,7 +41,7 @@ export const ThemeHelperProvider: React.FC = ({ children }) => {
             value={{
             }}
         >
-            <ThemeProvider theme={themes.dark}>
+            <ThemeProvider theme={themes.light}>
                 {children}
             </ThemeProvider>
         </ThemeHelperContext.Provider>
