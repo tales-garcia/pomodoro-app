@@ -170,6 +170,8 @@ export const NoSelectedWorkspace = styled.main`
 
     > img {
         margin-bottom: 1.8rem;
+        width: 256px;
+        height: 256px;
     }
 
     > p {
