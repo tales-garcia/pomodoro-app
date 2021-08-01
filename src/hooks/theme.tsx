@@ -17,10 +17,10 @@ const themes: { [key in 'dark' | 'light']: DefaultTheme } = {
     },
     light: {
         blue: '#F9F9F9',
-        darkBlue: '#E0E0E0',
+        darkBlue: '#E7E7E7',
         red: '#D93C3C',
         text: '#272727',
-        gradient: 'linear-gradient(146.1deg, #E0E0E0 0%, #F9F9F9 100%)',
+        gradient: 'linear-gradient(146.1deg, #E7E7E7 0%, #F9F9F9 100%)',
         keyBackground: '#e6e6e6'
     }
 }
