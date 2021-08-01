@@ -1,6 +1,4 @@
-import { ipcRenderer } from 'electron';
-import React, { createContext, useCallback, useContext, useEffect, useMemo } from 'react';
-import { useState } from 'react';
+import React, { createContext, useContext } from 'react';
 import { ThemeProvider } from 'styled-components';
 
 interface ThemeHelperContextContent {
