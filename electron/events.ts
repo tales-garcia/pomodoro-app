@@ -3,6 +3,7 @@ import { v4 } from "uuid";
 import getLocalization from "./localization";
 import { idsTranslator } from "./main";
 import { recentStore, windowsStore, workspacesStore } from './stores';
+import getTheme from "./theme";
 import timer from "./timer";
 
 interface ITimerProps {
@@ -177,6 +178,6 @@ export default {
         });
     },
     'get-theme': (ev) => {
-        ev.returnValue = 'light';
+        ev.returnValue = getTheme();
     }
 } as Events;
