@@ -13,13 +13,13 @@ const Settings: React.FC = () => {
 
             <Formik
                 initialValues={{
-                    enableRecents: '',
-                    openLastSession: '',
-                    displaySplash: '',
+                    enableRecents: false,
+                    openLastSession: false,
+                    displaySplash: false,
                     setTheme: '',
                     setLanguage: ''
                 }}
-                onSubmit={console.log}
+                onSubmit={values => console.log(values)}
             >
                 <Form>
                     <section>
