@@ -7,6 +7,7 @@ declare module 'styled-components' {
     red: string,
     text: string,
     gradient: string,
-    keyBackground: string
+    keyBackground: string,
+    switchBackground: string
   }
 }
