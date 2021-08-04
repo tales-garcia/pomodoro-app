@@ -97,7 +97,7 @@ export default {
 
         const window = new BrowserWindow({
             width: 700,
-            height: 600,
+            height: 640,
             backgroundColor: getTheme() === 'light' ? '#ECECEC' : '#1A1A29',
             webPreferences: {
                 nodeIntegration: true,
