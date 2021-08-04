@@ -11,7 +11,7 @@ export const Container = styled.div<ContainerProps>`
 
     label {
         display: flex;
-        background-color: ${({ theme, checked }) => !!checked ? theme.red : theme.text};
+        background-color: ${({ theme, checked }) => !!checked ? theme.red : theme.switchBackground};
         border-radius: 2rem;
         align-items: center;
         justify-content: center;
