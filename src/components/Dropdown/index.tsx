@@ -39,6 +39,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
         onChange={handleChange}
         value={value}
         onBlur={field.onBlur}
+        menuPlacement="auto"
         styles={{
           control: (base, state) => ({
             ...base,
