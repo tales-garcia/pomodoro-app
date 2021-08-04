@@ -32,5 +32,9 @@ export const Container = styled.div`
                 }
             }
         }
+
+        & + section {
+            margin-top: 1.2rem;
+        }
     }
 `;
