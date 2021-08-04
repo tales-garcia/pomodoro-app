@@ -13,7 +13,8 @@ const themes: { [key in 'dark' | 'light']: DefaultTheme } = {
         red: '#D93C3C',
         text: '#E4E4E4',
         gradient: 'linear-gradient(146.1deg, #1D1C30 0%, #31314E 100%)',
-        keyBackground: '#1f1f33'
+        keyBackground: '#1f1f33',
+        switchBackground: '#292929'
     },
     light: {
         blue: '#F9F9F9',
@@ -21,7 +22,8 @@ const themes: { [key in 'dark' | 'light']: DefaultTheme } = {
         red: '#D93C3C',
         text: '#272727',
         gradient: 'linear-gradient(146.1deg, #E7E7E7 0%, #F9F9F9 100%)',
-        keyBackground: '#e6e6e6'
+        keyBackground: '#e6e6e6',
+        switchBackground: '#d1d1d1'
     }
 }
 
