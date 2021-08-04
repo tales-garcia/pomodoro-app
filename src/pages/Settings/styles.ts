@@ -9,7 +9,7 @@ export const Container = styled.div`
         margin-bottom: 1.6rem;
     }
 
-    > section {
+    > form > section {
         > h3 {
             font-size: 1.4rem;
             margin-bottom: 0.6rem;
