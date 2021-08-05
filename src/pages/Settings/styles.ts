@@ -30,6 +30,11 @@ export const Container = styled.div`
                 & + li {
                     margin-top: 0.8rem;
                 }
+
+                > span {
+                    display: block;
+                    width: 16rem;
+                }
             }
         }
 

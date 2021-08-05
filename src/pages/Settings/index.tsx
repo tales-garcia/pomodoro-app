@@ -53,11 +53,15 @@ const Settings: React.FC = () => {
                         <ul>
                             <li>
                                 <p>Set Theme</p>
-                                <Dropdown name="setTheme" placeholder="Select a Theme" options={[{ label: 'Dark', value: 'dark' }]} />
+                                <span>
+                                    <Dropdown name="setTheme" placeholder="Select a Theme" options={[{ label: 'Dark', value: 'dark' }]} />
+                                </span>
                             </li>
                             <li>
                                 <p>Set Language</p>
-                                <Dropdown name="setLanguage" placeholder="Select a Language" options={[{ label: 'English', value: 'en-US' }]} />
+                                <span>
+                                    <Dropdown name="setLanguage" placeholder="Select a Language" options={[{ label: 'English', value: 'en-US' }]} />
+                                </span>
                             </li>
                         </ul>
                     </section>
