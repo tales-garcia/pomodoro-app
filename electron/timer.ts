@@ -34,7 +34,9 @@ export default {
             mainWindow.webContents.send('set-time', 0);
     },
     close: () => {
-        mainWindow?.close();
+        if (!mainWindow || mainWindow.webContents.getURL().includes("splash")) return;
+
+        mainWindow.close();
     },
     save: () => {
         if (!mainWindow) return;
