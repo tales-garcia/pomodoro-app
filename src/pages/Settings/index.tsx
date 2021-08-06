@@ -3,13 +3,16 @@ import React from 'react';
 import Button from '../../components/Button';
 import Dropdown from '../../components/Dropdown';
 import Switch from '../../components/Switch';
+import { useLocalization } from '../../hooks/localization';
 
 import { Container } from './styles';
 
 const Settings: React.FC = () => {
+    const { messages: { settings: { appearance, clearRecents, displaySplashScreen, enableRecents, execute, initialize, openLastSessionWindows, recents, setLanguage, setTheme, settings, themes, selectALanguage, selectATheme } } } = useLocalization();
+
     return (
         <Container>
-            <h1>Settings</h1>
+            <h1>{settings}</h1>
 
             <Formik
                 initialValues={{
@@ -23,44 +26,44 @@ const Settings: React.FC = () => {
             >
                 <Form>
                     <section>
-                        <h3>Recents</h3>
+                        <h3>{recents}</h3>
                         <ul>
                             <li>
-                                <p>Clear Recents</p>
-                                <Button confirmButton>Execute</Button>
+                                <p>{clearRecents}</p>
+                                <Button confirmButton>{execute}</Button>
                             </li>
                             <li>
-                                <p>Enable Recents</p>
+                                <p>{enableRecents}</p>
                                 <Switch name="enableRecents" />
                             </li>
                         </ul>
                     </section>
                     <section>
-                        <h3>Initialize</h3>
+                        <h3>{initialize}</h3>
                         <ul>
                             <li>
-                                <p>Open Last Session Windows</p>
+                                <p>{openLastSessionWindows}</p>
                                 <Switch name="openLastSession" />
                             </li>
                             <li>
-                                <p>Display Splash Screen</p>
+                                <p>{displaySplashScreen}</p>
                                 <Switch name="displaySplash" />
                             </li>
                         </ul>
                     </section>
                     <section>
-                        <h3>Initialize</h3>
+                        <h3>{appearance}</h3>
                         <ul>
                             <li>
-                                <p>Set Theme</p>
+                                <p>{setTheme}</p>
                                 <span>
-                                    <Dropdown name="setTheme" placeholder="Select a Theme" options={[{ label: 'Dark', value: 'dark' }]} />
+                                    <Dropdown name="setTheme" placeholder={selectATheme} options={Object.keys(themes).map(key => ({ value: key, label: (themes as any)[key] }))} />
                                 </span>
                             </li>
                             <li>
-                                <p>Set Language</p>
+                                <p>{setLanguage}</p>
                                 <span>
-                                    <Dropdown name="setLanguage" placeholder="Select a Language" options={[{ label: 'English', value: 'en-US' }]} />
+                                    <Dropdown name="setLanguage" placeholder={selectALanguage} options={[{ label: 'English', value: 'en-US' }]} />
                                 </span>
                             </li>
                         </ul>
