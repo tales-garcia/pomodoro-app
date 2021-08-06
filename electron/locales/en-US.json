@@ -36,5 +36,25 @@
         "hours": "Hours",
         "minutes": "Minutes",
         "seconds": "Seconds"
+    },
+    "settings": {
+        "settings": "Settings",
+        "clearRecents": "Clear Recents",
+        "enableRecents": "Enable Recents",
+        "execute": "Execute",
+        "recents": "Recents",
+        "initialize": "Initialize",
+        "openLastSessionWindows": "Open Last Session Windows",
+        "displaySplashScreen": "Display Splash Screen",
+        "appearance": "Appearance",
+        "setTheme": "Set Theme",
+        "themes": {
+            "dark": "Dark",
+            "light": "Light",
+            "System": "System"
+        },
+        "setLanguage": "Set Language",
+        "selectATheme": "Select a theme",
+        "selectALanguage": "Select a language"
     }
 }
