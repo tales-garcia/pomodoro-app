@@ -30,7 +30,7 @@ const Settings: React.FC = () => {
                         <ul>
                             <li>
                                 <p>{clearRecents}</p>
-                                <Button confirmButton>{execute}</Button>
+                                <Button type="button" confirmButton>{execute}</Button>
                             </li>
                             <li>
                                 <p>{enableRecents}</p>
