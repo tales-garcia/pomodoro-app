@@ -1,5 +1,6 @@
 import { Form, Formik } from 'formik';
 import React from 'react';
+import AutoSave from '../../components/AutoSave';
 import Button from '../../components/Button';
 import Dropdown from '../../components/Dropdown';
 import Switch from '../../components/Switch';
@@ -25,6 +26,7 @@ const Settings: React.FC = () => {
                 onSubmit={values => console.log(values)}
             >
                 <Form>
+                    <AutoSave />
                     <section>
                         <h3>{recents}</h3>
                         <ul>
