@@ -1,11 +1,49 @@
-import { app, Menu } from "electron";
+import { app, Menu, MenuItem } from "electron";
 import timer from "./timer";
 import windows from "./windows";
 
 export default function createMenu() {
     const dockMenu = Menu.buildFromTemplate([
         ...(process.platform === 'darwin' ? [{
-            role: 'appMenu'
+            // role: 'appMenu'
+            label: 'Pomodoro',
+            submenu: [
+                {
+                    role: 'about'
+                },
+                {
+                    type: 'separator'
+                },
+                {
+                    label: 'Settings',
+                    click: () => windows.createSettings(),
+                    accelerator: 'Command+,'
+                },
+                {
+                    type: 'separator'
+                },
+                {
+                    role: 'services'
+                },
+                {
+                    type: 'separator'
+                },
+                {
+                    role: 'hide'
+                },
+                {
+                    role: 'hideOthers'
+                },
+                {
+                    role: 'unhide'
+                },
+                {
+                    type: 'separator'
+                },
+                {
+                    role: 'quit'
+                }
+            ]
         }] : [] as any),
         {
             label: 'File',
