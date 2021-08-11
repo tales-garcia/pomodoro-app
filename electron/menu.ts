@@ -5,7 +5,6 @@ import windows from "./windows";
 export default function createMenu() {
     const dockMenu = Menu.buildFromTemplate([
         ...(process.platform === 'darwin' ? [{
-            // role: 'appMenu'
             label: 'Pomodoro',
             submenu: [
                 {
@@ -17,7 +16,7 @@ export default function createMenu() {
                 {
                     label: 'Settings',
                     click: () => windows.createSettings(),
-                    accelerator: 'Command+,'
+                    accelerator: 'CommandOrControl+,'
                 },
                 {
                     type: 'separator'
