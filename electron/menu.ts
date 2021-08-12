@@ -50,7 +50,9 @@ export default function createMenu() {
                 { label: 'Save', click: () => timer.save(), accelerator: 'CommandOrControl+S' },
                 { label: 'Close', click: () => timer.close(), accelerator: 'CommandOrControl+W' },
                 { label: 'Reset', click: () => timer.reset(), accelerator: 'Shift+CommandOrControl+R' },
+                { type: 'separator' },
                 { label: 'Dashboard', click: () => windows.createDashboard(), accelerator: 'Shift+CommandOrControl+T' },
+                { type: 'separator' },
                 {
                     label: 'New Timer',
                     submenu: [
@@ -99,6 +101,7 @@ export default function createMenu() {
                 }
             ],
         },
+        { type: 'separator' },
         { role: 'editMenu' },
         { role: 'windowMenu' }
     ])
