@@ -20,12 +20,14 @@ export default {
                 label: 'Dashboard',
                 click: () => windows.createDashboard()
             },
+            { type: 'separator' },
             {
                 label: 'File',
                 submenu: [
                     { label: 'Save', click: () => timer.save() },
                     { label: 'Close', click: () => timer.close() },
                     { label: 'Reset', click: () => timer.reset() },
+                    { type: 'separator' },
                     {
                         label: 'New Timer',
                         submenu: [
@@ -74,8 +76,10 @@ export default {
                     }
                 ],
             },
+            { type: 'separator' },
             { role: 'editMenu' },
             { role: 'windowMenu' },
+            { type: 'separator' },
             {
                 role: 'quit'
             }
