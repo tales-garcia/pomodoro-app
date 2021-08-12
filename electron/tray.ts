@@ -20,6 +20,10 @@ export default {
                 label: 'Dashboard',
                 click: () => windows.createDashboard()
             },
+            {
+                label: 'Settings',
+                click: () => windows.createSettings()
+            },
             { type: 'separator' },
             {
                 label: 'File',
