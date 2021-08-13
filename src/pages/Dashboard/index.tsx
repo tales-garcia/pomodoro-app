@@ -18,7 +18,7 @@ const Dashboard: React.FC = () => {
   const { red, text } = useTheme();
   const { mode } = useThemeHelper();
   const { editWorkspace, recents, saveWorkspaces, createNewTimerModal, workspaces, selectedWorkspace, createWorkspaceModal, setSelectedWorkspace, deleteWorkspace } = useWorkspace();
-  const { messages: { dashboard: { close, getStarted, create, newTimer, noRecent, openDashboard, recent, workspacesTitle } } } = useLocalization();
+  const { dashboard: { close, getStarted, create, newTimer, noRecent, openDashboard, recent, workspacesTitle } } = useLocalization();
 
   const handleDragEnd = useCallback(result => {
     if (!result.destination) return;

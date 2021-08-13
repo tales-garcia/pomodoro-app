@@ -56,7 +56,7 @@ export const WorkspaceProvider: React.FC = ({ children }) => {
   const [selectedWorkspace, setSelectedWorkspace] = useState<Workspace | null>(null);
   const [recents, setRecents] = useState<Timer[]>(ipcRenderer.sendSync('get-recents'));
   const { setContent, show, hide } = useModal();
-  const { messages: { shared: { buttons: { confirm, cancel }, namePlaceholder, newWorkspace, validation: { nameIsRequired, negativeNumbersAreNotAllowed, addValueToField }, hours, minutes, seconds } } } = useLocalization()
+  const { shared: { buttons: { confirm, cancel }, namePlaceholder, newWorkspace, validation: { nameIsRequired, negativeNumbersAreNotAllowed, addValueToField }, hours, minutes, seconds } } = useLocalization()
 
   const workspaceValidation = useMemo(() => yup.object().shape({
     name: yup.string().required(nameIsRequired)

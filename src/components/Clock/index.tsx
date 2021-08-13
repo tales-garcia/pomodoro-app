@@ -9,7 +9,7 @@ import { Container } from './styles';
 
 const Clock: React.FC = () => {
     const { time, isActive, maxTime, inputTime, setInputTime, toggleCounter, resetCounter } = useTimer();
-    const { messages: { timer: { start, pause } } } = useLocalization()
+    const { timer: { start, pause } } = useLocalization()
 
     const [stringHours, stringMinutes, stringSeconds] = useMemo(() => {
         if (!time) return [];

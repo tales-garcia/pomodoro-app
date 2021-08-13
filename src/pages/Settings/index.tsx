@@ -9,7 +9,7 @@ import { useLocalization } from '../../hooks/localization';
 import { Container } from './styles';
 
 const Settings: React.FC = () => {
-    const { messages: { settings: { appearance, clearRecents, displaySplashScreen, enableRecents, execute, initialize, openLastSessionWindows, recents, setLanguage, setTheme, settings, themes, selectALanguage, selectATheme } } } = useLocalization();
+    const { settings: { appearance, clearRecents, displaySplashScreen, enableRecents, execute, initialize, openLastSessionWindows, recents, setLanguage, setTheme, settings, themes, selectALanguage, selectATheme } } = useLocalization();
 
     return (
         <Container>
@@ -20,8 +20,8 @@ const Settings: React.FC = () => {
                     enableRecents: false,
                     openLastSession: false,
                     displaySplash: false,
-                    setTheme: '',
-                    setLanguage: ''
+                    theme: '',
+                    language: ''
                 }}
                 onSubmit={values => console.log(values)}
             >
@@ -59,13 +59,13 @@ const Settings: React.FC = () => {
                             <li>
                                 <p>{setTheme}</p>
                                 <span>
-                                    <Dropdown name="setTheme" placeholder={selectATheme} options={Object.keys(themes).map(key => ({ value: key, label: (themes as any)[key] }))} />
+                                    <Dropdown name="theme" placeholder={selectATheme} options={Object.keys(themes).map(key => ({ value: key, label: (themes as any)[key] }))} />
                                 </span>
                             </li>
                             <li>
                                 <p>{setLanguage}</p>
                                 <span>
-                                    <Dropdown name="setLanguage" placeholder={selectALanguage} options={[{ label: 'English', value: 'en-US' }]} />
+                                    <Dropdown name="language" placeholder={selectALanguage} options={[{ label: 'English', value: 'en-US' }]} />
                                 </span>
                             </li>
                         </ul>

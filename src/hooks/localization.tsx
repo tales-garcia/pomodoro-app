@@ -1,14 +1,9 @@
 import { ipcRenderer } from 'electron';
-import React, { createContext, useCallback, useContext, useEffect, useMemo } from 'react';
+import React, { createContext, useContext, useEffect, useMemo } from 'react';
 import { useState } from 'react';
 import { FileLocale } from '../../@types/locale';
 
-interface LocalizationContextContent {
-    messages: FileLocale;
-    changeLocale(locale: keyof Locales): void;
-}
-
-const LocalizationContext = createContext<LocalizationContextContent>({} as LocalizationContextContent);
+const LocalizationContext = createContext<FileLocale>({} as FileLocale);
 
 export const useLocalization = () => {
     const context = useContext(LocalizationContext);
@@ -29,17 +24,9 @@ export const LocalizationProvider: React.FC = ({ children }) => {
         ipcRenderer.on('set-locale', (_, newLocale) => setLocale(newLocale));
     }, []);
 
-    const changeLocale = useCallback((locale: string) => {
-        setLocale(locale);
-        ipcRenderer.send('set-locale');
-    }, []);
-
     return (
         <LocalizationContext.Provider
-            value={{
-                messages: formattedMessages,
-                changeLocale
-            }}
+            value={formattedMessages}
         >
             {children}
         </LocalizationContext.Provider>

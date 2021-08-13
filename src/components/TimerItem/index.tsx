@@ -19,7 +19,7 @@ interface TimerItemProps {
 const TimerItem: React.FC<TimerItemProps> = ({ data: { name, time, id }, index }) => {
     const { red, text, blue } = useTheme();
     const { deleteTimer, editTimer, setSelectedWorkspace } = useWorkspace();
-    const { messages: { shared: { buttons: { cancel, confirm } } } } = useLocalization()
+    const { shared: { buttons: { cancel, confirm } } } = useLocalization()
     const ref = React.useRef<HTMLLIElement>(null);
 
     const [editMode, setEditMode] = useState(false);
