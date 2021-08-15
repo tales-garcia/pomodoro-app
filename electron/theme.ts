@@ -1,5 +1,6 @@
 import { nativeTheme } from "electron";
+import { settingsStore } from "./stores";
 
 export default function getTheme() {
-    return nativeTheme.shouldUseDarkColors ? 'dark' : 'light';
+    return settingsStore.theme === 'system' ? nativeTheme.shouldUseDarkColors ? 'dark' : 'light' : settingsStore.settings;
 }
