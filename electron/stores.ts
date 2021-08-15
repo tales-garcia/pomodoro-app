@@ -1,3 +1,4 @@
+import { app } from 'electron';
 import { v4 } from 'uuid';
 import Store from './store';
 
@@ -38,4 +39,15 @@ export const workspacesStore = new Store<Workspace[]>({
 export const recentStore = new Store<Timer[]>({
     default: [],
     filename: 'recent'
+});
+
+export const settingsStore = new Store<ISettings>({
+    default: {
+        displaySplash: true,
+        enableRecents: true,
+        language: app.getLocale() as any,
+        openLastSession: true,
+        theme: 'system'
+    },
+    filename: 'settings'
 });
