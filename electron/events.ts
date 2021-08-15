@@ -133,6 +133,8 @@ export default {
         });
     },
     'save-recent': (_, idOrData) => {
+        if (!settingsStore.enableRecents) return;
+
         switch (typeof idOrData) {
             case 'string': {
                 const workspace = workspacesStore.find(workspace => !!workspace.timers.find(timer => timer.id === idOrData));
