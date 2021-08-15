@@ -2,7 +2,7 @@ import { BrowserWindow, ipcMain } from "electron";
 import { v4 } from "uuid";
 import getLocalization from "./localization";
 import { idsTranslator } from "./main";
-import { recentStore, windowsStore, workspacesStore } from './stores';
+import { recentStore, settingsStore, windowsStore, workspacesStore } from './stores';
 import getTheme from "./theme";
 import timer from "./timer";
 
@@ -168,16 +168,23 @@ export default {
     'get-localized-messages': (ev, locale?: string) => {
         ev.returnValue = getLocalization(locale);
     },
-    'set-locale': (ev, locale: keyof Locales) => {
+    'get-theme': (ev) => {
+        ev.returnValue = getTheme();
+    },
+    'get-settings': (ev) => {
+        ev.returnValue = JSON.parse(JSON.stringify(settingsStore));
+    },
+    'set-settings': (ev, settings: Partial<ISettings>) => {
+        Object.keys(settings).forEach(key => {
+            settingsStore[key] = settings[key];
+        });
+
         const senderId = BrowserWindow.fromWebContents(ev.sender)?.id;
 
         BrowserWindow.getAllWindows().forEach(win => {
             if (win.id !== senderId) {
-                win.webContents.send('set-locale', locale);
+                win.webContents.send('update-settings', JSON.parse(JSON.stringify(settingsStore)));
             }
         });
-    },
-    'get-theme': (ev) => {
-        ev.returnValue = getTheme();
     }
 } as Events;
