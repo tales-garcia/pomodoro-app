@@ -4,7 +4,7 @@ import windows from './windows';
 import { v4 } from 'uuid';
 import tray from './tray';
 import events from './events';
-import { windowsStore } from './stores';
+import { settingsStore, windowsStore } from './stores';
 
 export const idsTranslator: { [key: number]: string } = {};
 export let mainWindow: Electron.BrowserWindow | null;
@@ -12,11 +12,29 @@ export let mainWindow: Electron.BrowserWindow | null;
 Object.keys(events).forEach(event => ipcMain.on(event, events[event]));
 
 function createInitialWindows() {
-  const splash = windows.createSplash();
+  if (settingsStore.displaySplash) {
+    const splash = windows.createSplash();
 
-  setTimeout(() => {
-    splash.close();
+    setTimeout(() => {
+      splash.close();
 
+      windowsStore.windows.forEach(({ bounds, id, type }) => {
+        const typeToMethod: {
+          [key in typeof type]: keyof typeof windows;
+        } = {
+          dashboard: 'createDashboard',
+          timer: 'createTimer',
+          settings: 'createSettings'
+        };
+
+        mainWindow = windows[typeToMethod[type]](bounds) || null;
+
+        idsTranslator[mainWindow!.id] = id;
+
+        mainWindow!.on('close', () => mainWindow = null);
+      });
+    }, 6000);
+  } else {
     windowsStore.windows.forEach(({ bounds, id, type }) => {
       const typeToMethod: {
         [key in typeof type]: keyof typeof windows;
@@ -32,7 +50,7 @@ function createInitialWindows() {
 
       mainWindow!.on('close', () => mainWindow = null);
     });
-  }, 6000);
+  }
 }
 
 app.on('window-all-closed', () => {
