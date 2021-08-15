@@ -6,25 +6,28 @@ import { ModalProvider } from '../hooks/modal';
 import { WorkspaceProvider } from '../hooks/workspace';
 import { GlobalStyle } from '../styles/GlobalStyle'
 import { LocalizationProvider } from './localization';
+import { SettingsProvider } from './settings';
 import { ThemeHelperProvider } from './theme';
 import { TimerProvider } from './timer';
 
 const AppProvider: React.FC = ({ children }) => {
     return (
-        <LocalizationProvider>
-            <DndProvider backend={HTML5Backend}>
-                <ThemeHelperProvider>
-                    <GlobalStyle />
-                    <ModalProvider>
-                        <WorkspaceProvider>
-                            <TimerProvider>
-                                {children}
-                            </TimerProvider>
-                        </WorkspaceProvider>
-                    </ModalProvider>
-                </ThemeHelperProvider>
-            </DndProvider>
-        </LocalizationProvider>
+        <SettingsProvider>
+            <LocalizationProvider>
+                <DndProvider backend={HTML5Backend}>
+                    <ThemeHelperProvider>
+                        <GlobalStyle />
+                        <ModalProvider>
+                            <WorkspaceProvider>
+                                <TimerProvider>
+                                    {children}
+                                </TimerProvider>
+                            </WorkspaceProvider>
+                        </ModalProvider>
+                    </ThemeHelperProvider>
+                </DndProvider>
+            </LocalizationProvider>
+        </SettingsProvider>
     );
 }
 
