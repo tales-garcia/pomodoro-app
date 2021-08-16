@@ -5,24 +5,20 @@ import Button from '../../components/Button';
 import Dropdown from '../../components/Dropdown';
 import Switch from '../../components/Switch';
 import { useLocalization } from '../../hooks/localization';
+import { useSettings } from '../../hooks/settings';
 
 import { Container } from './styles';
 
 const Settings: React.FC = () => {
     const { settings: { appearance, clearRecents, displaySplashScreen, enableRecents, execute, initialize, openLastSessionWindows, recents, setLanguage, setTheme, settings, themes, selectALanguage, selectATheme } } = useLocalization();
+    const settingsObject = useSettings();
 
     return (
         <Container>
             <h1>{settings}</h1>
 
             <Formik
-                initialValues={{
-                    enableRecents: false,
-                    openLastSession: false,
-                    displaySplash: false,
-                    theme: '',
-                    language: ''
-                }}
+                initialValues={settingsObject}
                 onSubmit={values => console.log(values)}
             >
                 <Form>
