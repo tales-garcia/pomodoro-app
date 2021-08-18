@@ -1,5 +1,6 @@
+import { ipcRenderer } from 'electron';
 import { Form, Formik } from 'formik';
-import React from 'react';
+import React, { useCallback } from 'react';
 import AutoSave from '../../components/AutoSave';
 import Button from '../../components/Button';
 import Dropdown from '../../components/Dropdown';
@@ -13,13 +14,15 @@ const Settings: React.FC = () => {
     const { settings: { appearance, clearRecents, displaySplashScreen, enableRecents, execute, initialize, openLastSessionWindows, recents, setLanguage, setTheme, settings, themes, selectALanguage, selectATheme } } = useLocalization();
     const settingsObject = useSettings();
 
+    const handleSubmit = useCallback(values => ipcRenderer.send('set-settings', values), []);
+
     return (
         <Container>
             <h1>{settings}</h1>
 
             <Formik
                 initialValues={settingsObject}
-                onSubmit={values => console.log(values)}
+                onSubmit={handleSubmit}
             >
                 <Form>
                     <AutoSave />
