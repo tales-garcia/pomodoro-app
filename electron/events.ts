@@ -176,17 +176,13 @@ export default {
     'get-settings': (ev) => {
         ev.returnValue = JSON.parse(JSON.stringify(settingsStore));
     },
-    'set-settings': (ev, settings: Partial<ISettings>) => {
+    'set-settings': (_, settings: Partial<ISettings>) => {
         Object.keys(settings).forEach(key => {
             settingsStore[key] = settings[key];
         });
 
-        const senderId = BrowserWindow.fromWebContents(ev.sender)?.id;
-
         BrowserWindow.getAllWindows().forEach(win => {
-            if (win.id !== senderId) {
-                win.webContents.send('update-settings', JSON.parse(JSON.stringify(settingsStore)));
-            }
+            win.webContents.send('update-settings', JSON.parse(JSON.stringify(settingsStore)));
         });
     }
 } as Events;
