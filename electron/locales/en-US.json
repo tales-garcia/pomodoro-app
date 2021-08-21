@@ -51,7 +51,7 @@
         "themes": {
             "dark": "Dark",
             "light": "Light",
-            "System": "System"
+            "system": "System"
         },
         "setLanguage": "Set Language",
         "selectATheme": "Select a theme",
