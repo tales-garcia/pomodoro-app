@@ -59,7 +59,7 @@ const Dashboard: React.FC = () => {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                       >
-                        {workspace.name}
+                        <span>{workspace.name}</span>
                         <FiTrash2 size={16} color={red} onClick={e => {
                           e.stopPropagation();
                           deleteWorkspace(workspace.id);
