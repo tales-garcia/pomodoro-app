@@ -33,6 +33,7 @@ export const Container = styled.main`
         background: ${({ theme }) => theme.darkBlue};
         padding: 36px;
         height: 100vh;
+        min-width: 0;
 
         > * + * {
             margin-top: 64px;
@@ -49,6 +50,13 @@ export const Container = styled.main`
 
             > li {
                 cursor: pointer;
+
+                > span {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    width: 88%;
+                    text-overflow: ellipsis;
+                }
 
                 :hover {
                     svg {
