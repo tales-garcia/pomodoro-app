@@ -17,8 +17,12 @@ export default function getLocalization(locale?: string) : FileLocale {
     return JSON.parse(rawData);
 }
 
-export function getAvailableLocales(): FileLocale[] {
+export function getAvailableLocales(): { [key in keyof Locales]: string; } {
     const localesDir = path.join(__dirname, '/locales/');
 
-    return fs.readdirSync(localesDir).map(filename => JSON.parse(fs.readFileSync(path.join(localesDir, filename)) as any));
+    const finalReturn = {} as { [key in keyof Locales]: string; };
+
+    fs.readdirSync(localesDir).forEach(locale => Object.assign(finalReturn, { [locale]: JSON.parse(fs.readFileSync(path.join(localesDir, locale)) as any).localeName }));
+
+    return finalReturn;
 }
