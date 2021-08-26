@@ -1,6 +1,6 @@
 import { BrowserWindow, ipcMain } from "electron";
 import { v4 } from "uuid";
-import getLocalization from "./localization";
+import getLocalization, { getAvailableLocales } from "./localization";
 import { idsTranslator } from "./main";
 import { recentStore, settingsStore, windowsStore, workspacesStore } from './stores';
 import getTheme from "./theme";
@@ -184,5 +184,8 @@ export default {
         BrowserWindow.getAllWindows().forEach(win => {
             win.webContents.send('update-settings', JSON.parse(JSON.stringify(settingsStore)));
         });
+    },
+    'get-available-locales': (ev) => {
+        ev.returnValue = getAvailableLocales();
     }
 } as Events;
