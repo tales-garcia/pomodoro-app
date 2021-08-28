@@ -1,0 +1,61 @@
+{
+    "localeName": "Português - Brasil",
+    "timer": {
+        "pause": "PAUSAR",
+        "start": "COMEÇAR"
+    },
+    "dashboard": {
+        "workspacesTitle": "Espaços de Trabalho",
+        "create": "Novo",
+        "getStarted": "Selecione ou crie um Espaço de Trabalho para começar.",
+        "newTimer": "Novo Contador sem título",
+        "close": "Fechar Janela",
+        "openDashboard": "Abrir Painel de Controle",
+        "recent": "Recentes",
+        "noRecent": "Não há Contadores recentes."
+    },
+    "shared": {
+        "buttons": {
+            "confirm": "Confirmar",
+            "cancel": "Cancelar"
+        },
+        "untitled": "Sem Título",
+        "validation": {
+            "invalidSelection": "Seleção inválida",
+            "nameIsRequired": "Nome obrigatório",
+            "negativeNumbersAreNotAllowed": "Números negativos não permitidos",
+            "addValueToField": "Por favor adicione um valor para pelo menos um campo"
+        },
+        "timerFinished": "Contador finalizado",
+        "dropdown": {
+            "selectAWorkspace": "Selecione um Espaço de Trabalho",
+            "noWorkspaces": "Não há Espaços de Trabalho"
+        },
+        "newWorkspace": "Novo Espaço de Trabalho",
+        "namePlaceholder": "Nome",
+        "newTimer": "Novo Contador",
+        "hours": "Horas",
+        "minutes": "Minutos",
+        "seconds": "Segundos"
+    },
+    "settings": {
+        "settings": "Preferências",
+        "clearRecents": "Limpar Recentes",
+        "enableRecents": "Abilitar Recentes",
+        "execute": "Executar",
+        "recents": "Recentes",
+        "initialize": "Initialização",
+        "openLastSessionWindows": "Abrir Janelas da Última Sessão",
+        "displaySplashScreen": "Mostrar Tela de Abertura",
+        "appearance": "Aparência",
+        "setTheme": "Mudar Tema",
+        "themes": {
+            "dark": "Escuro",
+            "light": "Claro",
+            "system": "Sistema"
+        },
+        "setLanguage": "Mudar Linguagem",
+        "selectATheme": "Selecione um tema",
+        "selectALanguage": "Selecione uma linguagem"
+    }
+}
