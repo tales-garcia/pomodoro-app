@@ -22,7 +22,7 @@ export function getAvailableLocales(): { [key in keyof Locales]: string; } {
 
     const finalReturn = {} as { [key in keyof Locales]: string; };
 
-    fs.readdirSync(localesDir).forEach(locale => Object.assign(finalReturn, { [locale]: JSON.parse(fs.readFileSync(path.join(localesDir, locale)) as any).localeName }));
+    fs.readdirSync(localesDir).forEach(locale => Object.assign(finalReturn, { [locale.replace('.json', '')]: JSON.parse(fs.readFileSync(path.join(localesDir, locale)) as any).localeName }));
 
     return finalReturn;
 }
