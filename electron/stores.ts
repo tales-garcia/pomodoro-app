@@ -1,5 +1,6 @@
 import { app } from 'electron';
 import { v4 } from 'uuid';
+import { getAvailableLocales } from './localization';
 import Store from './store';
 
 interface Window {
@@ -45,7 +46,7 @@ export const settingsStore = new Store<ISettings>({
     default: {
         displaySplash: true,
         enableRecents: true,
-        language: app.getLocale() as any,
+        language: Object.keys(getAvailableLocales()).includes(app.getLocale()) ? app.getLocale() as any : 'en-US',
         openLastSession: true,
         theme: 'system'
     },
