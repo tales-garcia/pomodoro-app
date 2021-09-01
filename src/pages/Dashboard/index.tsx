@@ -13,6 +13,7 @@ import formatTime from '../../utils/formatTime';
 import { ipcRenderer } from 'electron';
 import { useLocalization } from '../../hooks/localization';
 import { useThemeHelper } from '../../hooks/theme';
+import WorkspaceTitle from '../../components/WorkspaceTitle';
 
 const Dashboard: React.FC = () => {
   const { red, text } = useTheme();
@@ -59,7 +60,7 @@ const Dashboard: React.FC = () => {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                       >
-                        <span>{workspace.name}</span>
+                        <WorkspaceTitle name={workspace.name} />
                         <FiTrash2 size={16} color={red} onClick={e => {
                           e.stopPropagation();
                           deleteWorkspace(workspace.id);
