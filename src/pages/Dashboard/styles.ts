@@ -1,4 +1,3 @@
-import ReactTooltip from 'react-tooltip';
 import styled, { css } from 'styled-components';
 
 interface WorkspaceItemProps {
@@ -245,9 +244,4 @@ export const Recent = styled.ul`
         }
     }
 
-`;
-
-export const WorkspaceTooltip = styled(ReactTooltip)`
-    background: #000 !important;
-    border-radius: 8px !important;
 `;
