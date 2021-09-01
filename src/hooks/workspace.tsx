@@ -64,19 +64,19 @@ export const WorkspaceProvider: React.FC = ({ children }) => {
 
   const timerValidation = useMemo(() => yup.object().shape({
     name: yup.string().required(nameIsRequired),
-    hours: yup.number().positive(negativeNumbersAreNotAllowed).test({
+    hours: yup.number().min(0, negativeNumbersAreNotAllowed).test({
       message: addValueToField,
       test: function () {
         return !((!this.parent.seconds && !this.parent.minutes) && !this.parent[this.path]);
       }
     }),
-    minutes: yup.number().positive(negativeNumbersAreNotAllowed).test({
+    minutes: yup.number().min(0, negativeNumbersAreNotAllowed).test({
       message: addValueToField,
       test: function () {
         return !((!this.parent.hours && !this.parent.seconds) && !this.parent[this.path]);
       }
     }),
-    seconds: yup.number().positive(negativeNumbersAreNotAllowed).test({
+    seconds: yup.number().min(0, negativeNumbersAreNotAllowed).test({
       message: addValueToField,
       test: function () {
         return !((!this.parent.hours && !this.parent.minutes) && !this.parent[this.path]);
