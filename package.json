@@ -70,13 +70,16 @@
   "build": {
     "appId": "br.com.tales-garcia.pomodoro",
     "productName": "Pomodoro",
+    "nsis": {
+      "perMachine": true
+    },
     "mac": {
       "target": "dmg",
       "icon": "icons/icon.icns",
       "category": "public.app-category.utilities"
     },
     "win": {
-      "target": "tar.gz",
+      "target": "nsis",
       "icon": "icons/icon.ico"
     },
     "linux": {
