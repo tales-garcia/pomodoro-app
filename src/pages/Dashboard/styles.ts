@@ -177,16 +177,16 @@ export const NoSelectedWorkspace = styled.main`
     padding-top: 6rem;
 
     > img {
-        margin-bottom: 1.8rem;
-        width: 256px;
-        height: 256px;
+        margin-bottom: 6rem;
+        width: 240px/*256px*/;
+        height: 240px/*256px*/;
     }
 
     > p {
         font: 500 1.2rem Montserrat, sans-serif;
         opacity: 0.8;
         text-align: center;
-        margin-bottom: 4rem;
+        margin-bottom: 3rem;
     }
 
     > div {
